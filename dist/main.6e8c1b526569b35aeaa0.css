@@ -1,0 +1,236 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  padding: 0 10% 0 10%;
+}
+
+.wrapper_minigame {  
+  display:flex;
+  justify-content: center;
+  align-items: center; 
+  flex-wrap: wrap;
+  margin-top: 5rem;
+}
+
+.game_content_wrapper {
+  position: relative;
+  width:45%;
+  padding: 3% 3% 3% 3%;
+  border: grey solid 1px;
+  border-radius: 1rem;
+  background-color: bisque;
+}
+
+.total_score,
+.bonus_carousel_wrapper,
+.game_content {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.answer_wrapper {
+  text-align: center;
+}
+
+.total_score {
+  width: 100%;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.bonus_carousel, 
+.bonus_icon_wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;  
+}
+
+.bonus_circle {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: gray;
+  border-radius: .75rem;
+}
+
+.bonus_icon {
+  display: block;
+  width: 3rem;
+}
+
+.answ_btn {
+  cursor: pointer;
+  display: inline-block;
+  width: 8rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border-radius: .5rem;
+}
+
+#answ_false {
+  background-color: brown;
+}
+
+#answ_true {
+  background-color: rgb(112, 130, 56);
+}
+
+.bonus_size,
+.engl_word,
+.translate_engl_word {    
+  font-size: 2rem;
+}
+
+.engl_word {
+  margin-top: 3rem;
+}
+
+.translate_engl_word,
+.bonus_size {
+  margin-top: 1.5rem;
+}
+
+.answ_result_right,
+.answ_result_false {
+  position: absolute;
+  bottom: 30%;
+  left: 45%;
+  width: 4rem;
+  height: 4rem;  
+  opacity: 0; 
+  transition: .75s; 
+}
+
+.answ_result_right.click, 
+.answ_result_false.click {
+  opacity: 1;
+  transition: .75s;  
+}
+
