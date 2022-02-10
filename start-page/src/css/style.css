@@ -1,0 +1,355 @@
+:root {
+  --bg-dark: #0f29bd;
+  --bg-light: #3687f1;
+  --bg-transp: transparent;
+  --border: #29279f;
+  --gold: #817b26;
+  --white: #ffffff;
+  --grey: #e4d0d0;
+  --yellow: #fdd700;
+  --red: #f71313;
+  --blue: #1b6ae2;
+  --gren: #08aa05;
+  --black: #000000;
+  --font1: 2.5rem;
+  --font2: 2rem;
+  --font3: 1.5rem;
+  --font4: 1.2rem;
+  
+}
+body {  
+  width: 100%;
+  min-width: 31rem;
+  height: 100vh;  
+  justify-content: center;  
+  background-image: url('../assets/img/flag_GB_light.jpg');
+  background-repeat: no-repeat;  
+  background-size: 100vw 100vh; 
+  background-attachment: fixed; 
+  /*backdrop-filter: blur(0.3rem); */  
+}
+.header {
+  width: 100%;
+  position: fixed;
+  height: 3rem;
+  left: 0;
+  top: 0;
+  z-index: 5;
+}
+.burger {
+  position: fixed;
+  left: 0.5rem;
+  top: 0.45rem;
+  width: 2rem;
+  height: 2rem;
+  background-image: url('../assets/img/burger.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  transform: rotate(180deg);
+  transition: 0.7s;
+  z-index: 7;
+}
+.burger._active {  
+  left: 0.6rem;
+  top: 0.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url('../assets/img/close.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  transform: rotate(-180deg);
+  transition: 0.7s;
+  z-index: 7;
+}
+.header-nav {
+  display: flex;
+  width: 100%;
+  height: 3rem; 
+  justify-content: space-evenly;
+  align-items: center;
+  position: fixed;
+  left: 0rem;
+  top: 0rem;
+  background-color: var(--bg-dark);
+  z-index: 6; 
+  transform: translateY(-10rem);
+  transition: 0.7s;
+  opacity: 0.1;
+}
+.header-nav._active {
+  transform: translateY(0rem);
+  transition: 0.7s;
+  opacity: 0.8;  
+}
+.nav-btn {
+  flex: 0 1 5.5rem;
+  height: 1.5rem;
+  background-color: var(--grey);  
+  background-image: url('../assets/img/flag_GB_light.png');
+  background-repeat: no-repeat;
+  background-size: 5rem;
+  background-position: center ;
+  border-radius: 0.3rem;
+  font-weight: 700;
+}
+.nav-btn:first-child{
+  margin-left: 1rem;
+}
+.nav-btn:last-child{
+  margin-right: 3.5rem;
+}
+.header-login {
+  position: fixed;
+  width: 4.2rem;
+  right: 0.5rem;
+  top: 0.7rem;
+  background-color: var(--bg-transp);
+  background-image: url('../assets/img/login_logout.jpg');
+  background-repeat: no-repeat;
+  background-size: 6rem;
+  border-radius: 0.6rem;
+  background-position: -1rem -1rem;
+  height: 1.5rem;
+  z-index: 7;
+}
+.header-login._logged {
+  width: 4.4rem;
+  background-position: -1rem -3.6rem;
+}
+
+/*-------------------------MAIN----------------------*/
+
+.main-wrapper {
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(0.3rem);
+}
+.main {
+  padding: 3rem 0.5rem ;  
+}
+
+
+/*-------------------------HOME----------------------*/
+
+.home {
+  display: block;
+  /*display: none;*/
+}
+
+.home-intro,
+.home-textbook,
+.home-games,
+.home-statistics {  
+  height: 11rem;
+  width: 80%;
+  margin: 2rem auto;
+  font-size: var(--font3); 
+  background-color: rgba(212, 152, 152, 0.5);
+  background-size: contain;
+  background-repeat: no-repeat; 
+  padding: 0 1rem 0 1rem;
+  position: relative;
+}
+.home-article:nth-child(odd) {
+  background-position: 100% 0%;
+  border-radius: 0rem 2rem 2rem 0rem;
+  text-align: start;
+}
+.home-article:nth-child(even) {
+  background-position: 0% 100%;
+  border-radius: 2rem 0rem 0rem 2rem;
+  text-align: end;
+}
+.home-intro.home-article {
+  background-image: url('../assets/img/intro.jpg');
+  background-position: 110% 0%;      
+}
+.home-textbook {
+  background-image: url('../assets/img/dictionary.jpg');  
+  background-size: 16rem 11rem;
+}
+.home-games {
+  background-image: url('../assets/img/game.jpg');  
+}
+.home-statistics {
+  background-image: url('../assets/img/statistics.png');  
+  background-size: 16rem 11rem;
+}
+.home-intro_title,
+.home-textbook_title,
+.home-games_title,
+.home-statistics_title {
+  font-size: 5rem;
+  padding-top: 2.5rem;
+  color: var(--border);
+}
+.home-intro_subtitle,
+.home-textbook_subtitle,
+.home-games_subtitle,
+.home-statistics_subtitle {
+  display: flex;  
+  justify-content: center; 
+  align-items: center;
+  height: 9rem;
+  width: calc(96% - 16rem);
+  background-color: rgba(0, 2, 3, 0.8);
+  color: var(--grey);
+  padding: 1rem 1rem;
+  position: absolute;
+  left: 0rem;
+  top: 0rem;
+  font-size: var(--font4);
+  
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+.home-intro_subtitle,
+.home-games_subtitle {
+  left: 16rem;  
+}
+.home-intro:hover .home-intro_subtitle,
+.home-textbook:hover .home-textbook_subtitle,
+.home-games:hover .home-games_subtitle,
+.home-statistics:hover .home-statistics_subtitle {   
+  visibility: visible;
+  opacity: 1;
+  transition: all 1s ease-in-out; 
+  left: 0rem;  
+}
+.home-textbook:hover .home-textbook_subtitle,
+.home-statistics:hover .home-statistics_subtitle {
+  position: absolute;
+  left: 16rem;  
+}
+
+/*---------------------TextBook---------------------*/
+
+.textbook-pagination {
+  display: flex;
+  position: fixed;
+  justify-content: space-around;
+  width: 50%;  
+  background-color: var(--bg-light);
+}
+
+/*---------------------ABOUT APP--------------------*/
+
+.developers {
+  display: block;
+  /*display: none;*/
+  width: 80%;
+  margin: 0 auto;
+}
+.developers-title {
+  width: 100%;
+  text-align: center;
+  font-size: var(--font1);
+  color: var(--border);
+  margin-bottom: 2rem;
+}
+.developers-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.developer {
+  width: 100%;
+  height: 30vh;
+  font-size: var(--font3);
+  background-color: rgba(106, 156, 202, 0.5);
+  background-repeat: no-repeat;
+  background-size: contain;   
+  margin-bottom: 3rem; 
+  color: var(--border); 
+}
+.developer:first-child {
+  background-image: url('https://avatars.githubusercontent.com/u/91083180?v=4');
+  background-position: 0 0;
+  border-radius: 2rem 0rem 0rem 2rem;
+  padding-left: 17rem;
+  padding-right: 1rem;
+}
+.developer:last-child {
+background-image: url('https://cdn.rs.school/arturzabashta.png?size=192');
+background-position: 100% 0;
+border-radius: 0rem 2rem 2rem 0rem;
+padding-left: 1rem;
+padding-right: 17rem;
+}
+.developer-subtitle {
+  width: 100%;
+  text-align: center;
+  font-size: var(--font2);
+  color: var(--red);
+  margin-top: 1rem;
+}
+.developer-role,
+.developer-work {
+  margin-top: 1.5rem;  
+}
+.developer-role {
+  color: var(--gold);
+}
+
+/*---------------------FOOTER-----------------------*/
+
+.footer {
+  display: flex;
+  /*display: none;*/   
+  width: 100%;
+  height: 3rem;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--bg-dark);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 0.8;
+  z-index: 5;  
+}
+.footer-copyright,
+.footer-rsschool,
+.footer-github {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  font-size: var(--font2);
+  color: var(--white);
+  text-decoration: none;
+  padding: 0rem 0rem;
+  outline: 0;
+  transition: 0.7s;
+}
+.footer-rsschool_svg {
+  width: 7rem;
+  height: 2.3rem;
+  background-image: url("../assets/svg/rss.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.footer-github {
+  display: flex;   
+  height: 2.2rem;
+  margin-left: 1rem;
+  color: var(--white);  
+}
+.footer-github a {
+  display: block;
+  color: var(--red);
+  font-size: var(--font3);
+}
+.footer-github_logo {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0 .5rem 0 1rem;
+  background-image: url("../assets/svg/github.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.footer-copyright {
+  font-size: var(--font3);
+}
+
+
