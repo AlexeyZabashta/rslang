@@ -48,6 +48,18 @@ body {
   height: 1.5rem;
   background-color: gray;
   border-radius: .75rem;
+  opacity: 1;
+  transition: .5s;
+}
+
+.bonus_circle.active {
+  background-color: rgb(112, 130, 56);
+  transition: .5s;
+}
+
+.bonus_circle.max {
+  opacity: 0;
+  transition: .5s;
 }
 
 .bonus_icon {
@@ -95,11 +107,25 @@ body {
   width: 4rem;
   height: 4rem;  
   opacity: 0; 
-  transition: .75s; 
+  transition: .5s; 
 }
 
 .answ_result_right.click, 
 .answ_result_false.click {
   opacity: 1;
-  transition: .75s;  
+  transition: .5s;  
+}
+
+.big,
+.boom,
+.flash {
+  opacity: 0;
+  transition: .5s;
+}
+
+.big.active,
+.boom.active,
+.flash.active {
+  opacity: 1;
+  transition: .5s;
 }

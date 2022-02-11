@@ -12,14 +12,14 @@ export const renderDOM = async (word:string) => {
         <div class="bonus_circle"></div>
         <div class="bonus_circle"></div>
       </div>
-      <h3 class="bonus_size">+20</h3>        
+      <h3 class="bonus_size"></h3>        
     </div>
     <div class="game_content">
       <div class="bonus_icon_wrapper">
         <img src="../src/assets/red.png" class="bonus_icon" id="red">
-        <img src="../src/assets/big.png" class="bonus_icon" id="big">
-        <img src="../src/assets/boom.png" class="bonus_icon" id="boom">
-        <img src="../src/assets/flash.png" class="bonus_icon" id="flash">
+        <img src="../src/assets/big.png" class="bonus_icon big" id="big">
+        <img src="../src/assets/boom.png" class="bonus_icon boom" id="boom">
+        <img src="../src/assets/flash.png" class="bonus_icon flash" id="flash">
       </div>
       <div class="engl_word">${word}</div>
       <div class="translate_engl_word">${await answerVariant()}</div>

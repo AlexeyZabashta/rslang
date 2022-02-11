@@ -1,4 +1,5 @@
 import { Word, GrPg } from './type';
+import { checkBonus } from './bonusAlg';
 import { getWords } from './request';
 
 export const answers:Word[] = [];
@@ -86,7 +87,9 @@ export async function checkAnsw(val:boolean) {
   console.log('if result: ', val === answerFlag);
   if (answerFlag === val) {
     trueAnsw();
+    checkBonus(true);
   } else {
+    checkBonus(false);
     falseAnsw();
   }
   await checkIndex();    
