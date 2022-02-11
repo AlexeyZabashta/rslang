@@ -90,12 +90,19 @@ body {
   background-size: 5rem;
   background-position: center ;
   border-radius: 0.3rem;
-  font-weight: 700;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 1s ease-in-out;
+}
+.nav-btn:hover {
+  background-image: url('../assets/img/flag_GB.png');
+  transition: all 1s ease-in-out;  
 }
 .nav-btn:first-child{
   margin-left: 1rem;
 }
 .nav-btn:last-child{
+  flex: 0 1 5.8rem;
   margin-right: 3.5rem;
 }
 .header-login {
@@ -149,6 +156,7 @@ body {
   background-repeat: no-repeat; 
   padding: 0 1rem 0 1rem;
   position: relative;
+  background-size: 16rem 11rem;
 }
 .home-article:nth-child(odd) {
   background-position: 100% 0%;
@@ -162,18 +170,16 @@ body {
 }
 .home-intro.home-article {
   background-image: url('../assets/img/intro.jpg');
-  background-position: 110% 0%;      
+  background-position: 100% 0%;      
 }
 .home-textbook {
-  background-image: url('../assets/img/dictionary.jpg');  
-  background-size: 16rem 11rem;
+  background-image: url('../assets/img/textbook.jpg');    
 }
 .home-games {
   background-image: url('../assets/img/game.jpg');  
 }
 .home-statistics {
   background-image: url('../assets/img/statistics.png');  
-  background-size: 16rem 11rem;
 }
 .home-intro_title,
 .home-textbook_title,
@@ -228,11 +234,103 @@ body {
 .textbook-pagination {
   display: flex;
   position: fixed;
+  top: 3.5rem;
   justify-content: space-around;
   width: 50%;  
   background-color: var(--bg-light);
 }
+.textbook-prev_btn,
+#textbook-select,
+.textbook-nex_tbtn,
+.textbook-audio_btn,
+.textbook-sprint_btn {
+  border-radius: 0.3rem;
+  cursor: pointer;
 
+}
+.textbook-list {
+  width: 90%;
+  margin: 4rem auto 0rem auto;
+}
+
+.textbook-item{
+  position: relative;
+  min-height: 10.5rem;
+  background-color: rgba(123, 171, 226, 0.733);
+  margin: 1rem 0;
+  padding-left: 16.5rem;
+  border-radius: 2rem 2rem 0 2rem;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  background-size: 16rem auto;
+  box-shadow: inset 0px 0px 0.5rem 1rem rgba(123, 171, 226, 0.9);
+}
+.textbook-word_blur {
+  position: absolute;
+  width: 3rem;
+  height: 100%;
+  left: 13rem;
+  top: 0;
+  background: linear-gradient(to right, var(--bg-transp), rgba(123, 171, 226, 1));
+
+}
+
+.textbook-word,
+.textbook-word_transcription,
+.textbook-word_translate {  
+  margin-right: 1rem;
+  font-weight: 700;
+}
+
+.textbook-word {
+  font-size: var(--font2);
+  color: var(--border);
+}
+.textbook-word_transcription {
+  color: var(--red);
+}
+
+.textbook-word_audio,
+.textbook-example_audio,
+.textbook-meaning_audio {
+  visibility: hidden;
+  opacity: 0;
+  font-size: 0.7rem;
+}
+.textbook-example,
+.textbook-meaning {
+  color: var(--border);
+  font-style: italic;
+  font-weight: 700;
+}
+.textbook-btns_wrapper {
+  display: flex;  
+  justify-content: center;
+}
+
+.word-btn {
+  width: 6rem;
+  height: 1.5rem;
+  cursor: pointer;
+  background-color: var(--bg-transp);
+  background-image: url('../assets/img/flag_GB_light.png');
+  background-repeat: no-repeat;
+  background-size: 6rem;
+  background-position: center;
+  transition: all 1s ease-in-out; 
+}
+.word-btn:hover {
+  background-color: var(--blue);
+  background-image: url('../assets/img/flag_GB.png');
+  transition: all 1s; 
+  font-weight: 800;
+}
+.learned-word {
+  border-radius: 0 0 0 90%;
+}
+.difficult-word {
+  border-radius: 0 90% 0 0%;
+}
 /*---------------------ABOUT APP--------------------*/
 
 .developers {

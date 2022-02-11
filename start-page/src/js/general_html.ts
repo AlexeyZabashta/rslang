@@ -1,7 +1,7 @@
 import { bodyHtml } from './data';
 import { homePage } from './render_home_page';
 import { aboutAppPage } from './render_about_app';
-import { textbookPage } from './render_textbook';
+import { renderTextbookPage } from './render_textbook';
 
 export const renderHTMLStructure = async () => {
   bodyHtml.innerHTML = '';
@@ -56,7 +56,7 @@ renderHTMLStructure().then(async () => {
     const textbookHtml = document.querySelector('.nav-textbook') as HTMLButtonElement;
     textbookHtml.addEventListener('click', () => {
       console.log(' вызываю textbookPage;');
-      textbookPage();
+      renderTextbookPage();
     });
   })
 

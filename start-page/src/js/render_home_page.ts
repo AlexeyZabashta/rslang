@@ -24,7 +24,7 @@ export const homePage = (async () => {
     </div>
 
     <div class="home-games home-article">
-      <h2 class="home-games_title">Word Games</h2>
+      <h2 class="home-games_title">Games</h2>
       <div class="home-games_subtitle">
         Do you think learning English is boring? 
         How about learning by playing? 
