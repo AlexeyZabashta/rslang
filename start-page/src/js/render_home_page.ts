@@ -1,4 +1,8 @@
-export const homePage = (async () => {
+import { aboutAppPage } from './render_about_app';
+import { renderTextbookPage } from './render_textbook';
+import { renderStatisticsPage } from './render_statistics';
+
+export const homePage = async () => {
   console.log('Отрисовываю стартовую страницу');
   const mainHtml = document.querySelector('.main') as HTMLElement;
   mainHtml.innerHTML = '';
@@ -28,8 +32,8 @@ export const homePage = (async () => {
       <div class="home-games_subtitle">
         Do you think learning English is boring? 
         How about learning by playing? 
-        There are two games to choose from. 
-        Audio Challenge - try to guess a word by ear.
+        There are two games to choose from.<br> 
+        Audio Challenge - try to guess a word by ear.<br> 
         Sprint - become the fastest, guessing words visually. 
       </div>
     </div>
@@ -41,6 +45,41 @@ export const homePage = (async () => {
         in the special section Statistics
       </div>
     </div>
+
+    <div class="home-developers home-article">
+      <h2 class="home-developers_title">About App</h2>
+      <div class="home-developers_subtitle">
+        Meet the app development team
+      </div>
+    </div>
   </section>
   `;
-});
+
+  const textbookHtml = document.querySelector('.home-textbook') as HTMLElement;
+  textbookHtml.addEventListener('click', () => {
+    console.log(' вызываю textbookPage');
+    localStorage.setItem('currentPage', 'Textbook');
+    renderTextbookPage();
+  });
+
+  const gamesHtml = document.querySelector('.home-games') as HTMLElement;
+  gamesHtml.addEventListener('click', () => {
+    console.log(' вызываю Games page();');
+    localStorage.setItem('currentPage', 'Games');
+    // renderStatisticsPage();
+  });
+
+  const statisticsHtml = document.querySelector('.home-statistics') as HTMLElement;
+  statisticsHtml.addEventListener('click', () => {
+    console.log(' вызываю Statistics page();');
+    localStorage.setItem('currentPage', 'Statistics');
+    renderStatisticsPage();
+  });
+
+  const developersHtml = document.querySelector('.home-developers') as HTMLElement;
+  developersHtml.addEventListener('click', () => {
+    console.log(' вызываю About App page();');
+    localStorage.setItem('currentPage', 'About App');
+    aboutAppPage();
+  });
+};
