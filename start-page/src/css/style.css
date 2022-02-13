@@ -7,7 +7,7 @@
   --white: #ffffff;
   --grey: #e4d0d0;
   --yellow: #fdd700;
-  --red: #f71313;
+  --red: #e01533;
   --blue: #1b6ae2;
   --gren: #08aa05;
   --black: #000000;
@@ -17,6 +17,11 @@
   --font4: 1.2rem;
   
 }
+input,
+button {
+  cursor: pointer;
+}
+
 body {  
   width: 100%;
   min-width: 31rem;
@@ -38,10 +43,13 @@ body {
 }
 .header-current {
   position: fixed;
-  left: 45%;
+  left: 41%;
   top: 1rem;
   font-size: var(--font2);
+  font-weight: 700;
   color: var(--gold);
+  background-color: var(--bg-transp);
+   
 }
 .burger {
   position: fixed;
@@ -67,6 +75,7 @@ body {
   transform: rotate(-180deg);
   transition: 0.7s;
   z-index: 7;
+  
 }
 .header-nav {
   display: flex;
@@ -99,7 +108,7 @@ body {
   border-radius: 0.3rem;
   font-weight: 800;
   cursor: pointer;
-  transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;  
 }
 .nav-btn:hover {
   background-image: url('../assets/img/flag_GB.png');
@@ -112,7 +121,7 @@ body {
   flex: 0 1 5.8rem;
   margin-right: 3.5rem;
 }
-.header-login {
+.header-login_btn {
   position: fixed;
   width: 4.2rem;
   right: 0.5rem;
@@ -125,11 +134,175 @@ body {
   background-position: -1rem -1rem;
   height: 1.5rem;
   z-index: 7;
+  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg)
+    brightness(100%) contrast(90%);
+  transition: all 0.5s;
 }
-.header-login._logged {
+.header-login_btn:hover {
+  filter: none;
+  transition: all 0.5s;
+}
+.header-login_btn:active {
+  transform: translatey(0.1rem);
+}
+
+.header-login_btn._logged {
   width: 4.4rem;
   background-position: -1rem -3.6rem;
 }
+
+/*-------------------LOGIN BLOCK---------------*/
+
+.header-login_block {
+	position: fixed;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background: rgba(31, 19, 19, 0.5);
+	z-index: 10;
+	box-sizing: border-box;
+  transition: all 0.7s;
+  backdrop-filter: blur(0.3rem);
+}
+.login-window {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+	background: var(--white);
+  background-image: url('../assets/img/flag_GB_light.jpg');
+  background-position: center;
+  background-size: cover;
+	width: 20rem;
+	height: 25rem;
+	border-radius: 0 1.5rem 0 1.5rem;
+  box-shadow: 1.75rem 2rem 3rem 0.5rem var(--black);
+  transition: all 0.7s; 
+}
+
+.login-exit {	
+	position: absolute;
+  right: 0;
+	width: 2rem;
+	height: 2rem;	
+	border-radius: 0 2rem 0 2rem;	
+	transition: all 0.5s;
+  z-index: 11;
+}
+.login-exit:hover {
+	background: var(--bg-light);
+	
+}
+.login-exit_btn {
+  width: 2rem;
+	height: 2rem;
+  border-radius: 0 20px 0 20px;	
+  background: rgba(32, 30, 30, 0.7);
+  background-image: url('../assets/img/close.png');
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: center;
+}
+.login-exit_btn:active {
+  transform: rotate(180deg);
+  transition: 0.7s;
+}
+
+.login-head {
+  width: 100%;
+	font-size: var(--font2);
+  font-weight: 700;
+  color: var(--border);
+	margin: 1rem 0;
+	padding: 0;
+	text-align: center;
+	user-select: none;
+}
+
+.login-input,
+.login-btn {
+  width: 70%;
+	margin: 1.5rem auto;	
+	border: 2px solid rgba(114, 114, 114, .5);
+	border-radius: 15px;
+	outline: none;
+	font-size: var(--font4);
+	font-family: sans-serif;
+	transition: .3s;
+	height: 1.75rem;
+	text-align: center;
+  transition: all 0.5s;
+  box-shadow: 0.75rem 1rem 1rem 0.2rem rgba(114, 114, 114, .5); 
+}
+
+.login-input:focus {
+	border: 2px solid var(--red);
+	color: var(--red);
+  box-shadow: 0.75rem 1rem 1rem 0.2rem rgba(131, 6, 6, 0.5);
+}
+.login-btn_wrapper{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	width: 70%;	
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 1.5rem;
+  padding: 6px 0;
+	transition: all 0.5s;
+  box-shadow: 0.75rem 1rem 1rem 0rem var(--black); 
+}
+.login-btn:active {    
+  transform: translatey(0.11rem);
+  transition: all 0.5s; 
+}
+.sign-in {
+  border: 2px solid var(--red);  
+	color: var(--red);		
+	background: var(--white);
+  transition: all 0.5s;	 
+}
+
+.sign-in:hover, 
+.registration:hover {    
+	color: var(--white);		
+	background: var(--red);
+  box-shadow: 0.75rem 1rem 1rem 0rem rgba(131, 6, 6, 0.7); 
+  transition: all 0.5s;		 
+}
+
+.login-btn._not-hover {
+	border: 2px solid rgba(114, 114, 114, .5);
+	color: var(--black);
+  background: var(--white);
+  opacity: 0.7;
+  scale: 0.9;
+  transition: all 0.5s;	
+}
+
+
+.notReg {
+	font-size: var(--font4);
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	user-select: none;
+}
+
+.notReg-btn input:hover {
+	background: #e01533;
+	color: #fff;
+}
+
 
 /*-------------------------MAIN----------------------*/
 
@@ -161,6 +334,7 @@ body {
   padding: 0 1rem 0 1rem;
   position: relative;
   background-size: 16rem 11rem;
+  box-shadow: 1.75rem 2rem 3rem 0.5rem var(--black);
 }
 .home-article:nth-child(odd) {
   background-position: 100% 0%;
@@ -207,8 +381,8 @@ body {
   justify-content: center; 
   align-items: center;
   height: 9rem;
-  width: calc(97% - 16rem);
-  background-color: rgba(0, 2, 3, 0.8);
+  width: calc(96.5% - 16rem);
+  background-color: rgba(0, 2, 3, 0.85);
   color: var(--grey);
   padding: 1rem 1rem;
   position: absolute;
@@ -217,7 +391,7 @@ body {
   font-size: var(--font4);  
   visibility: hidden;
   opacity: 0;
-  transition: all 1s ease-in-out;
+  transition: all 0.7s ease-in-out;
 }
 .home-intro_subtitle,
 .home-games_subtitle,
@@ -236,7 +410,7 @@ body {
 .home-developers:hover .home-developers_subtitle {   
   visibility: visible;
   opacity: 1;
-  transition: all 1s ease-in-out; 
+  transition: all 0.7s ease-in-out; 
   left: 0rem;  
 }
 .home-textbook:hover .home-textbook_subtitle,
@@ -280,6 +454,7 @@ body {
   background-position: 0% 0%;
   background-size: 16rem auto;
   box-shadow: inset 0px 0px 0.5rem 1rem rgba(123, 171, 226, 0.9);
+  box-shadow: 1.75rem 2rem 3rem 0rem var(--black);
 }
 .textbook-word_blur {
   position: absolute;
@@ -287,7 +462,7 @@ body {
   height: 100%;
   left: 13rem;
   top: 0;
-  background: linear-gradient(to right, var(--bg-transp), rgba(123, 171, 226, 1));
+  background: linear-gradient(to right, var(--bg-transp), rgb(139, 193, 255));
 }
 
 .textbook-word,
@@ -314,7 +489,15 @@ body {
   background-image: url('../assets/img/audioplay_btn.png');
   background-repeat: no-repeat;
   background-size: 1.7rem;
-  background-position: center;  
+  background-position: center; 
+  transition: all 0.5s; 
+}
+.textbook-play:hover {
+  background-color: var(--border);
+}
+
+.textbook-play:active {
+  transform: translatey(0.15rem);
 }
 
 .textbook-word_audio,
@@ -338,8 +521,11 @@ body {
 }
 
 .word-btn {
+  display: flex;
+  align-items: center;
   width: 6rem;
   height: 1.5rem;
+  font-weight: 600;
   cursor: pointer;
   background-color: var(--bg-transp);
   background-image: url('../assets/img/flag_GB_light.png');
@@ -348,12 +534,17 @@ body {
   background-position: center;
   transition: all 1s ease-in-out; 
 }
+.word-btn:first-child {
+  justify-content: end;
+}
 
 .word-btn:hover {
   background-color: var(--blue);
   background-image: url('../assets/img/flag_GB.png');
-  transition: all 1s; 
-  font-weight: 800;
+  transition: all 1s;   
+}
+.word-btn:active {
+  transform: translatey(0.15rem);
 }
 .learned-word {
   border-radius: 0 0 0 90%;

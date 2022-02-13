@@ -3,6 +3,7 @@ import { homePage } from './render_home_page';
 import { aboutAppPage } from './render_about_app';
 import { renderTextbookPage } from './render_textbook';
 import { renderStatisticsPage } from './render_statistics';
+import { renderLoginWindow } from './render_login';
 
 export const renderHTMLStructure = async () => {
   bodyHtml.innerHTML = '';
@@ -32,7 +33,8 @@ renderHTMLStructure().then(async () => {
       <button class="nav-btn nav-statistics">Statistics</button>
       <button class="nav-btn nav-developers">About App</button>   
     </nav>
-    <button class="header-login"></button>  
+    <button class="header-login_btn"></button>
+    <div class="header-login_block"></div>  
   `;
 })
 
@@ -78,6 +80,15 @@ renderHTMLStructure().then(async () => {
       console.log(' вызываю About App page();');
       localStorage.setItem('currentPage', 'About App');
       aboutAppPage();
+    });
+  })
+
+  .then(async () => {
+    const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
+    loginHtml.addEventListener('click', () => {
+      console.log(' Хочу залогинится;');
+      // localStorage.setItem('currentPage', 'About App');
+      renderLoginWindow();
     });
   })
 
