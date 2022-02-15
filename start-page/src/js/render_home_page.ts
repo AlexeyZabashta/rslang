@@ -30,7 +30,7 @@ export const homePage = async () => {
     <div class="home-games home-article">
       <h2 class="home-games_title">Games</h2>
       <div class="home-games_subtitle">
-        Do you think learning English is boring? 
+        Do you think learning English is boring?<br> 
         How about learning by playing? 
         There are two games to choose from.<br> 
         Audio Challenge - try to guess a word by ear.<br> 

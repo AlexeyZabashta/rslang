@@ -8,6 +8,7 @@
   --grey: #e4d0d0;
   --yellow: #fdd700;
   --red: #e01533;
+  --light-red: #ce3c3cb9;
   --blue: #1b6ae2;
   --gren: #08aa05;
   --black: #000000;
@@ -15,6 +16,7 @@
   --font2: 2rem;
   --font3: 1.5rem;
   --font4: 1.2rem;
+  --font5: 0.8rem;
   
 }
 input,
@@ -24,7 +26,7 @@ button {
 
 body {  
   width: 100%;
-  min-width: 31rem;
+  min-width: 20rem;
   height: 100vh;  
   justify-content: center;  
   background-image: url('../assets/img/flag_GB_light.jpg');
@@ -90,7 +92,7 @@ body {
   z-index: 6; 
   transform: translateY(-10rem);
   transition: 0.7s;
-  opacity: 0.1;
+  opacity: 0;
 }
 .header-nav._active {
   transform: translateY(0rem);
@@ -148,7 +150,7 @@ body {
 
 .header-login_btn._logged {
   width: 4.4rem;
-  background-position: -1rem -3.6rem;
+  background-position: -1rem -3.9rem;
 }
 
 /*-------------------LOGIN BLOCK---------------*/
@@ -161,7 +163,7 @@ body {
 	width: 100%;
 	height: 100%;
 	background: rgba(31, 19, 19, 0.5);
-	z-index: 10;
+	z-index: 100;
 	box-sizing: border-box;
   transition: all 0.7s;
   backdrop-filter: blur(0.3rem);
@@ -170,6 +172,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   position: relative;
 	background: var(--white);
   background-image: url('../assets/img/flag_GB_light.jpg');
@@ -185,6 +188,7 @@ body {
 .login-exit {	
 	position: absolute;
   right: 0;
+  top: 0;
 	width: 2rem;
 	height: 2rem;	
 	border-radius: 0 2rem 0 2rem;	
@@ -212,19 +216,30 @@ body {
 
 .login-head {
   width: 100%;
+  height: 1rem;
 	font-size: var(--font2);
   font-weight: 700;
   color: var(--border);
-	margin: 1rem 0;
+	margin-bottom: 1.5rem;
 	padding: 0;
 	text-align: center;
 	user-select: none;
 }
 
+.login-form {
+  display: flex;
+  width: 100%;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+
+}
+
 .login-input,
 .login-btn {
   width: 70%;
-	margin: 1.5rem auto;	
+	margin: 0.25rem auto;	
 	border: 2px solid rgba(114, 114, 114, .5);
 	border-radius: 15px;
 	outline: none;
@@ -239,9 +254,54 @@ body {
 
 .login-input:focus {
 	border: 2px solid var(--red);
-	color: var(--red);
+	color: var(--black);
   box-shadow: 0.75rem 1rem 1rem 0.2rem rgba(131, 6, 6, 0.5);
 }
+
+.lable_name,
+.lable_email,
+.lable_password {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.5rem 0 0.5rem;
+  position: absolute;
+  top: -2.9rem;
+  width: 0%;
+  height: 0rem;
+  border: 2px solid rgba(114, 114, 114, .5);
+  border-radius: 1rem;  
+  background-color: var(--white);
+  color: rgb(104, 97, 97);
+  font-size: var(--font5);  
+  visibility: hidden;
+  opacity: 0;
+  z-index: 12;
+  box-shadow: 0.75rem 1rem 1rem 0.2rem rgba(114, 114, 114, .5);
+  transition: all 0.7s;
+}
+
+
+._name:focus + .lable_name {
+  height: 2.5rem;
+  width: 70%;
+  visibility: visible;
+  opacity: 1;
+}
+._email:focus + .lable_email {
+  height: 2.5rem;
+  width: 70%;
+  visibility: visible;
+  opacity: 1;
+}
+._password:focus + .lable_password {
+  height: 2.5rem;
+  width: 70%;
+  visibility: visible;
+  opacity: 1;
+}
+
 .login-btn_wrapper{
   width: 100%;
   display: flex;
@@ -292,17 +352,36 @@ body {
 
 .notReg {
 	font-size: var(--font4);
-	margin: 0;
+	margin: 0.5rem 0;
 	padding: 0;
 	text-align: center;
 	user-select: none;
 }
 
 .notReg-btn input:hover {
-	background: #e01533;
-	color: #fff;
+	background: var(--red);
+	color: var(--white);
 }
 
+.login-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 14.4rem;
+  width: 70%;
+  height: 2.5rem; 
+  padding: 0 0.5rem;
+  border-radius: 1rem;  
+  background: rgba(2, 2, 2, 0.85);;
+  color: var(--red);
+  opacity: 0;
+  box-shadow: 0.75rem 1rem 1rem 0rem rgba(131, 6, 6, 0.7);
+  z-index: 10;
+  transition: all 0.7s;
+
+}
 
 /*-------------------------MAIN----------------------*/
 
@@ -335,6 +414,7 @@ body {
   position: relative;
   background-size: 16rem 11rem;
   box-shadow: 1.75rem 2rem 3rem 0.5rem var(--black);
+  transition: all 0.5s;
 }
 .home-article:nth-child(odd) {
   background-position: 100% 0%;
@@ -371,6 +451,7 @@ body {
   font-size: 5rem;
   padding-top: 2.5rem;
   color: var(--border);
+  transition: all 0.5s;
 }
 .home-intro_subtitle,
 .home-textbook_subtitle,
@@ -425,9 +506,11 @@ body {
   display: flex;
   position: fixed;
   top: 3.5rem;
+  left: 0;
   justify-content: space-around;
-  width: 50%;  
+  width: 100%;  
   background-color: var(--bg-light);
+  z-index: 6;
 }
 .textbook-prev_btn,
 #textbook-select,
@@ -444,6 +527,10 @@ body {
 }
 
 .textbook-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   min-height: 10.5rem;
   background-color: rgba(123, 171, 226, 0.733);
@@ -451,18 +538,52 @@ body {
   padding: 0 0.7rem 0 16.5rem;
   border-radius: 2rem 2rem 0 2rem;
   background-repeat: no-repeat;
-  background-position: 0% 0%;
-  background-size: 16rem auto;
-  box-shadow: inset 0px 0px 0.5rem 1rem rgba(123, 171, 226, 0.9);
+  background-position: -3.7rem 0;
+  background-size: auto 13rem;  
   box-shadow: 1.75rem 2rem 3rem 0rem var(--black);
+  transition: all 0.5s;
 }
+
+.textbook-item_picture {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 16rem;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2rem 0 0 2rem;
+  transition: all 0.5s;
+}
+
+.textbook-item_article,
+.textbook-btns_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.textbook-item_article:nth-child(2) {  
+  margin-right: 1rem;
+  justify-content: space-evenly;
+}
+
+.textbook-item_article:nth-child(3) span,
+.textbook-item_article:nth-child(4) span {
+  flex: 1 1 45%;
+}
+
 .textbook-word_blur {
   position: absolute;
   width: 3rem;
   height: 100%;
   left: 13rem;
   top: 0;
-  background: linear-gradient(to right, var(--bg-transp), rgb(139, 193, 255));
+  background: linear-gradient(to right, var(--bg-transp), rgb(96, 148, 207));
+  transition: all 0.5s;
 }
 
 .textbook-word,
@@ -470,10 +591,10 @@ body {
 .textbook-word_translate {  
   margin-right: 1rem;
   font-weight: 700;
+  font-size: var(--font3);
 }
 
-.textbook-word {
-  font-size: var(--font2);
+.textbook-word {  
   color: var(--border);
 }
 
@@ -482,6 +603,9 @@ body {
 }
 
 .textbook-play {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.7rem;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -498,14 +622,6 @@ body {
 
 .textbook-play:active {
   transform: translatey(0.15rem);
-}
-
-.textbook-word_audio,
-.textbook-example_audio,
-.textbook-meaning_audio {
-  visibility: hidden;
-  opacity: 0;
-  font-size: 0.7rem;
 }
 
 .textbook-example,
@@ -552,6 +668,7 @@ body {
 .difficult-word {
   border-radius: 0 90% 0 0%;
 }
+
 
 /*---------------------STATISTICS-------------------*/
 
@@ -683,4 +800,192 @@ padding-right: 17rem;
   font-size: var(--font3);
 }
 
+@media all and (max-width: 34rem) {
+  .home-intro_subtitle,
+  .home-textbook_subtitle,
+  .home-games_subtitle,
+  .home-statistics_subtitle,
+  .home-developers_subtitle {
+    align-items: center;    
+    width: 70%;
+    left: 0;
+    text-align: center;
+    font-size: var(--font4);
+    transform: translate(0,100%);
+    color: #e01533;
+  }
+
+}
+
+@media all and (max-width: 46rem) {
+
+  .header {
+    width: 7rem;
+    height: 100vh;
+    position: fixed;
+    flex-direction: column;
+    
+    left: 0;
+    top: 0;
+    z-index: 5;
+  }
+  
+  .header-nav {
+    display: flex;
+    flex-direction: column;
+    width: 6rem;
+    height: calc(100vh - 3rem);
+    justify-content: space-evenly;
+    align-items: center;
+    position: fixed;    
+    transition: 0.7s;    
+  }
+
+  .nav-btn,
+  .nav-btn.nav-home,
+  .nav-btn.nav-developers {
+    width: 5rem;    
+    padding: 0;
+    margin: 0;
+  }
+  .nav-btn.nav-home{
+    margin-top: 3.2rem;
+  }
+
+  .nav-btn.nav-developers {
+    margin-bottom: 3.5rem;
+  }
+
+  .home-article,
+  .home-article.home-developers {
+    background-size: 1px;
+    transition: all 0.5s;
+    padding: 0;
+  }
+
+  .home-intro_title,
+  .home-textbook_title,
+  .home-games_title,
+  .home-statistics_title,
+  .home-developers_title { 
+    font-size: 4.5rem;   
+    text-align: center;    
+    transition: all 0.5s;       
+  }
+
+  .home-intro_subtitle,
+  .home-textbook_subtitle,
+  .home-games_subtitle,
+  .home-statistics_subtitle,
+  .home-developers_subtitle {
+    width: 94.5%;
+    left: 0;
+    text-align: center;
+    font-size: var(--font4);
+    transform: translate(0,100%);
+  }
+
+  .home-intro_subtitle,
+  .home-games_subtitle,
+  .home-developers_subtitle {    
+    border-radius: 0rem 2rem 2rem 2rem;    
+  }
+
+  .home-textbook_subtitle,
+  .home-statistics_subtitle {    
+    border-radius: 2rem 2rem 0rem 2rem;    
+  }
+
+  .home-intro:hover .home-intro_subtitle,
+  .home-textbook:hover .home-textbook_subtitle,
+  .home-games:hover .home-games_subtitle,
+  .home-statistics:hover .home-statistics_subtitle,
+  .home-developers:hover .home-developers_subtitle {   
+    transform: translate(0,0);
+    left: 0rem;  
+  }
+
+  .textbook-item{
+    padding: 0 1rem 0 1rem;
+    background-size: 1px;
+    transition: all 0.5s;
+  }
+  .textbook-item_picture {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;    
+    transition: all 0.5s;
+  }
+
+  .textbook-word_blur {
+    width: 1px;
+    height: 1px;
+    left: -1rem;
+    transition: all 0.5s;
+  }
+
+  .textbook-word,
+  .textbook-word_transcription,
+  .textbook-word_translate {  
+    margin-right: 1rem;
+    font-weight: 700;
+    font-size: var(--font4);
+  }
+
+  .textbook-item_article {
+    font-size: var(--font5);
+  }
+
+}
+
+@media all and (min-width: 80rem) {
+
+.home-intro_subtitle,
+.home-textbook_subtitle,
+.home-games_subtitle,
+.home-statistics_subtitle,
+.home-developers_subtitle {
+  
+  width: calc(98% - 16rem);  
+}
+
+  .textbook-word,
+  .textbook-word_transcription,
+  .textbook-word_translate {  
+    margin-right: 1rem;
+    font-weight: 700;
+    font-size: var(--font2);
+  }
+
+  .textbook-item_article {
+    font-size: var(--font3);
+  }
+}
+
+@media all and (max-height: 32rem) {
+  .login-window {    
+    height: 20rem;   
+    transition: all 0.7s; 
+  }
+
+  .login-input,
+  .login-btn {    
+    margin: 0.5rem auto;    
+  }
+
+  .lable_name,
+  .lable_email,
+  .lable_password {
+    top: 12rem;
+  }
+
+  .login-error {  
+    top: 14.8rem;
+  }
+
+}
 

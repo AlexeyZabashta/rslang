@@ -100,10 +100,7 @@ export const renderTextbookPage = async () => {
         <div class="textbook-list">      
         </div>
       </div>
-      <audio class="textbook-player">
-        <source src="" id="src1" type="audio/mpeg">
-        <source src="" id="src2" type="audio/mpeg">
-        <source src="" id="src3" type="audio/mpeg">
+      <audio class="textbook-player">        
       </audio>
     </section> 
     `;
@@ -124,24 +121,31 @@ export const renderTextbookPage = async () => {
   pageWords.forEach((elem: Iwords, index: number) => {
     const wordCard = document.createElement('div');
     wordCard.classList.add('textbook-item');
-    wordCard.style.backgroundImage = `url('http://localhost:2020/${elem.image}')`;
-    wordCard.innerHTML = `<span class="textbook-word">${elem.word}</span>
+    // wordCard.style.backgroundImage = `url('http://localhost:2020/${elem.image}')`;
+    wordCard.innerHTML = `<div class="textbook-item_picture">
+      <img class="textbook-item_img" src=http://localhost:2020/${elem.image}>
+    </div>
+    <div class="textbook-item_article">
+    <span class="textbook-word">${elem.word}</span>
     <span class="textbook-word_transcription">${elem.transcription}</span>
     <span class="textbook-word_translate">${elem.wordTranslate}</span>
     <button class="textbook-play" data-audioplay='${elem.id}'></button>
-    <p class="textbook-word_audio">${elem.audioExample}</p>
+    </div>
+    <div class="textbook-item_article">
     <span class="textbook-example">${elem.textExample} - </span>    
     <span class="textbook-example_translate">${elem.textExampleTranslate}</span>
-    <p class="textbook-example_audio">${elem.audioExample}</p>
+    </div>
+    <div class="textbook-item_article">
     <span class="textbook-meaning">${elem.textMeaning} - </span>
     <span class="textbook-meaning_translate">${elem.textMeaningTranslate}</span>
-    <p class="textbook-meaning_audio">${elem.audioMeaning}</p>
+    </div>
     <div class="textbook-btns_wrapper">
       <button class="word-btn learned-word">Learn</button>
       <button class="word-btn difficult-word">Difficult</button>
     </div>
     <div class="textbook-word_blur"></div>
     `;
+
     textbookPage.append(wordCard);
   });
 

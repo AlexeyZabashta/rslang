@@ -123,6 +123,23 @@ window.addEventListener('load', async () => {
     if (localStorage.getItem('currentPage') === 'About App') aboutAppPage();
     // if (localStorage.getItem('currentPage') === "Home") homePage();
   }
+
+  const headerTitle = document.querySelector('.header-current') as HTMLElement;
+  headerTitle.innerHTML = 'Statistics';
+  if (!localStorage.getItem('currentPage')) { headerTitle.innerHTML = ''; } else {
+    if (localStorage.getItem('currentPage') === 'Home') {
+      headerTitle.innerHTML = '';
+    }
+    if (localStorage.getItem('currentPage') === 'Textbook') {
+      headerTitle.innerHTML = 'Textbook';
+    }
+    if (localStorage.getItem('currentPage') === 'Statistics') {
+      headerTitle.innerHTML = 'Statistics';
+    }
+    if (localStorage.getItem('currentPage') === 'About App') {
+      headerTitle.innerHTML = 'About App';
+    }
+  }
 });
 window.addEventListener('click', async () => {
   const headerTitle = document.querySelector('.header-current') as HTMLElement;
