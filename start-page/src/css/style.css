@@ -149,8 +149,9 @@ body {
 }
 
 .header-login_btn._logged {
-  width: 4.4rem;
-  background-position: -1rem -3.9rem;
+  right: 0.3rem;
+  width: 4.95rem;
+  background-position: -0.8em -3.6rem;
 }
 
 /*-------------------LOGIN BLOCK---------------*/
@@ -233,7 +234,6 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-
 }
 
 .login-input,
@@ -302,7 +302,17 @@ body {
   opacity: 1;
 }
 
-.login-btn_wrapper{
+._name{
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.7s;
+}
+._name._not-hover {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.login-btn_wrapper{  
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -329,11 +339,39 @@ body {
   border: 2px solid var(--red);  
 	color: var(--red);		
 	background: var(--white);
-  transition: all 0.5s;	 
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s;
+}
+.registration {
+  visibility: visible;
+  opacity: 1; 
+}
+.log-out {
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+.sign-in._logged,
+.registration._logged {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.log-out._logged {
+  position: absolute;
+  width: 70%;
+  height: 1.75rem;	
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s;
 }
 
 .sign-in:hover, 
-.registration:hover {    
+.registration:hover,
+.log-out:hover {    
 	color: var(--white);		
 	background: var(--red);
   box-shadow: 0.75rem 1rem 1rem 0rem rgba(131, 6, 6, 0.7); 
@@ -356,6 +394,13 @@ body {
 	padding: 0;
 	text-align: center;
 	user-select: none;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s;
+}
+.notReg._logged {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .notReg-btn input:hover {

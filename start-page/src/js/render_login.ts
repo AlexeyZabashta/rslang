@@ -1,3 +1,5 @@
+import { Iuser, IauthorisedUser } from './data';
+
 export const renderLoginWindow = async () => {
   console.log('Отрисовываю окно LogIn');
   // const nameRegExp = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
@@ -53,12 +55,15 @@ export const renderLoginWindow = async () => {
             Password must contain Latin letters 
             (at least one capital letter), 
             numbers, and special characters #$/?&%@
-          </div>S
+          </div>
         </form>  
         <div class="login-btn_wrapper">
             <button class="login-btn sign-in">
                  Sign in 
-            </button>        
+            </button>
+            <button class="login-btn log-out">
+                 Logout 
+            </button>      
             <p class="notReg">Are not yet registered?</p>        
             <button class="login-btn registration">
                 Registration 
@@ -77,18 +82,26 @@ export const renderLoginWindow = async () => {
     loginWindow.style.visibility = 'hidden';
   });
 
-  const signInBtn = document.querySelector('.sign-in') as HTMLButtonElement;
-  const registrationBtn = document.querySelector('.registration') as HTMLButtonElement;
-
-  signInBtn.addEventListener('mouseover', () => { registrationBtn.classList.add('_not-hover'); });
-  signInBtn.addEventListener('mouseout', () => { registrationBtn.classList.remove('_not-hover'); });
-  registrationBtn.addEventListener('mouseover', () => { signInBtn.classList.add('_not-hover'); });
-  registrationBtn.addEventListener('mouseout', () => { signInBtn.classList.remove('_not-hover'); });
-
   const loginInputData = document.querySelector('._name') as HTMLInputElement;
   const emailInputData = document.querySelector('._email') as HTMLInputElement;
   const passInputData = document.querySelector('._password') as HTMLInputElement;
   const errorMessage = document.querySelector('.login-error') as HTMLElement;
+
+  const signInBtn = document.querySelector('.sign-in') as HTMLButtonElement;
+  const logoutBtn = document.querySelector('.log-out') as HTMLButtonElement;
+  const registrationBtn = document.querySelector('.registration') as HTMLButtonElement;
+  const notRegMessage = document.querySelector('.notReg') as HTMLElement;
+
+  signInBtn.addEventListener('mouseover', () => {
+    registrationBtn.classList.add('_not-hover');
+    loginInputData.classList.add('_not-hover');
+  });
+  signInBtn.addEventListener('mouseout', () => {
+    registrationBtn.classList.remove('_not-hover');
+    loginInputData.classList.remove('_not-hover');
+  });
+  registrationBtn.addEventListener('mouseover', () => { signInBtn.classList.add('_not-hover'); });
+  registrationBtn.addEventListener('mouseout', () => { signInBtn.classList.remove('_not-hover'); });
 
   const inputCheck = (el: HTMLInputElement) => {
     const inputValue = el.value;
@@ -116,18 +129,127 @@ export const renderLoginWindow = async () => {
   const loginForm = document.querySelector('.login-form') as HTMLFormElement;
   loginForm.addEventListener('input', inputHandler);
 
-  signInBtn.addEventListener('click', () => {
+  const createUser = async (userLogin: string, userEmail:string, userPassword: string) => {
+    // email: "A1@mail.com"
+    // id: "620b7cb7b8a8d840b893827c"
+    // name: "A1"
+    //
+    // email: "B1@mail.com"
+    // id: "620b7ecbb8a8d840b893827e"
+    // name: "B1"
+
+    const newUser = {
+      name: userLogin,
+      email: userEmail,
+      password: userPassword,
+    };
+    const responseUser:Response = await fetch('http://localhost:2020/users', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    });
+    const userData = await responseUser.json();
+
+    console.log(userData);
+  };
+
+  const signinUser = async (userEmail:string, userPassword: string) => {
+    const signinUserData = {
+      email: userEmail,
+      password: userPassword,
+    };
+    const responseUser:Response = await fetch('http://localhost:2020/signin', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signinUserData),
+    });
+    const authentData = await responseUser.json();
+
+    const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
+    loginHtml.classList.add('_logged');
+    // console.log(authentData);
+    // console.log('token', authentData.token);
+    // console.log('refreshtoken', authentData.refreshToken);
+
+    localStorage.setItem('userData', JSON.stringify(authentData));
+
+    const getUserFromLS = String(localStorage.getItem(`${userEmail}`));
+    const getauthentData:IauthorisedUser = JSON.parse(getUserFromLS);
+    console.log('getauthentData', getauthentData);
+
+    if (localStorage.getItem('userData')) {
+      signInBtn.classList.add('_logged');
+      logoutBtn.classList.add('_logged');
+      registrationBtn.classList.add('_logged');
+      notRegMessage.classList.add('_logged');
+    } else {
+      signInBtn.classList.remove('_logged');
+      logoutBtn.classList.remove('_logged');
+      registrationBtn.classList.remove('_logged');
+      notRegMessage.classList.remove('_logged');
+    }
+  };
+
+  signInBtn.addEventListener('click', async () => {
+    if (emailInputData.classList.contains('_validated')
+     && passInputData.classList.contains('_validated')) {
+      const userEmail = String(emailInputData.value);
+      const userPassword = String(passInputData.value);
+      signinUser(userEmail, userPassword);
+      errorMessage.style.opacity = '0';
+      console.log('userEmail = ', userEmail, 'userPassword = ', userPassword);
+    } else {
+      errorMessage.innerHTML = 'Log in or register if you don\'t have an account yet';
+      errorMessage.style.opacity = '1';
+    }
+  });
+
+  registrationBtn.addEventListener('click', () => {
     if (loginInputData.classList.contains('_validated')
      && emailInputData.classList.contains('_validated')
      && passInputData.classList.contains('_validated')) {
-      const userLogin = loginInputData.value;
-      const userEmail = emailInputData.value;
-      const userPassword = passInputData.value;
+      const userLogin = String(loginInputData.value);
+      const userEmail = String(emailInputData.value);
+      const userPassword = String(passInputData.value);
+      createUser(userLogin, userEmail, userPassword);
       errorMessage.style.opacity = '0';
       console.log('userLogin = ', userLogin, 'userEmail = ', userEmail, 'userPassword = ', userPassword);
     } else {
       errorMessage.innerHTML = 'Log in or register if you don\'t have an account yet';
       errorMessage.style.opacity = '1';
+    }
+  });
+
+  if (localStorage.getItem('userData')) {
+    signInBtn.classList.add('_logged');
+    logoutBtn.classList.add('_logged');
+    registrationBtn.classList.add('_logged');
+    notRegMessage.classList.add('_logged');
+  } else {
+    signInBtn.classList.remove('_logged');
+    logoutBtn.classList.remove('_logged');
+    registrationBtn.classList.remove('_logged');
+    notRegMessage.classList.remove('_logged');
+  }
+
+  logoutBtn.addEventListener('click', async () => {
+    localStorage.removeItem('userData');
+    if (localStorage.getItem('userData')) {
+      signInBtn.classList.add('_logged');
+      logoutBtn.classList.add('_logged');
+      registrationBtn.classList.add('_logged');
+      notRegMessage.classList.add('_logged');
+    } else {
+      signInBtn.classList.remove('_logged');
+      logoutBtn.classList.remove('_logged');
+      registrationBtn.classList.remove('_logged');
+      notRegMessage.classList.remove('_logged');
     }
   });
 };

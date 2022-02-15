@@ -124,6 +124,11 @@ window.addEventListener('load', async () => {
     // if (localStorage.getItem('currentPage') === "Home") homePage();
   }
 
+  const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
+  if (localStorage.getItem('userData')) {
+    loginHtml.classList.add('_logged');
+  } else loginHtml.classList.remove('_logged');
+
   const headerTitle = document.querySelector('.header-current') as HTMLElement;
   headerTitle.innerHTML = 'Statistics';
   if (!localStorage.getItem('currentPage')) { headerTitle.innerHTML = ''; } else {
@@ -143,8 +148,11 @@ window.addEventListener('load', async () => {
 });
 window.addEventListener('click', async () => {
   const headerTitle = document.querySelector('.header-current') as HTMLElement;
-  headerTitle.innerHTML = 'Statistics';
-  if (!localStorage.getItem('currentPage')) { headerTitle.innerHTML = ''; } else {
+  const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
+
+  if (!localStorage.getItem('currentPage')) {
+    headerTitle.innerHTML = '';
+  } else {
     if (localStorage.getItem('currentPage') === 'Home') {
       headerTitle.innerHTML = '';
     }
@@ -159,4 +167,8 @@ window.addEventListener('click', async () => {
     }
     // if (localStorage.getItem('currentPage') === "Home") homePage();
   }
+
+  if (localStorage.getItem('userData')) {
+    loginHtml.classList.add('_logged');
+  } else loginHtml.classList.remove('_logged');
 });

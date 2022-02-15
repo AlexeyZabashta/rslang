@@ -16,3 +16,17 @@ export interface Iwords {
   word: string
   wordTranslate: string
 }
+
+export interface Iuser {
+  name: string,
+  email: string,
+  password: string
+}
+
+export interface IauthorisedUser {
+  message: string,
+  name: string,
+  refreshToken: string,
+  token: string,
+  userId: string
+}
