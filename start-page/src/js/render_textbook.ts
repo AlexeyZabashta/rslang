@@ -1,10 +1,15 @@
-import { Iwords } from './data';
+import {
+  Iwords, IauthorisedUser, IUserWordOptions, IUserWord,
+} from './data';
 
 export const getWords = async () => {
   let group = 0;
   let groupPage = 0;
+
   if (localStorage.getItem('group')) group = Number(localStorage.getItem('group'));
   if (localStorage.getItem('groupPage')) groupPage = Number(localStorage.getItem('groupPage'));
+  if (localStorage.getItem('group') === null) { localStorage.setItem('group', '0'); }
+  if (localStorage.getItem('groupPage') === null) { localStorage.setItem('groupPage', '0'); }
 
   const request:Response = await fetch(`http://localhost:2020/words?page=${groupPage}&group=${group}`, {
     method: 'GET',
@@ -46,7 +51,7 @@ const playWord = async (wordId: string) => {
     function switchTrack(numtrack: number) {
       // Меняем значение атрибута src аудиоплейра
       audioPlayer.src = `${playList[numtrack]}`;
-      console.log(`следующий трек = ${audioPlayer.src}`);
+      // console.log(`следующий трек = ${audioPlayer.src}`);
       // Назначаем время аудиофайла ноль
       audioPlayer.currentTime = 0;
       // Включаем аудиофайл
@@ -121,6 +126,7 @@ export const renderTextbookPage = async () => {
   pageWords.forEach((elem: Iwords, index: number) => {
     const wordCard = document.createElement('div');
     wordCard.classList.add('textbook-item');
+    // console.log(elem);
     // wordCard.style.backgroundImage = `url('http://localhost:2020/${elem.image}')`;
     wordCard.innerHTML = `<div class="textbook-item_picture">
       <img class="textbook-item_img" src=http://localhost:2020/${elem.image}>
@@ -140,8 +146,8 @@ export const renderTextbookPage = async () => {
     <span class="textbook-meaning_translate">${elem.textMeaningTranslate}</span>
     </div>
     <div class="textbook-btns_wrapper">
-      <button class="word-btn learned-word">Learn</button>
-      <button class="word-btn difficult-word">Difficult</button>
+      <button class="word-btn learned-word" data-learned='${elem.id}'>Learn</button>
+      <button class="word-btn difficult-word" data-difficult='${elem.id}'>Difficult</button>
     </div>
     <div class="textbook-word_blur"></div>
     `;
@@ -192,10 +198,141 @@ export const renderTextbookPage = async () => {
       const currWordId = String((button as HTMLButtonElement).dataset.audioplay);
       // const playWordBtn = document.querySelector(`.textbook-play[data-audioplay="${currWordId}"]`) as HTMLButtonElement;
       console.log(currWordId);
-
       playWord(currWordId);
     });
   });
+
+  //= ======= Логика кнопок  Learn и Difficult =====================
+
+  const learnBtns = document.querySelectorAll(
+    '.learned-word[data-learned]',
+  ) as NodeListOf<HTMLButtonElement>;
+  const difficultBtns = document.querySelectorAll(
+    '.difficulty-word[data-difficulty]',
+  ) as NodeListOf<HTMLButtonElement>;
+
+  const group = Number(localStorage.getItem('group'));
+  const getUserFromLS = await String(localStorage.getItem('userData'));
+  const getauthentData: IauthorisedUser = JSON.parse(getUserFromLS);
+  const { userId } = getauthentData;
+  const userToken: string = getauthentData.token;
+
+  const createUserWord = async (wordId: string, word: IUserWordOptions) => {
+    const rawResponse = await fetch(`http://localhost:2020/users/${userId}/words/${wordId}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${getauthentData.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(word),
+    });
+    const content: IUserWord = await rawResponse.json();
+    console.log(content);
+  };
+
+  const updateUserWord = async (wordId: string, word: IUserWordOptions) => {
+    const rawResponse = await fetch(`http://localhost:2020/users/${userId}/words/${wordId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${getauthentData.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(word),
+    });
+    const content: IUserWord = await rawResponse.json();
+    console.log(content);
+  };
+
+  const getUserWord = async (wordId: string, token: string, word: IUserWordOptions) => {
+    const request = await fetch(`http://localhost:2020/users/${userId}/words/${wordId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(async (response) => {
+        console.log('request', response.status);
+
+        if (response.status === 200) {
+          console.log('Сработал updateUserWord');
+          updateUserWord(wordId, word);
+        } else {
+          console.log('Сработал createUserWord');
+          createUserWord(wordId, word);
+        }
+      });
+  };
+
+  difficultBtns.forEach(async (diffButton) => {
+    diffButton.addEventListener('click', async () => {
+      const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
+      diffButton.classList.toggle('_difficult');
+
+      let learnBtnStatus = false;
+      let diffBtnStatus = 'weak';
+
+      const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
+      if (currLearnedBtn.classList.contains('_learned')) learnBtnStatus = true;
+      if (diffButton.classList.contains('_difficult')) diffBtnStatus = 'hard';
+
+      // ------Запускаем проверку на наличие такого слова в userWords
+
+      const isUserWord = await getUserWord(currDifficultId, userToken, { difficulty: diffBtnStatus, optional: { group: String(group), groupPage: String(groupPage), learned: learnBtnStatus } });
+      console.log(isUserWord);
+    });
+  });
+
+  learnBtns.forEach(async (learnButton) => {
+    learnButton.addEventListener('click', async () => {
+      const currLearnedId = String((learnButton as HTMLButtonElement).dataset.learned);
+      learnButton.classList.toggle('_learned');
+
+      let learnBtnStatus = false;
+      let diffBtnStatus = 'weak';
+
+      const curdiffButton = document.querySelector(`.difficult-word[data-difficult='${currLearnedId}']`) as HTMLButtonElement;
+      if (curdiffButton.classList.contains('_difficult')) diffBtnStatus = 'hard';
+      if (learnButton.classList.contains('_learned')) learnBtnStatus = true;
+
+      // ------Запускаем проверку на наличие такого слова в userWords
+
+      const isUserWord = await getUserWord(currLearnedId, userToken, { difficulty: diffBtnStatus, optional: { group: String(group), groupPage: String(groupPage), learned: learnBtnStatus } });
+      console.log(isUserWord);
+    });
+  });
+
+  difficultBtns.forEach(async (diffButton, i: number) => {
+    diffButton.addEventListener('click', async () => {
+      const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
+      diffButton.classList.toggle('_difficult');
+
+      let learnBtnStatus = false;
+      let diffBtnStatus = 'weak';
+
+      const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
+      if (currLearnedBtn.classList.contains('_learned')) learnBtnStatus = true;
+      if (diffButton.classList.contains('_difficult')) diffBtnStatus = 'hard';
+
+      // ------Запускаем проверку на наличие такого слова в userWords
+
+      const isUserWord = await getUserWord(currDifficultId, userToken, { difficulty: diffBtnStatus, optional: { group: String(group), groupPage: String(groupPage), learned: learnBtnStatus } });
+      console.log(isUserWord);
+    });
+  });
+
+  /*
+  const learnedWord = document.querySelector('.learned-word') as HTMLButtonElement;
+  learnedWord.addEventListener('click', async() => {
+    const getUserFromLS = await String(localStorage.getItem('userData'));
+    const getauthentData:IauthorisedUser = JSON.parse(getUserFromLS);
+    console.log('getauthentData', getauthentData);
+    console.log('token = ', getauthentData.token);
+
+*/
 
   const audioGame = document.querySelector('.textbook-audio_btn') as HTMLButtonElement;
   const sprintGame = document.querySelector('.textbook-sprint_btn') as HTMLButtonElement;

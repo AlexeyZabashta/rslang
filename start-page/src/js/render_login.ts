@@ -179,7 +179,7 @@ export const renderLoginWindow = async () => {
 
     localStorage.setItem('userData', JSON.stringify(authentData));
 
-    const getUserFromLS = String(localStorage.getItem(`${userEmail}`));
+    const getUserFromLS = await String(localStorage.getItem(`${userEmail}`));
     const getauthentData:IauthorisedUser = JSON.parse(getUserFromLS);
     console.log('getauthentData', getauthentData);
 

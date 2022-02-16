@@ -30,3 +30,18 @@ export interface IauthorisedUser {
   token: string,
   userId: string
 }
+
+export interface IUserWordOptions {
+  difficulty: string,
+  optional: {
+    group: string,
+    groupPage: string,
+    learned: boolean
+  }
+}
+
+export interface IUserWord {
+  userId: string,
+  wordId: string,
+  word: IUserWordOptions
+}
