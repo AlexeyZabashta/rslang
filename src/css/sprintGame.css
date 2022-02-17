@@ -1,133 +1,3 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-ol,
-ul {
-  list-style: none;
-}
-blockquote,
-q {
-  quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 body {
   padding: 0 10% 0 10%;
 }
@@ -140,6 +10,12 @@ body {
   margin-top: 5rem;
 }
 
+#game_timer,
+#answer_bonus,
+#answer_sound {
+  display: none;
+}
+
 .game_content_wrapper {
   position: relative;
   width:45%;
@@ -150,8 +26,8 @@ body {
 }
 
 .total_score,
-.bonus_carousel_wrapper,
-.game_content {
+.game_content,
+.bonus_carousel_wrapper {
   margin: 2rem auto;
   text-align: center;
 }
@@ -166,11 +42,22 @@ body {
   font-size: 2.5rem;
 }
 
-.bonus_carousel, 
+.bonus_carousel,
 .bonus_icon_wrapper {
   display: flex;
   justify-content: space-between;
-  flex-wrap: nowrap;  
+  flex-wrap: nowrap;   
+  position: relative;  
+}
+
+.bonus_carousel {  
+  width: 7rem;
+  left: calc(50% - 3.5rem);
+}
+
+.bonus_icon_wrapper {  
+  width: 16rem;
+  left: calc(50% - 8rem);
 }
 
 .bonus_circle {
@@ -178,12 +65,13 @@ body {
   height: 1.5rem;
   background-color: gray;
   border-radius: .75rem;
-  opacity: 1;
+  opacity: .5;
   transition: .5s;
 }
 
 .bonus_circle.active {
-  background-color: rgb(112, 130, 56);
+  background-image: url('../assets/true2.svg');
+  opacity: 1;
   transition: .5s;
 }
 
@@ -193,7 +81,7 @@ body {
 }
 
 .bonus_icon {
-  display: block;
+  display: inline-block;
   width: 3rem;
 }
 
@@ -223,6 +111,17 @@ body {
 .engl_word {
   margin-top: 3rem;
 }
+
+.bonus_size {
+  opacity: 0;
+  transition: .3s;
+}
+
+.bonus_size.active {
+  opacity: 1;
+  transition: .3s;
+}
+
 
 .translate_engl_word,
 .bonus_size {
@@ -260,4 +159,17 @@ body {
   transition: .5s;
 }
 
-
+.timer_value {
+  position: absolute;
+  top: 10%;
+  left:80%;
+  width: 3rem;
+  height: 3rem;
+  border-radius: .5rem;
+  font-size: 1.5rem;
+  text-align: center;
+  vertical-align: middle;
+  background-color: bisque; 
+  
+  transition: .2;  
+}

@@ -1,0 +1,82 @@
+import { body } from './const';
+import { Word } from './typeSprint';
+import { randomDiap } from './clickFunctionSprint';
+import { answersAudio } from './audioGameAlg';
+import { clickAudioGame, clickIdkAudio } from './audioGameAlg';
+import { getWords } from './requestSprint';
+
+
+export const falseAnswersAudio: Word[] = [];
+export const rightAnswNum: number[] = [];
+let indexAnsw = 0;
+
+async function updateAudioGameDom(btnIndex:number, rightIndex:number, word:string): Promise<string> {
+  if (btnIndex === rightIndex) {
+    console.log('верный ответ на кнопке', btnIndex + 1);
+    return word;
+  }
+  const falseInd:number = randomDiap(0, 19);   
+  return falseAnswersAudio[falseInd].wordTranslate;
+}
+
+export const audioDOM = async (val:Word) => {  
+  const ind = randomDiap(0, 4);
+  console.log('верная кнопка: ', ind + 1);
+  rightAnswNum.push(ind);  
+  body.innerHTML = `<section class="wrapper_audioGame">
+  <div class="word_block">
+    <audio id="audioGame_audio" src="http://localhost:2020/${val.audio}"></audio>
+    <img id="audio_img" src="http://localhost:2020/${val.image}">
+    <h2 id="audio_answer">${val.word} (${val.wordTranslate})</h2>
+    <button id="play_word">
+      <img src="../src/assets/volume.svg" id="play_word_audio">        
+    </button>      
+  </div>
+  <div class="word_variants">
+    <div class="word_variant">
+      <span class="audio_answer_variant" id="audio_answer_variant0"></span>
+      <button class="btn_word_variant" id="btn_word_variant0">${await updateAudioGameDom(0, ind, val.wordTranslate)}</button>
+    </div>
+    <div class="word_variant">
+      <span class="audio_answer_variant" id="audio_answer_variant1"></span>
+      <button class="btn_word_variant" id="btn_word_variant1">${await updateAudioGameDom(1, ind, val.wordTranslate)}</button>
+    </div>
+    <div class="word_variant">
+      <span class="audio_answer_variant" id="audio_answer_variant2"></span>
+      <button class="btn_word_variant" id="btn_word_variant2">${await updateAudioGameDom(2, ind, val.wordTranslate)}</button>
+    </div>
+    <div class="word_variant">
+      <span class="audio_answer_variant" id="audio_answer_variant3"></span>
+      <button class="btn_word_variant" id="btn_word_variant3">${await updateAudioGameDom(3, ind, val.wordTranslate)}</button>
+    </div>
+    <div class="word_variant">
+      <span class="audio_answer_variant" id="audio_answer_variant4"></span>
+      <button class="btn_word_variant" id="btn_word_variant4">${await updateAudioGameDom(4, ind, val.wordTranslate)}</button>
+    </div>
+  </div>
+  <div class="next_word">
+    <button id="idk">Не знаю</button>
+    <button id="next_word_btn">&#8594;</button>
+  </div>
+</section>`;
+  const answBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.word_variant');
+  const wordVariants = document.querySelector('.word_variants') as HTMLDivElement;
+  wordVariants.addEventListener('click', (e) => {
+    if ((e.target as HTMLButtonElement).classList.contains('btn_word_variant')) {
+      const targetId:string = (e.target as HTMLButtonElement).id;
+      const targetInd = Number(targetId[targetId.length - 1]);
+      if (targetInd === ind) {
+        clickAudioGame(targetInd, true);
+      } else {
+        clickAudioGame(targetInd, false);
+      }
+    }    
+  });
+  const btnIdk = document.querySelector('#idk') as HTMLElement;
+  btnIdk.addEventListener('click', ()=> clickIdkAudio(ind));
+  const btnNext = document.querySelector('#next_word_btn') as HTMLElement;
+  btnNext.addEventListener('click', () => {
+    indexAnsw += 1;
+    audioDOM(answersAudio[indexAnsw]);
+  });   
+};

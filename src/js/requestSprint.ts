@@ -1,4 +1,4 @@
-import { Word } from './type';
+import { Word } from './typeSprint';
 
 export const getWords = async (group:number, page:number) => {
   const request:Response = await fetch(`http://localhost:2020/words?page=${page}&group=${group}`, {

@@ -1,6 +1,6 @@
-import { Word, GrPg } from './type';
-import { checkBonus } from './bonusAlg';
-import { getWords } from './request';
+import { Word, GrPg } from './typeSprint';
+import { checkBonus } from './bonusAlgSprint';
+import { getWords } from './requestSprint';
 
 export const answers:Word[] = [];
 export const groupPage:GrPg[] = [];
@@ -9,7 +9,7 @@ let answersFalse:Word[] = [];
 let answersIndex = 0;
 let answerFlag:boolean;
 
-function randomDiap(min:number, max:number){  
+export function randomDiap(min:number, max:number){  
   const rndGroup = Math.floor(Math.random() * (max - min + 1)) + min;  
   return rndGroup;
 }
@@ -95,9 +95,3 @@ export async function checkAnsw(val:boolean) {
   await checkIndex();    
   newWordDOM();
 }
-
-
-
-
-
-

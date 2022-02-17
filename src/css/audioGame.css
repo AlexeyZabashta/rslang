@@ -1,0 +1,59 @@
+.wrapper_audioGame {
+  margin: 5rem auto;
+  width: 90%;
+  padding: 3% 3% 3% 3%;
+  border: grey solid 1px;
+  border-radius: 1rem;
+  background-color: bisque;
+}
+
+.word_block {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.word_variants {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  position: relative;
+  margin: 5rem 0 5rem 0;
+  width: 20rem;
+  left: calc(50% - 10rem);
+}
+
+.next_word {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.audio_answer_variant,
+.word_variant {
+  display: inline-block;
+}
+
+.audio_answer_variant {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: gray;
+  border-radius: .75rem;
+  opacity: .5;
+  transition: .5s;
+}
+
+.audio_answer_variant.right {
+  background-image: url('../assets/true2.svg');
+  opacity: 1;
+  transition: .5s;
+}
+
+.audio_answer_variant.false {
+  background-image: url('../assets/false2.svg');
+  opacity: 1;
+  transition: .5s;
+}
+
+
+
