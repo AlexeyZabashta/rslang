@@ -18,6 +18,42 @@ export const getWords = async () => {
   return wordsResponse;
 };
 
+const getAllUserWords = async () => {
+  const getUserFromLS = await String(localStorage.getItem('userData'));
+  const getauthentData: IauthorisedUser = JSON.parse(getUserFromLS);
+  const { userId } = getauthentData;
+  const userToken: string = getauthentData.token;
+
+  const request = await fetch(`http://localhost:2020/users/${userId}/aggregatedWords?find={"difficulty":"hard"}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (response) => {
+      const wordsResponse: IUserWord[] = await response.json();
+      console.log('response', response);
+      console.log('wordsResponse', wordsResponse[0]);
+
+      /* if (response.status === 200) {
+        console.log('Сработал updateUserWord');
+        updateUserWord(wordId, word);
+      } else {
+        console.log('Сработал createUserWord');
+        createUserWord(wordId, word);
+      } */
+    })
+    .catch(async (error) => {
+      // console.log('catch(error');
+      if (error.status === 402) {
+        console.log('getUserWord. Error 402 Access token is missing or invalid');
+      // error.message; // 'An error has occurred: 404'
+      }
+    });
+};
+
 const playWord = async (wordId: string) => {
   // Отключаем аудиокнопи на время воспроизведения
   const playWordsBtns = document.querySelectorAll(
@@ -94,19 +130,28 @@ export const renderTextbookPage = async () => {
   mainHtml.innerHTML = '';
   mainHtml.innerHTML = `<section class="textbook">
       <div class="textbook-wrapper">
-        <div class="textbook-pagination">
-          <button class="textbook-prev_btn">Prev</button>
-          <select name="textbook-select" id="textbook-select">            
-          </select>
-          <button class="textbook-nex_tbtn">Next</button>
-          <button class="textbook-audio_btn">Audio challenge</button>
-          <button class="textbook-sprint_btn">Sprint</button>
+        <div class="textbook-headbtns_wrapper">
+          <div class="textbook-pagination">
+            <button class="textbook-prev_btn">Prev</button>
+            <select name="textbook-select" id="textbook-select">            
+            </select>
+            <button class="textbook-nex_tbtn">Next</button>
+            <button class="textbook-audio_btn">Audio challenge</button>
+            <button class="textbook-sprint_btn">Sprint</button>
+          </div>
+          <div class="textbook-group">
+            <button class="textbook-group_btn" data-group="0">1</button>          
+            <button class="textbook-group_btn" data-group="1">2</button>
+            <button class="textbook-group_btn" data-group="2">3</button>
+            <button class="textbook-group_btn" data-group="3">4</button>
+            <button class="textbook-group_btn" data-group="4">5</button>
+            <button class="textbook-group_btn" data-group="5">6</button>
+            <button class="textbook-group_btn" data-group="6">7</button>
+          </div>
         </div>
-        <div class="textbook-list">      
-        </div>
+        <div class="textbook-list"></div>
       </div>
-      <audio class="textbook-player">        
-      </audio>
+      <audio class="textbook-player"></audio>
     </section> 
     `;
 
@@ -145,9 +190,14 @@ export const renderTextbookPage = async () => {
     <span class="textbook-meaning">${elem.textMeaning} - </span>
     <span class="textbook-meaning_translate">${elem.textMeaningTranslate}</span>
     </div>
-    <div class="textbook-btns_wrapper">
+    <div class="textbook-wordbtns_wrapper">
       <button class="word-btn learned-word" data-learned='${elem.id}'>Learn</button>
-      <button class="word-btn difficult-word" data-difficult='${elem.id}'>Difficult</button>
+      <button class="word-btn difficult-word" data-difficult='${elem.id}'>Difficult</button>      
+    </div>
+    <div class="textbook-answ_wrapper">
+      <span class="answ-true">0</span>
+      <span class="answ-separator">/</span>
+      <span class="answ-false">0</span>
     </div>
     <div class="textbook-word_blur"></div>
     `;
@@ -170,6 +220,19 @@ export const renderTextbookPage = async () => {
     renderTextbookPage();
   };
 
+  /* const wichGroup = async (step: number) => {
+    const oldPage = Number(localStorage.getItem('groupPage'));
+    const oldGroup = Number(localStorage.getItem('group'));
+
+    let newPage = oldPage + step;
+    const newGroup = oldGroup;
+    if (newPage < 0) newPage = 0;
+    if (newPage > 29) newPage = 29;
+    localStorage.setItem('group', String(newGroup));
+    localStorage.setItem('groupPage', String(newPage));
+    renderTextbookPage();
+  }; */
+
   const prevBtn = document.querySelector('.textbook-prev_btn') as HTMLButtonElement;
   prevBtn.addEventListener('click', () => {
     wichPage(-1);
@@ -185,6 +248,21 @@ export const renderTextbookPage = async () => {
   const nextBtn = document.querySelector('.textbook-nex_tbtn') as HTMLButtonElement;
   nextBtn.addEventListener('click', () => {
     wichPage(1);
+  });
+
+  const gropButtons = document.querySelectorAll(
+    '.textbook-group_btn[data-group]',
+  ) as NodeListOf<HTMLButtonElement>;
+
+  gropButtons.forEach(async (button, i: number) => {
+    button.addEventListener('click', () => {
+      const currGroupNum = Number((button as HTMLButtonElement).dataset.group);
+      localStorage.setItem('group', String(currGroupNum));
+      console.log('Выбрана группа учебника', currGroupNum);
+      localStorage.setItem('groupPage', '0');
+      if (currGroupNum === 6) getAllUserWords();
+      else renderTextbookPage();
+    });
   });
 
   // ----- Функция запуска проигрывания  произношения
@@ -208,8 +286,13 @@ export const renderTextbookPage = async () => {
     '.learned-word[data-learned]',
   ) as NodeListOf<HTMLButtonElement>;
   const difficultBtns = document.querySelectorAll(
-    '.difficulty-word[data-difficulty]',
+    '.difficult-word[data-difficult]',
   ) as NodeListOf<HTMLButtonElement>;
+  const trueAnswCount = Number((document.querySelector('.answ-true') as HTMLElement).textContent);
+  const falseAnswCount = Number((document.querySelector('.answ-true') as HTMLElement).textContent);
+
+  // console.log('learnBtns', learnBtns);
+  // console.log('difficultBtns', difficultBtns);
 
   const group = Number(localStorage.getItem('group'));
   const getUserFromLS = await String(localStorage.getItem('userData'));
@@ -226,9 +309,15 @@ export const renderTextbookPage = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(word),
-    });
-    const content: IUserWord = await rawResponse.json();
-    console.log(content);
+    })
+      .then(async (response) => {
+        const content: IUserWord = await response.json();
+        console.log(content);
+      })
+      .catch(async (error) => {
+        alert('Вам необходимо пройти авторизацию');
+        // error.message; // 'An error has occurred: 404'
+      });
   };
 
   const updateUserWord = async (wordId: string, word: IUserWordOptions) => {
@@ -241,8 +330,29 @@ export const renderTextbookPage = async () => {
       },
       body: JSON.stringify(word),
     });
-    const content: IUserWord = await rawResponse.json();
-    console.log(content);
+    const updataContent: IUserWord = await rawResponse.json();
+    console.log('updataContent = ', updataContent);
+  };
+
+  const deleteUserWord = async (wordId: string) => {
+    const rdeleteResponse = await fetch(`http://localhost:2020/users/${userId}/words/${wordId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${getauthentData.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(async (response) => {
+        console.log('deleteUserWord response.status', response.status);
+      })
+      .catch(async (error) => {
+      // console.log('catch(error');
+        if (error.status === 401) {
+          console.log('getUserWord. Error 401 Access token is missing or invalid');
+          // error.message; // 'An error has occurred: 404'
+        }
+      });
   };
 
   const getUserWord = async (wordId: string, token: string, word: IUserWordOptions) => {
@@ -264,30 +374,19 @@ export const renderTextbookPage = async () => {
           console.log('Сработал createUserWord');
           createUserWord(wordId, word);
         }
+      })
+      .catch(async (error) => {
+        // console.log('catch(error');
+        if (error.status === 404) {
+          console.log('getUserWord. Error 404');
+        // error.message; // 'An error has occurred: 404'
+        }
       });
   };
 
-  difficultBtns.forEach(async (diffButton) => {
-    diffButton.addEventListener('click', async () => {
-      const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
-      diffButton.classList.toggle('_difficult');
-
-      let learnBtnStatus = false;
-      let diffBtnStatus = 'weak';
-
-      const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
-      if (currLearnedBtn.classList.contains('_learned')) learnBtnStatus = true;
-      if (diffButton.classList.contains('_difficult')) diffBtnStatus = 'hard';
-
-      // ------Запускаем проверку на наличие такого слова в userWords
-
-      const isUserWord = await getUserWord(currDifficultId, userToken, { difficulty: diffBtnStatus, optional: { group: String(group), groupPage: String(groupPage), learned: learnBtnStatus } });
-      console.log(isUserWord);
-    });
-  });
-
-  learnBtns.forEach(async (learnButton) => {
+  /* learnBtns.forEach(async (learnButton) => {
     learnButton.addEventListener('click', async () => {
+      console.log('Нажал Learned');
       const currLearnedId = String((learnButton as HTMLButtonElement).dataset.learned);
       learnButton.classList.toggle('_learned');
 
@@ -301,38 +400,46 @@ export const renderTextbookPage = async () => {
       // ------Запускаем проверку на наличие такого слова в userWords
 
       const isUserWord = await getUserWord(currLearnedId, userToken, { difficulty: diffBtnStatus, optional: { group: String(group), groupPage: String(groupPage), learned: learnBtnStatus } });
-      console.log(isUserWord);
+      //console.log(isUserWord);
     });
-  });
+  }); */
 
   difficultBtns.forEach(async (diffButton, i: number) => {
     diffButton.addEventListener('click', async () => {
+      console.log('Нажал Dificult');
       const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
+      const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
       diffButton.classList.toggle('_difficult');
 
-      let learnBtnStatus = false;
+      // let learnBtnStatus = false;
       let diffBtnStatus = 'weak';
 
-      const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
-      if (currLearnedBtn.classList.contains('_learned')) learnBtnStatus = true;
-      if (diffButton.classList.contains('_difficult')) diffBtnStatus = 'hard';
+      // if (currLearnedBtn.classList.contains('_learned')) learnBtnStatus = true;
+      if (diffButton.classList.contains('_difficult')) {
+        diffBtnStatus = 'hard';
+        currLearnedBtn.classList.remove('_learned');
 
-      // ------Запускаем проверку на наличие такого слова в userWords
+        // ------Запускаем проверку на наличие такого слова в userWords
 
-      const isUserWord = await getUserWord(currDifficultId, userToken, { difficulty: diffBtnStatus, optional: { group: String(group), groupPage: String(groupPage), learned: learnBtnStatus } });
-      console.log(isUserWord);
+        const isUserWord = await getUserWord(
+          currDifficultId,
+          userToken,
+          {
+            difficulty: diffBtnStatus,
+            optional: {
+              group: String(group), groupPage: String(groupPage), trueAnsw: trueAnswCount, falseAnsw: falseAnswCount,
+            },
+          },
+        )
+          .catch((error) => {
+            // error.message; // 'An error has occurred: 404'
+          });
+        // console.log(isUserWord);
+      } else {
+        const letDeleteUserWord = await deleteUserWord(currDifficultId);
+      }
     });
   });
-
-  /*
-  const learnedWord = document.querySelector('.learned-word') as HTMLButtonElement;
-  learnedWord.addEventListener('click', async() => {
-    const getUserFromLS = await String(localStorage.getItem('userData'));
-    const getauthentData:IauthorisedUser = JSON.parse(getUserFromLS);
-    console.log('getauthentData', getauthentData);
-    console.log('token = ', getauthentData.token);
-
-*/
 
   const audioGame = document.querySelector('.textbook-audio_btn') as HTMLButtonElement;
   const sprintGame = document.querySelector('.textbook-sprint_btn') as HTMLButtonElement;

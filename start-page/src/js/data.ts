@@ -36,7 +36,8 @@ export interface IUserWordOptions {
   optional: {
     group: string,
     groupPage: string,
-    learned: boolean
+    trueAnsw: number,
+    falseAnsw: number
   }
 }
 

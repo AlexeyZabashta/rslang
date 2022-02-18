@@ -547,25 +547,50 @@ body {
 
 /*---------------------TextBook---------------------*/
 
+.textbook-headbtns_wrapper {
+  display: flex;
+  
+}
 .textbook-pagination {
   display: flex;
-  position: fixed;
+  width: 35%;  
   top: 3.5rem;
-  left: 0;
-  justify-content: space-around;
+  left: 0;  
   width: 100%;  
   background-color: var(--bg-light);
   z-index: 6;
 }
-.textbook-prev_btn,
+.textbook-group {
+  display: flex;
+  width: 35%; 
+  background-color: var(--bg-dark);
+}
+
 #textbook-select,
-.textbook-nex_tbtn,
 .textbook-audio_btn,
 .textbook-sprint_btn {
-  border-radius: 0.3rem;
-  cursor: pointer;
+  border-radius: 1rem;
 
 }
+.textbook-prev_btn,
+.textbook-nex_tbtn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.textbook-group_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font3);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  
+}
+
+
 .textbook-list {
   width: 90%;
   margin: 4rem auto 0rem auto;
@@ -601,7 +626,7 @@ body {
 }
 
 .textbook-item_article,
-.textbook-btns_wrapper {
+.textbook-wordbtns_wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -676,7 +701,7 @@ body {
   font-weight: 700;
 }
 
-.textbook-btns_wrapper {
+.textbook-wordbtns_wrapper {
   display: flex;  
   justify-content: center;
 }
@@ -686,7 +711,7 @@ body {
   align-items: center;
   width: 6rem;
   height: 1.5rem;
-  font-weight: 600;
+  font-weight: 800;
   cursor: pointer;
   background-color: var(--bg-transp);
   background-image: url('../assets/img/flag_GB_light.png');
@@ -713,6 +738,23 @@ body {
 .difficult-word {
   border-radius: 0 90% 0 0%;
 }
+.textbook-answ_wrapper{
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+.answ-true,
+.answ-false,
+.answ-separator {
+  font-size: var(--font3);
+}
+.answ-true {
+  color: var(--gren);
+}
+.answ-false {
+  color: var(--red);
+}
+
 
 
 /*---------------------STATISTICS-------------------*/

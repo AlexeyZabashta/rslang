@@ -179,10 +179,6 @@ export const renderLoginWindow = async () => {
 
     localStorage.setItem('userData', JSON.stringify(authentData));
 
-    const getUserFromLS = await String(localStorage.getItem(`${userEmail}`));
-    const getauthentData:IauthorisedUser = JSON.parse(getUserFromLS);
-    console.log('getauthentData', getauthentData);
-
     if (localStorage.getItem('userData')) {
       signInBtn.classList.add('_logged');
       logoutBtn.classList.add('_logged');
