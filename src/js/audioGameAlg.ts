@@ -15,10 +15,7 @@ export function clickAudioGame(ind:number, val:boolean) {
   }
 }
 
-export function clickIdkAudio(ind:number) {
-  const answView = document.querySelector(`#audio_answer_variant${ind}`) as HTMLSpanElement;
-  answView.classList.add('right');
-}
+
 
 
 

@@ -2,13 +2,62 @@ import { body } from './const';
 import { Word } from './typeSprint';
 import { randomDiap } from './clickFunctionSprint';
 import { answersAudio } from './audioGameAlg';
-import { clickAudioGame, clickIdkAudio } from './audioGameAlg';
+import { clickAudioGame } from './audioGameAlg';
 import { getWords } from './requestSprint';
 
 
 export const falseAnswersAudio: Word[] = [];
 export const rightAnswNum: number[] = [];
 let indexAnsw = 0;
+
+
+
+function hideInfo() {
+  const hideDiv = document.querySelector('.hide_info') as HTMLDivElement;
+  hideDiv.classList.add('active');
+  const btnNext = document.querySelector('#next_word_btn') as HTMLButtonElement;
+  btnNext.disabled = false;
+}
+
+function hideAnswersAudio(targetInd:number) {
+  const answBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.btn_word_variant');
+  answBtns.forEach(async (item, index) => { 
+    item.disabled = true;   
+    if (targetInd !== index) {      
+      item.classList.add('block');
+    }              
+  });
+}
+
+function clickIdkAudio(ind:number) {
+  const answView = document.querySelector(`#audio_answer_variant${ind}`) as HTMLSpanElement;
+  answView.classList.add('right');
+  hideAnswersAudio(ind);
+  hideInfo();
+}
+
+function addListnersAudioGame(ind:number) {  
+  const wordVariants = document.querySelector('.word_variants') as HTMLDivElement;  
+  const btnIdk = document.querySelector('#idk') as HTMLButtonElement;
+  btnIdk.addEventListener('click', () => {
+    btnIdk.disabled = true;
+    clickIdkAudio(ind);
+  }); 
+  wordVariants.addEventListener('click', (e) => {
+    if ((e.target as HTMLButtonElement).classList.contains('btn_word_variant')) {
+      const targetId:string = (e.target as HTMLButtonElement).id;
+      const targetInd = Number(targetId[targetId.length - 1]);      
+      btnIdk.disabled = true;
+      hideAnswersAudio(targetInd);
+      hideInfo();           
+      if (targetInd === ind) {
+        clickAudioGame(targetInd, true);
+      } else {
+        clickAudioGame(targetInd, false);
+      }
+    }    
+  });   
+}
 
 async function updateAudioGameDom(btnIndex:number, rightIndex:number, word:string): Promise<string> {
   if (btnIndex === rightIndex) {
@@ -26,8 +75,10 @@ export const audioDOM = async (val:Word) => {
   body.innerHTML = `<section class="wrapper_audioGame">
   <div class="word_block">
     <audio id="audioGame_audio" src="http://localhost:2020/${val.audio}"></audio>
-    <img id="audio_img" src="http://localhost:2020/${val.image}">
-    <h2 id="audio_answer">${val.word} (${val.wordTranslate})</h2>
+    <div class="hide_info">
+      <div class="audio_img" style="background-image: url('http://localhost:2020/${val.image}');"></div>    
+      <div class="audio_answer">${val.word} (${val.wordTranslate})</div>
+    </div>
     <button id="play_word">
       <img src="../src/assets/volume.svg" id="play_word_audio">        
     </button>      
@@ -56,27 +107,14 @@ export const audioDOM = async (val:Word) => {
   </div>
   <div class="next_word">
     <button id="idk">Не знаю</button>
-    <button id="next_word_btn">&#8594;</button>
+    <button id="next_word_btn" disabled>&#8594;</button>
   </div>
-</section>`;
-  const answBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.word_variant');
-  const wordVariants = document.querySelector('.word_variants') as HTMLDivElement;
-  wordVariants.addEventListener('click', (e) => {
-    if ((e.target as HTMLButtonElement).classList.contains('btn_word_variant')) {
-      const targetId:string = (e.target as HTMLButtonElement).id;
-      const targetInd = Number(targetId[targetId.length - 1]);
-      if (targetInd === ind) {
-        clickAudioGame(targetInd, true);
-      } else {
-        clickAudioGame(targetInd, false);
-      }
-    }    
-  });
-  const btnIdk = document.querySelector('#idk') as HTMLElement;
-  btnIdk.addEventListener('click', ()=> clickIdkAudio(ind));
+  </section>`;
+  addListnersAudioGame(ind);
   const btnNext = document.querySelector('#next_word_btn') as HTMLElement;
   btnNext.addEventListener('click', () => {
     indexAnsw += 1;
     audioDOM(answersAudio[indexAnsw]);
-  });   
+  });
+  body.classList.add('active');  
 };

@@ -304,6 +304,16 @@ body {
   transition: .2;  
 }
 
+body {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+body.active {
+  opacity: 1;
+  transition: 0.5s;
+}
+
 .wrapper_audioGame {
   margin: 5rem auto;
   width: 90%;
@@ -311,6 +321,15 @@ body {
   border: grey solid 1px;
   border-radius: 1rem;
   background-color: bisque;
+}
+
+button {
+  cursor: pointer;
+  appearance: none; 
+}
+
+button:disabled {
+  cursor: auto;
 }
 
 .word_block {
@@ -349,6 +368,28 @@ body {
   transition: .5s;
 }
 
+.next_word_btn:disabled {
+  background-color: gray;
+  opacity: .5;
+  transition: .5s;
+}
+
+.next_word_btn {
+  background-color: transparent;
+  transition: .5s;
+}
+
+.btn_word_variant {
+  opacity: 1;
+}
+
+.btn_word_variant.block,
+#idk:disabled {
+  background-color: gray;
+  opacity: .5;
+  transition: .5s;
+}
+
 .audio_answer_variant.right {
   background-image: url(assets/be7c5034058e2dc3ad88.svg);
   opacity: 1;
@@ -360,6 +401,28 @@ body {
   opacity: 1;
   transition: .5s;
 }
+
+
+.hide_info {
+  opacity: 0;
+  transition: .5s;
+}
+
+.hide_info.active {
+  opacity: 1;
+  transition: .5s;
+}
+
+.audio_img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;  
+  transition: .5s;
+  background-position: center;
+  background-size: contain;  
+}
+
+
 
 
 
