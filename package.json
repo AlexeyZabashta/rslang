@@ -1,13 +1,15 @@
 {
-  "name": "rs-lang",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+
+  "name": "empty_project",
+  "version": "0.0.0",
+  "description": "Empty project template",
+  "private": true,
   "scripts": {
     "build": "webpack",
     "dev": "webpack serve --env development",
     "lint": "eslint src"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -39,4 +41,5 @@
   },
   "homepage": "https://github.com/AlexeyZabashta/rslang#readme",
   "dependencies": {}
+
 }

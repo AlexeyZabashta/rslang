@@ -68,3 +68,4 @@ module.exports = ({ development }) => ({
   },
   ...devServer(development)
 });
+
