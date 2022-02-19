@@ -1,16 +1,25 @@
 import { body } from './const';
 import { Word } from './typeSprint';
 import { randomDiap } from './clickFunctionSprint';
-import { answersAudio } from './audioGameAlg';
-import { clickAudioGame } from './audioGameAlg';
-import { getWords } from './requestSprint';
 
+import { getWords } from './requestSprint';
 
 export const falseAnswersAudio: Word[] = [];
 export const rightAnswNum: number[] = [];
 let indexAnsw = 0;
 
+export const answersAudio:Word[] = [];
+export const indWordAudio:number[] = [];
 
+export function clickAudioGame(ind:number, val:boolean) {
+  console.log('сработала функция клика', ind + 1, val);
+  const answView = document.querySelector(`#audio_answer_variant${ind}`) as HTMLSpanElement;
+  if (val) {
+    answView.classList.add('right');
+  } else {
+    answView.classList.add('false');
+  }
+}
 
 function hideInfo() {
   const hideDiv = document.querySelector('.hide_info') as HTMLDivElement;
@@ -21,11 +30,11 @@ function hideInfo() {
 
 function hideAnswersAudio(targetInd:number) {
   const answBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.btn_word_variant');
-  answBtns.forEach(async (item, index) => { 
-    item.disabled = true;   
-    if (targetInd !== index) {      
+  answBtns.forEach(async (item, index) => {
+    item.disabled = true;
+    if (targetInd !== index) {
       item.classList.add('block');
-    }              
+    }
   });
 }
 
@@ -36,27 +45,27 @@ function clickIdkAudio(ind:number) {
   hideInfo();
 }
 
-function addListnersAudioGame(ind:number) {  
-  const wordVariants = document.querySelector('.word_variants') as HTMLDivElement;  
+function addListnersAudioGame(ind:number) {
+  const wordVariants = document.querySelector('.word_variants') as HTMLDivElement;
   const btnIdk = document.querySelector('#idk') as HTMLButtonElement;
   btnIdk.addEventListener('click', () => {
     btnIdk.disabled = true;
     clickIdkAudio(ind);
-  }); 
+  });
   wordVariants.addEventListener('click', (e) => {
     if ((e.target as HTMLButtonElement).classList.contains('btn_word_variant')) {
       const targetId:string = (e.target as HTMLButtonElement).id;
-      const targetInd = Number(targetId[targetId.length - 1]);      
+      const targetInd = Number(targetId[targetId.length - 1]);
       btnIdk.disabled = true;
       hideAnswersAudio(targetInd);
-      hideInfo();           
+      hideInfo();
       if (targetInd === ind) {
         clickAudioGame(targetInd, true);
       } else {
         clickAudioGame(targetInd, false);
       }
-    }    
-  });   
+    }
+  });
 }
 
 async function updateAudioGameDom(btnIndex:number, rightIndex:number, word:string): Promise<string> {
@@ -64,14 +73,14 @@ async function updateAudioGameDom(btnIndex:number, rightIndex:number, word:strin
     console.log('верный ответ на кнопке', btnIndex + 1);
     return word;
   }
-  const falseInd:number = randomDiap(0, 19);   
+  const falseInd:number = randomDiap(0, 19);
   return falseAnswersAudio[falseInd].wordTranslate;
 }
 
-export const audioDOM = async (val:Word) => {  
+export const audioDOM = async (val:Word) => {
   const ind = randomDiap(0, 4);
   console.log('верная кнопка: ', ind + 1);
-  rightAnswNum.push(ind);  
+  rightAnswNum.push(ind);
   body.innerHTML = `<section class="wrapper_audioGame">
   <div class="word_block">
     <audio id="audioGame_audio" src="http://localhost:2020/${val.audio}"></audio>
@@ -116,5 +125,11 @@ export const audioDOM = async (val:Word) => {
     indexAnsw += 1;
     audioDOM(answersAudio[indexAnsw]);
   });
-  body.classList.add('active');  
+  body.classList.add('active');
+  const playAudio = document.querySelector('#audioGame_audio') as HTMLAudioElement;
+  playAudio.play();
+  const playWord = document.querySelector('#play_word') as HTMLButtonElement;
+  playWord.addEventListener('click', () => {
+    playAudio.play();
+  });
 };

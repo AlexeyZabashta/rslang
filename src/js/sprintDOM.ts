@@ -1,5 +1,5 @@
-import { checkAnsw, answerVariant } from './clickFunctionSprint';
-import { gameTimer, addDOMVariables } from './bonusAlgSprint';
+import { checkAnsw, answerVariant, gameTimer } from './clickFunctionSprint';
+import { addDOMVariables } from './bonusAlgSprint';
 import { body } from './const';
 import { Word } from './typeSprint';
 
@@ -35,11 +35,21 @@ export const sprintDOM = async (word:string) => {
     <img class="answ_result_right" src="../src/assets/true2.svg">
     <img class="answ_result_false" src="../src/assets/false2.svg">
   </div>
-  <div class="timer_value">60</div>
-</section>`;
+  <div class="timer_value">60</div>  
+</section>
+<div class="wrapper_end_game">
+  <div class="end_game">
+      <div class="end_game_score"></div>
+      <div class="end_game_total"></div>
+      <div class="end_game_series"></div>
+      <div class="end_game_percent"></div>
+      <button id="end_game_textbook"></button>
+      <button id="end_game_mainmenu"></button>
+  </div>
+</div>`;
   const btnFalse = document.querySelector('#answ_false') as HTMLElement;
-  btnFalse.addEventListener('click', ()=>checkAnsw(false));
+  btnFalse.addEventListener('click', () => checkAnsw(false));
   const btnTrue = document.querySelector('#answ_true') as HTMLElement;
-  btnTrue.addEventListener('click', ()=>checkAnsw(true));
-  addDOMVariables();  
+  btnTrue.addEventListener('click', () => checkAnsw(true));
+  addDOMVariables();
 };

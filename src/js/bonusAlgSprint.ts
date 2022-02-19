@@ -3,20 +3,18 @@ let circleMass:NodeListOf<HTMLElement>;
 let totalPointsDOM:HTMLElement;
 let bonusSize:number;
 let totalPoints = 0;
+export const massPoint:number[] = [];
 let bonusPoint:HTMLElement;
 let flagDOM = false;
-let flagTimer = false;
+const flagTimer = false;
 
 let big:HTMLElement;
 let boom:HTMLElement;
 let flash:HTMLElement;
 let birdsMass:NodeListOf<HTMLElement>;
 
-let timer:HTMLAudioElement;
 let answerSound:HTMLAudioElement;
 let answerBonus:HTMLAudioElement;
-let timerValue:HTMLElement;
-
 
 async function playBonusSound() {
   answerBonus.src = '../src/assets/audio/bonus.mp3';
@@ -33,7 +31,6 @@ async function playSoundAnswer(val:boolean) {
   }
 }
 
-
 function checkBonusSize():void {
   const oldBonus = bonusSize;
   switch (true) {
@@ -41,16 +38,19 @@ function checkBonusSize():void {
       bonusSize = 10;
       break;
     case ((bonusIndex >= 4) && (bonusIndex < 7)):
-      bonusSize = 20;      
+      bonusSize = 20;
       big.classList.add('active');
       break;
     case ((bonusIndex >= 7) && (bonusIndex < 9)):
-      bonusSize = 40;      
+      bonusSize = 40;
       boom.classList.add('active');
       break;
     case (bonusIndex === 10):
-      bonusSize = 80;      
-      flash.classList.add('active');            
+      bonusSize = 80;
+      flash.classList.add('active');
+      break;
+    default:
+      // console.log('def');
       break;
   }
   if (oldBonus < bonusSize) {
@@ -58,7 +58,7 @@ function checkBonusSize():void {
   }
 }
 
-function growBonus():void {  
+function growBonus():void {
   const variable = bonusIndex % circleMass.length;
   switch (variable) {
     case 0:
@@ -71,24 +71,12 @@ function growBonus():void {
     case 2:
       circleMass[1].classList.add('active');
       break;
-          
+    default:
+      break;
   }
 }
-export async function gameTimer() {  
-  timer.play();
-  let timerDur = 60;    
-  let timerId = setTimeout(function tick() {
-    if (timerDur > 0) {
-      timerDur -= 1;
-      timerValue.textContent = `${timerDur}`; 
-      timerId = setTimeout(tick, 1000);
-    } else {
-      clearTimeout(timerId);
-    }    
-  }, 1000);
-}
 
-export function addDOMVariables():void {  
+export function addDOMVariables():void {
   circleMass = document.querySelectorAll('.bonus_circle');
   birdsMass = document.querySelectorAll('.bonus_icon');
   totalPointsDOM = document.querySelector('.total_score') as HTMLElement;
@@ -96,49 +84,44 @@ export function addDOMVariables():void {
   big = document.querySelector('.big') as HTMLElement;
   boom = document.querySelector('.boom') as HTMLElement;
   flash = document.querySelector('.flash') as HTMLElement;
-  timerValue = document.querySelector('.timer_value') as HTMLElement;
-  timer = document.querySelector('#game_timer') as HTMLAudioElement;
+
   answerSound = document.querySelector('#answer_sound') as HTMLAudioElement;
   answerBonus = document.querySelector('#answer_bonus') as HTMLAudioElement;
-  window.addEventListener('click', () => {
-    if (!flagTimer) {
-      flagTimer = true;
-      gameTimer();
-    }    
-  }); 
-  flagDOM = true;   
+  flagDOM = true;
 }
 
-export function checkBonus(val:boolean):void {  
-  if (val) {        
+export function checkBonus(val:boolean):void {
+  if (val) {
     if (bonusIndex !== 10) {
       bonusIndex += 1;
-      checkBonusSize();      
+      checkBonusSize();
       growBonus();
       if (bonusIndex === 10) {
         circleMass[0].classList.add('max');
         circleMass[1].classList.add('active');
         circleMass[2].classList.add('max');
-      }      
+      }
     }
-    totalPoints += bonusSize;    
-  } else {    
+    totalPoints += bonusSize;
+  } else {
     bonusIndex = 0;
     checkBonusSize();
     circleMass.forEach((item) => {
       item.classList.remove('active');
       item.classList.remove('max');
     });
-    birdsMass.forEach((item)=>{
+    birdsMass.forEach((item) => {
       item.classList.remove('active');
     });
   }
   if (bonusIndex < 4) {
     bonusPoint.classList.remove('active');
   } else {
-    bonusPoint.classList.add('active');    
+    bonusPoint.classList.add('active');
   }
-  playSoundAnswer(val);  
-  bonusPoint.innerHTML = `+${bonusSize} очков за слово`;  
+  playSoundAnswer(val);
+  bonusPoint.innerHTML = `+${bonusSize} очков за слово`;
   totalPointsDOM.innerHTML = `${totalPoints}`;
+  massPoint.length = 0;
+  massPoint.push(totalPoints);
 }

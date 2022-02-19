@@ -19,3 +19,11 @@ export type GrPg = {
   group:number,
   page: number
 };
+
+export type AuthUser = {
+  message: string,
+  name: string,
+  refreshToken: string,
+  token: string,
+  userId: string
+};

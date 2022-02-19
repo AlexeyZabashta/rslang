@@ -1,13 +1,3 @@
-body {
-  opacity: 0;
-  transition: 0.5s;
-}
-
-body.active {
-  opacity: 1;
-  transition: 0.5s;
-}
-
 .wrapper_audioGame {
   margin: 5rem auto;
   width: 90%;
@@ -116,7 +106,8 @@ button:disabled {
   background-size: contain;  
 }
 
-
-
-
-
+.play_word {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 2.5rem;
+}
