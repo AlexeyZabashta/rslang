@@ -9,13 +9,10 @@ export const renderHTMLStructure = async () => {
   bodyHtml.innerHTML = '';
   const header = document.createElement('header');
   header.classList.add('header');
-  const mainWrapper = document.createElement('main-wrapper');
-  mainWrapper.classList.add('main');
   const main = document.createElement('main');
   main.classList.add('main');
   const footer = document.createElement('footer');
   footer.classList.add('footer');
-  mainWrapper.append(main);
   bodyHtml.append(header);
   bodyHtml.append(main);
   bodyHtml.append(footer);
@@ -52,6 +49,8 @@ renderHTMLStructure().then(async () => {
     homeHtml.addEventListener('click', () => {
       console.log(' вызываю homePage();');
       localStorage.setItem('currentPage', 'Home');
+      const headerTitle = document.querySelector('.header-current') as HTMLElement;
+      headerTitle.innerHTML = 'Home';
       homePage();
     });
   })
@@ -60,7 +59,13 @@ renderHTMLStructure().then(async () => {
     const textbookHtml = document.querySelector('.nav-textbook') as HTMLButtonElement;
     textbookHtml.addEventListener('click', () => {
       console.log(' вызываю textbookPage');
+      const mainHtml = document.querySelector('.main') as HTMLElement;
+      mainHtml.innerHTML = `
+    `;
       localStorage.setItem('currentPage', 'Textbook');
+      const headerTitle = document.querySelector('.header-current') as HTMLElement;
+      headerTitle.innerHTML = 'Textbook';
+      // renderGroupBtns();
       renderTextbookPage();
     });
   })
@@ -70,6 +75,8 @@ renderHTMLStructure().then(async () => {
     statisticsHtml.addEventListener('click', () => {
       console.log(' вызываю Statistics page();');
       localStorage.setItem('currentPage', 'Statistics');
+      const headerTitle = document.querySelector('.header-current') as HTMLElement;
+      headerTitle.innerHTML = 'Statistics';
       renderStatisticsPage();
     });
   })
@@ -79,6 +86,8 @@ renderHTMLStructure().then(async () => {
     developersHtml.addEventListener('click', () => {
       console.log(' вызываю About App page();');
       localStorage.setItem('currentPage', 'About App');
+      const headerTitle = document.querySelector('.header-current') as HTMLElement;
+      headerTitle.innerHTML = 'About App';
       aboutAppPage();
     });
   })
@@ -118,7 +127,25 @@ renderHTMLStructure().then(async () => {
 window.addEventListener('load', async () => {
   if (!localStorage.getItem('currentPage')) { homePage(); } else {
     if (localStorage.getItem('currentPage') === 'Home') homePage();
-    if (localStorage.getItem('currentPage') === 'Textbook') renderTextbookPage();
+    if (localStorage.getItem('currentPage') === 'Textbook') {
+      /* const mainHtml = document.querySelector('.main') as HTMLElement;
+      mainHtml.innerHTML = `<section class="textbook">
+      <div class="textbook-group">
+        <button class="textbook-group_btn" data-group="0">1</button>
+        <button class="textbook-group_btn" data-group="1">2</button>
+        <button class="textbook-group_btn" data-group="2">3</button>
+        <button class="textbook-group_btn" data-group="3">4</button>
+        <button class="textbook-group_btn" data-group="4">5</button>
+        <button class="textbook-group_btn" data-group="5">6</button>
+        <button class="textbook-group_btn" data-group="6">7</button>
+      </div>
+      <div class="textbook-wrapper"></div>
+      <audio class="textbook-player"></audio>
+    </section>
+    `;
+      renderGroupBtns(); */
+      renderTextbookPage();
+    }
     if (localStorage.getItem('currentPage') === 'Statistics') renderStatisticsPage();
     if (localStorage.getItem('currentPage') === 'About App') aboutAppPage();
     // if (localStorage.getItem('currentPage') === "Home") homePage();
@@ -146,7 +173,8 @@ window.addEventListener('load', async () => {
     }
   }
 });
-window.addEventListener('click', async () => {
+
+/* window.addEventListener('click', async () => {
   const headerTitle = document.querySelector('.header-current') as HTMLElement;
   const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
 
@@ -171,4 +199,4 @@ window.addEventListener('click', async () => {
   if (localStorage.getItem('userData')) {
     loginHtml.classList.add('_logged');
   } else loginHtml.classList.remove('_logged');
-});
+}); */

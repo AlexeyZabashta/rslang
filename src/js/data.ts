@@ -1,6 +1,7 @@
 export const bodyHtml = document.querySelector('.body') as HTMLElement;
+export const baseUrl = 'http://localhost:2020';
 
-export interface Iwords {
+export interface Iword {
   audio: string
   audioExample: string
   audioMeaning: string
@@ -13,6 +14,24 @@ export interface Iwords {
   textMeaning: string
   textMeaningTranslate: string
   transcription: string
+  word: string
+  wordTranslate: string
+}
+export interface IaggregatedWord {
+  audio: string
+  audioExample: string
+  audioMeaning: string
+  group: number
+  _id?: string
+  id?: string
+  image: string
+  page: number
+  textExample: string
+  textExampleTranslate: string
+  textMeaning: string
+  textMeaningTranslate: string
+  transcription: string
+  userWord?:IUserWordOptions
   word: string
   wordTranslate: string
 }

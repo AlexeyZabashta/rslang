@@ -1,4 +1,4 @@
-import { Iuser, IauthorisedUser } from './data';
+import { baseUrl, Iuser, IauthorisedUser } from './data';
 
 export const renderLoginWindow = async () => {
   console.log('Отрисовываю окно LogIn');
@@ -143,7 +143,7 @@ export const renderLoginWindow = async () => {
       email: userEmail,
       password: userPassword,
     };
-    const responseUser:Response = await fetch('http://localhost:2020/users', {
+    const responseUser:Response = await fetch(`${baseUrl}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -161,7 +161,7 @@ export const renderLoginWindow = async () => {
       email: userEmail,
       password: userPassword,
     };
-    const responseUser:Response = await fetch('http://localhost:2020/signin', {
+    const responseUser:Response = await fetch(`${baseUrl}/signin`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
