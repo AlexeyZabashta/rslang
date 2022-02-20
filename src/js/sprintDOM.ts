@@ -1,6 +1,7 @@
 import { checkAnsw, answerVariant, gameTimer } from './clickFunctionSprint';
 import { addDOMVariables } from './bonusAlgSprint';
 import { body } from './const';
+import { getAggrWords, getAggrWordsTest, getWordUserSprintTest } from './requestSprint';
 import { Word } from './typeSprint';
 
 export const sprintDOM = async (word:string) => {
@@ -43,8 +44,8 @@ export const sprintDOM = async (word:string) => {
       <div class="end_game_total"></div>
       <div class="end_game_series"></div>
       <div class="end_game_percent"></div>
-      <button id="end_game_textbook"></button>
-      <button id="end_game_mainmenu"></button>
+      <button id="end_game_textbook">end_game_textbook</button>
+      <button id="end_game_mainmenu">end_game_mainmenu</button>
   </div>
 </div>`;
   const btnFalse = document.querySelector('#answ_false') as HTMLElement;
@@ -52,4 +53,12 @@ export const sprintDOM = async (word:string) => {
   const btnTrue = document.querySelector('#answ_true') as HTMLElement;
   btnTrue.addEventListener('click', () => checkAnsw(true));
   addDOMVariables();
+  const backMain = document.querySelector('#end_game_mainmenu') as HTMLElement;
+  backMain.addEventListener('click', () => {
+    getAggrWordsTest(0, 2);
+  });
+  const backText = document.querySelector('#end_game_textbook') as HTMLElement;
+  backText.addEventListener('click', () => {
+    getWordUserSprintTest();
+  });
 };

@@ -1,9 +1,12 @@
 import { Word, GrPg } from './typeSprint';
 import { body } from './const';
 import { checkBonus, massPoint } from './bonusAlgSprint';
-import { getAggrWords, getWords, buildMassSprint } from './requestSprint';
+import { IaggregatedWord } from './data';
+import { getWordUserSprint, getAggrWords, getWords, buildMassSprint, getAggrWordsTest } from './requestSprint';
+
 
 export const answers:Word[] = [];
+export const answersTextBook:IaggregatedWord[] = [];
 export const groupPage:GrPg[] = [];
 export const startFlag:boolean[] = [];
 let answersFalse:Word[] = [];
@@ -167,7 +170,7 @@ async function checkIndexTextbook() {
     if (typeof newPage === 'number') {
       await checkNewPageTextbookSprint(group, newPage);
       console.log('answers ', answers);
-      newWordDOM();
+      await newWordDOM();
     } else {
       body.classList.add('active');
       createSprintResult();
@@ -177,15 +180,26 @@ async function checkIndexTextbook() {
   }
 }
 
+function allBtnsBlock() {
+  const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.answ_btn');
+  btns.forEach((item) => item.disabled = true);
+}
+
+function allBtnsUnlock() {
+  const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.answ_btn');
+  btns.forEach((item) => item.disabled = false);
+}
+
+
 export async function checkAnsw(val:boolean) {
   // console.log('val: ', val, 'answerFlag: ', answerFlag);
-  // console.log('if result: ', val === answerFlag);
-  if (answerFlag === val) {
+  // console.log('if result: ', val === answerFlag);  
+  if (answerFlag === val) {    
     trueAnsw();
     checkBonus(true);
     rightAnswers += 1;
     bestSeries += 1;
-  } else {
+  } else {    
     bestSeriesOld = bestSeriesOld < bestSeries ? bestSeries : bestSeriesOld;
     bestSeries = 0;
     checkBonus(false);
@@ -197,6 +211,15 @@ export async function checkAnsw(val:boolean) {
     newWordDOM();
   } else {
     console.log('textBook');
-    await checkIndexTextbook();
+    if (answerFlag === val) {
+      getWordUserSprint(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, true);
+    } else {
+      getWordUserSprint(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, false);
+    }  
+    allBtnsBlock();
+    await checkIndexTextbook().then(() => {
+      allBtnsUnlock();
+    });
   }
 }
+

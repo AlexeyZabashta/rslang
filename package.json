@@ -1,5 +1,4 @@
 {
-
   "name": "empty_project",
   "version": "0.0.0",
   "description": "Empty project template",
@@ -9,7 +8,6 @@
     "dev": "webpack serve --env development",
     "lint": "eslint src"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -40,6 +38,6 @@
     "url": "https://github.com/AlexeyZabashta/rslang/issues"
   },
   "homepage": "https://github.com/AlexeyZabashta/rslang#readme",
-  "dependencies": {}
-
+  "dependencies": {},
+  "main": "webpack.config.js"
 }

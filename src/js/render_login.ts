@@ -1,7 +1,7 @@
 import { baseUrl, Iuser, IauthorisedUser } from './data';
 
 export const renderLoginWindow = async () => {
-  console.log('Отрисовываю окно LogIn');
+  //console.log('Отрисовываю окно LogIn');
   // const nameRegExp = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
   // const emailRegExp = /^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$/;
   // const nameRegExp = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -153,7 +153,7 @@ export const renderLoginWindow = async () => {
     });
     const userData = await responseUser.json();
 
-    console.log(userData);
+    //console.log(userData);
   };
 
   const signinUser = async (userEmail:string, userPassword: string) => {
@@ -175,7 +175,7 @@ export const renderLoginWindow = async () => {
     loginHtml.classList.add('_logged');
     // console.log(authentData);
     // console.log('token', authentData.token);
-    // console.log('refreshtoken', authentData.refreshToken);
+    ///console.log('refreshtoken', authentData.refreshToken);
 
     localStorage.setItem('userData', JSON.stringify(authentData));
 
@@ -199,7 +199,7 @@ export const renderLoginWindow = async () => {
       const userPassword = String(passInputData.value);
       signinUser(userEmail, userPassword);
       errorMessage.style.opacity = '0';
-      console.log('userEmail = ', userEmail, 'userPassword = ', userPassword);
+      //console.log('userEmail = ', userEmail, 'userPassword = ', userPassword);
     } else {
       errorMessage.innerHTML = 'Log in or register if you don\'t have an account yet';
       errorMessage.style.opacity = '1';
@@ -215,7 +215,7 @@ export const renderLoginWindow = async () => {
       const userPassword = String(passInputData.value);
       createUser(userLogin, userEmail, userPassword);
       errorMessage.style.opacity = '0';
-      console.log('userLogin = ', userLogin, 'userEmail = ', userEmail, 'userPassword = ', userPassword);
+      //console.log('userLogin = ', userLogin, 'userEmail = ', userEmail, 'userPassword = ', userPassword);
     } else {
       errorMessage.innerHTML = 'Log in or register if you don\'t have an account yet';
       errorMessage.style.opacity = '1';
