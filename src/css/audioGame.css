@@ -1,0 +1,177 @@
+.wrapper_audioGame {
+  margin: 5rem auto;
+  width: 90%;
+  padding: 3% 3% 3% 3%;
+  border: grey solid 1px;
+  border-radius: 1rem;
+  background-color: bisque;
+}
+
+button {
+  cursor: pointer;
+  /*appearance: none; */
+}
+
+button:disabled {
+  cursor: auto;
+}
+
+.word_block {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.word_variants {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  position: relative;
+  margin: 5rem 0 5rem 0;
+  width: 20rem;
+  left: calc(50% - 10rem);
+}
+
+.next_word {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.audio_answer_variant,
+.word_variant {
+  display: inline-block;
+}
+
+.audio_answer_variant {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: gray;
+  border-radius: .75rem;
+  opacity: .5;
+  transition: .5s;
+}
+
+.next_word_btn:disabled {
+  background-color: gray;
+  opacity: .5;
+  transition: .5s;
+}
+
+.next_word_btn {
+  background-color: transparent;
+  transition: .5s;
+}
+
+.btn_word_variant {
+  opacity: 1;
+}
+
+.btn_word_variant.block,
+#idk:disabled {
+  background-color: gray;
+  opacity: .5;
+  transition: .5s;
+}
+
+.audio_answer_variant.right {
+  background-image: url('../assets/true2.svg');
+  opacity: 1;
+  transition: .5s;
+}
+
+.audio_answer_variant.false {
+  background-image: url('../assets/false2.svg');
+  opacity: 1;
+  transition: .5s;
+}
+
+
+.hide_info {
+  opacity: 0;
+  transition: .5s;
+}
+
+.hide_info.active {
+  opacity: 1;
+  transition: .5s;
+}
+
+.audio_img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;  
+  transition: .5s;
+  background-position: center;
+  background-size: contain;  
+}
+
+.play_word {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 2.5rem;
+}
+
+.end_audio_train {
+  position: absolute; 
+  width:20rem;
+  height: 20rem;
+  top: calc(50% - 10rem);
+  left: calc(50% - 10rem);
+  transition: 1s;
+  font-size: 1.5rem;
+  text-align: center;
+  vertical-align: middle;
+  background-color: bisque;
+  border: grey solid 1px;
+  border-radius: 1rem;  
+  z-index: 200;
+}
+
+.end_audio_train_wrapper {
+  display: none;  
+  position: absolute;  
+  top: 120%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: .5s;
+}
+
+.end_audio_train_wrapper.active {
+  display: block; 
+  top: 0;
+  left: 0;
+  transition: .5s;
+}
+
+#end_game_nextPage {
+  display: none;
+}
+
+#end_game_nextPage.active {
+  display: block;
+}
+
+.end_audio_info {
+  position: absolute; 
+  width:20rem;
+  height: 20rem;
+  top: calc(50% - 10rem);
+  left: calc(50% - 10rem);
+  transition: 1s;
+  font-size: 1.5rem;
+  text-align: center;
+  vertical-align: middle;
+  background-color: bisque;
+  border: grey solid 1px;
+  border-radius: 1rem;  
+  z-index: 400;
+  opacity: 0;
+}
+
+.end_audio_info.active {
+  display: block;
+  opacity: 1;
+  transition: 1s;
+}
