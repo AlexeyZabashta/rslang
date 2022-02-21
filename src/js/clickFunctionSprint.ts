@@ -1,11 +1,13 @@
 import { Word, GrPg } from './typeSprint';
-import { body } from './const';
 import { checkBonus, massPoint } from './bonusAlgSprint';
-import { getAggrWords, getWords, buildMassSprint } from './requestSprint';
+import { IaggregatedWord } from './data';
+import { startFlag, groupPage } from '../indexGame';
+import { getWordUserSprint, getWordsMiniGame, buildMassSprint } from './requestSprint';
 
 export const answers:Word[] = [];
-export const groupPage:GrPg[] = [];
-export const startFlag:boolean[] = [];
+export const answersTextBook:IaggregatedWord[] = [];
+
+let newAnswMass:Word[] = [];
 let answersFalse:Word[] = [];
 let answersIndex = 0;
 let answerFlag:boolean;
@@ -75,9 +77,9 @@ function checkPage(page:number):number {
 
 export async function createMassFalse(group:number, page:number) {
   if (group < 5) {
-    answersFalse = await getWords(group + 1, page);
+    answersFalse = await getWordsMiniGame(group + 1, page);
   } else {
-    answersFalse = await getWords(group - 1, page);
+    answersFalse = await getWordsMiniGame(group - 1, page);
   }
   // console.log(answersFalse);
 }
@@ -91,7 +93,7 @@ async function checkIndex() {
     answersIndex = 0;
     answers.length = 0;
     const newPage:number = checkPage(page);
-    const newAnsw = await getWords(group, newPage);
+    const newAnsw = await getWordsMiniGame(group, newPage);
     newAnsw.map((item) => answers.push(item));
     await createMassFalse(group, newPage);
   }
@@ -101,9 +103,13 @@ async function checkPageTextBook(group:number, page:number):Promise<number | boo
   if (page - 1 >= 0) {
     groupPage[0].page = page - 1;
     const newPage = page - 1;
-    const newAnswMass:Word[] = await buildMassSprint(group, newPage);
+    if (localStorage.getItem('userData')) {
+      newAnswMass = await buildMassSprint(group, newPage);
+    } else {
+      newAnswMass = await getWordsMiniGame(group, newPage);
+    }
     if (newAnswMass.length === 0) {
-      checkPageTextBook(group, newPage);
+      await checkPageTextBook(group, newPage);
     }
     console.log('newPage ', newPage);
     return newPage;
@@ -122,7 +128,7 @@ async function checkNewPageTextbookSprint(group:number, newPage:number) {
 
 export function createSprintResult() {
   const wrapperEndgame = document.querySelector('.wrapper_end_game') as HTMLDivElement;
-  const wrapperMinigame = document.querySelector('.wrapper_minigame') as HTMLDivElement;
+  const wrapperMinigame = document.querySelector('.sprint_minigame') as HTMLDivElement;
   const endScore = document.querySelector('.end_game_score') as HTMLDivElement;
   const endTotal = document.querySelector('.end_game_total') as HTMLDivElement;
   const endSer = document.querySelector('.end_game_series') as HTMLDivElement;
@@ -133,7 +139,11 @@ export function createSprintResult() {
   endTotal.innerHTML = `Total number of words: ${allAnswers}`;
   endSer.innerHTML = `Best right-series:  ${bestSeries}`;
   const perc = rightAnswers / allAnswers;
-  endPer.innerHTML = `Answered correctly:  ${(perc * 100).toFixed(1)}%`;
+  if (allAnswers > 0) {
+    endPer.innerHTML = `Answered correctly:  ${(perc * 100).toFixed(1)}%`;
+  } else {
+    endPer.innerHTML = 'Answered correctly:  0';
+  }
   sprintDefaultIndex();
   console.log('stop game');
 }
@@ -141,6 +151,7 @@ export function createSprintResult() {
 export async function gameTimer() {
   const timerValue = document.querySelector('.timer_value') as HTMLElement;
   timer = document.querySelector('#game_timer') as HTMLAudioElement;
+  console.log(timer);
   timer.play();
   timerId = setTimeout(function tick() {
     if (timer.currentTime < timer.duration) {
@@ -167,12 +178,31 @@ async function checkIndexTextbook() {
     if (typeof newPage === 'number') {
       await checkNewPageTextbookSprint(group, newPage);
       console.log('answers ', answers);
-      newWordDOM();
+      await newWordDOM();
     } else {
-      body.classList.add('active');
       createSprintResult();
       timer.pause();
       clearTimeout(timerId);
+    }
+  }
+}
+
+function allBtnsBlock() {
+  const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.answ_btn');
+  btns.forEach((item) => item.disabled = true);
+}
+
+function allBtnsUnlock() {
+  const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.answ_btn');
+  btns.forEach((item) => item.disabled = false);
+}
+
+export async function checkAuthSprint(flag: boolean, answ: boolean) {
+  if (localStorage.getItem('userData')) {
+    if (flag === answ) {
+      await getWordUserSprint(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, true);
+    } else {
+      await getWordUserSprint(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, false);
     }
   }
 }
@@ -197,6 +227,10 @@ export async function checkAnsw(val:boolean) {
     newWordDOM();
   } else {
     console.log('textBook');
-    await checkIndexTextbook();
+    checkAuthSprint(answerFlag, val);
+    allBtnsBlock();
+    await checkIndexTextbook().then(() => {
+      allBtnsUnlock();
+    });
   }
 }

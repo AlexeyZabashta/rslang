@@ -1,4 +1,3 @@
-export const bodyHtml = document.querySelector('.body') as HTMLElement;
 export const baseUrl = 'http://localhost:2020';
 
 export interface Iword {
@@ -56,7 +55,10 @@ export interface IUserWordOptions {
     group: string,
     groupPage: string,
     trueAnsw: number,
-    falseAnsw: number
+    falseAnsw: number,
+    answSeries?: number,
+    learnDate?: string,
+    learnGame?: string
   }
 }
 
