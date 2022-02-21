@@ -8,8 +8,10 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const devServer = (isDev) => !isDev ? {} : {
   devServer: {
     open: true,
-    port: 8080,
-    contentBase: path.join(__dirname, 'public'),
+    port: 5050,
+    static: {
+      directory: path.join(__dirname, 'src'),
+    }    
   },
 };
 
@@ -68,4 +70,3 @@ module.exports = ({ development }) => ({
   },
   ...devServer(development)
 });
-

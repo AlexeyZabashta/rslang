@@ -4,7 +4,7 @@ import {
 } from './data';
 
 import { gameTimer } from './clickFunctionSprint';
-import { startSprint } from '../indexGame';
+import { startMiniGame } from '../indexGame';
 
 export const getWords = async () => {
   let group = 0;
@@ -39,7 +39,7 @@ const getAllHardUserWords = async () => {
   // .then(async (response) => {
   const hardWordsResponse = await request.json();
   const hardWordsArr: IaggregatedWord[] = await hardWordsResponse[0].paginatedResults;
-  //console.log('AllHardUserWords', hardWordsArr);
+  // console.log('AllHardUserWords', hardWordsArr);
   return hardWordsArr;
   // })
   /*
@@ -63,8 +63,8 @@ const getCurrPageUserWords = async () => {
   if (localStorage.getItem('group')) group = Number(localStorage.getItem('group'));
   if (localStorage.getItem('groupPage')) groupPage = Number(localStorage.getItem('groupPage'));
 
-  //console.log('group', group);
-  //console.log('groupPage', groupPage);
+  // console.log('group', group);
+  // console.log('groupPage', groupPage);
 
   const request = await fetch(`${baseUrl}/users/${userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${groupPage}},{"$or":[{"userWord.difficulty":"hard"},{"userWord.difficulty":"weak"}]}]}&wordsPerPage=20`, {
     method: 'GET',
@@ -78,7 +78,7 @@ const getCurrPageUserWords = async () => {
   const currUserWordsResponse = await request.json();
   const currUserWordsArr: IaggregatedWord[] = await currUserWordsResponse[0].paginatedResults;
   // console.log('response', response);
-  //console.log('CurrPageUserWords', currUserWordsArr);
+  // console.log('CurrPageUserWords', currUserWordsArr);
   return currUserWordsArr;
   /*
     .catch(async (error) => {
@@ -112,7 +112,7 @@ const playWord = async (wordId: string) => {
     `${baseUrl}/${curWordResponse.audioExample}`,
     `${baseUrl}/${curWordResponse.audioMeaning}`,
   ];
-  //console.log(`playList = ${playList}`);
+  // console.log(`playList = ${playList}`);
   audioPlayer.src = `${baseUrl}/${curWordResponse.audio}`;
 
   let track = 0;
@@ -157,17 +157,17 @@ const playWord = async (wordId: string) => {
 };
 
 export const renderTextbookPage = async () => {
-  //console.log('Отрисовываю страницу TextbookPage');
+  // console.log('Отрисовываю страницу TextbookPage');
 
   const pageWords: Iword[] = await getWords();
-  //console.log('pageWords', pageWords);
-  //console.log(pageWords[0].word);
+  // console.log('pageWords', pageWords);
+  // console.log(pageWords[0].word);
 
   const userPageWords = await getCurrPageUserWords();
-  //console.log('userPageWords', userPageWords);
+  // console.log('userPageWords', userPageWords);
 
   const diffPageWords = await getAllHardUserWords();
-  //console.log('diffPageWords', diffPageWords);
+  // console.log('diffPageWords', diffPageWords);
 
   const currPageCommonArr: IaggregatedWord[] = pageWords.map((item) => {
     const aggrIndex = userPageWords.findIndex((aggitem) => (aggitem._id === item.id));
@@ -344,7 +344,7 @@ export const renderTextbookPage = async () => {
 
   selectedPage.addEventListener('change', () => {
     localStorage.setItem('groupPage', String(selectedPage.value));
-    //console.log(selectedPage.selectedIndex);
+    // console.log(selectedPage.selectedIndex);
     selectedPage.options[selectedPage.selectedIndex].selected = true;
     renderTextbookPage();
   });
@@ -375,7 +375,7 @@ export const renderTextbookPage = async () => {
 
       const currGroupNum = Number((button as HTMLButtonElement).dataset.group);
       localStorage.setItem('group', String(currGroupNum));
-      //console.log('Выбрана группа учебника', currGroupNum);
+      // console.log('Выбрана группа учебника', currGroupNum);
       localStorage.setItem('groupPage', '0');
       // renderGroupBtns();
       if (currGroupNum === 6) {
@@ -396,7 +396,7 @@ export const renderTextbookPage = async () => {
     button.addEventListener('click', () => {
       const currWordId = String((button as HTMLButtonElement).dataset.audioplay);
       // const playWordBtn = document.querySelector(`.textbook-play[data-audioplay="${currWordId}"]`) as HTMLButtonElement;
-      //console.log(currWordId);
+      // console.log(currWordId);
       playWord(currWordId);
     });
   });
@@ -433,7 +433,7 @@ export const renderTextbookPage = async () => {
     })
       .then(async (response) => {
         const content: IUserWord = await response.json();
-        //console.log(content);
+        // console.log(content);
       })
       .catch(async (error) => {
         alert('Вам необходимо пройти авторизацию');
@@ -452,7 +452,7 @@ export const renderTextbookPage = async () => {
       body: JSON.stringify(word),
     });
     const updataContent: IUserWord = await rawResponse.json();
-    //console.log('updataContent = ', updataContent);
+    // console.log('updataContent = ', updataContent);
   };
 
   const deleteUserWord = async (wordId: string) => {
@@ -465,7 +465,7 @@ export const renderTextbookPage = async () => {
       },
     })
       .then(async (response) => {
-        //console.log('deleteUserWord response.status', response.status);
+        // console.log('deleteUserWord response.status', response.status);
       })
       .catch(async (error) => {
       // console.log('catch(error');
@@ -486,7 +486,7 @@ export const renderTextbookPage = async () => {
       },
     })
       .then(async (response) => {
-        //console.log('request', response.status);
+        // console.log('request', response.status);
 
         if (response.status === 200) {
           // console.log('Сработал updateUserWord');
@@ -507,7 +507,7 @@ export const renderTextbookPage = async () => {
 
   learnBtns.forEach(async (learnButton) => {
     learnButton.addEventListener('click', async () => {
-      //console.log('Нажал Learned');
+      // console.log('Нажал Learned');
       const currLearnedId = String((learnButton as HTMLButtonElement).dataset.learned);
       const curdiffButton = document.querySelector(`.difficult-word[data-difficult='${currLearnedId}']`) as HTMLButtonElement;
       learnButton.classList.add('_learned');
@@ -534,7 +534,7 @@ export const renderTextbookPage = async () => {
 
   difficultBtns.forEach(async (diffButton, i: number) => {
     diffButton.addEventListener('click', async () => {
-      //console.log('Нажал Dificult');
+      // console.log('Нажал Dificult');
       const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
       const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
       diffButton.classList.add('_difficult');
@@ -572,7 +572,11 @@ export const renderTextbookPage = async () => {
   sprintGame.addEventListener('click', async () => {
     const groupSpr = Number(localStorage.getItem('group'));
     const pageSpr = Number(localStorage.getItem('groupPage'));
-    await startSprint(false, groupSpr, pageSpr);
-    await gameTimer();
+    await startMiniGame(true, false, groupSpr, pageSpr);
+  });
+  audioGame.addEventListener('click', async () => {
+    const groupSpr = Number(localStorage.getItem('group'));
+    const pageSpr = Number(localStorage.getItem('groupPage'));
+    await startMiniGame(false, false, groupSpr, pageSpr);
   });
 };

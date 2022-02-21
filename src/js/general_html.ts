@@ -1,4 +1,3 @@
-import { bodyHtml } from './data';
 import { homePage } from './render_home_page';
 import { aboutAppPage } from './render_about_app';
 import { renderTextbookPage } from './render_textbook';
@@ -6,6 +5,7 @@ import { renderStatisticsPage } from './render_statistics';
 import { renderLoginWindow } from './render_login';
 
 export const renderHTMLStructure = async () => {
+  const bodyHtml = document.querySelector('.body') as HTMLElement;
   bodyHtml.innerHTML = '';
   const header = document.createElement('header');
   header.classList.add('header');
@@ -47,7 +47,7 @@ renderHTMLStructure().then(async () => {
   .then(async () => {
     const homeHtml = document.querySelector('.nav-home') as HTMLButtonElement;
     homeHtml.addEventListener('click', () => {
-      //console.log(' вызываю homePage();');
+      // console.log(' вызываю homePage();');
       localStorage.setItem('currentPage', 'Home');
       const headerTitle = document.querySelector('.header-current') as HTMLElement;
       headerTitle.innerHTML = 'Home';
@@ -58,7 +58,7 @@ renderHTMLStructure().then(async () => {
   .then(async () => {
     const textbookHtml = document.querySelector('.nav-textbook') as HTMLButtonElement;
     textbookHtml.addEventListener('click', () => {
-      //console.log(' вызываю textbookPage');
+      // console.log(' вызываю textbookPage');
       const mainHtml = document.querySelector('.main') as HTMLElement;
       mainHtml.innerHTML = `
     `;
@@ -73,7 +73,7 @@ renderHTMLStructure().then(async () => {
   .then(async () => {
     const statisticsHtml = document.querySelector('.nav-statistics') as HTMLButtonElement;
     statisticsHtml.addEventListener('click', () => {
-      //console.log(' вызываю Statistics page();');
+      // console.log(' вызываю Statistics page();');
       localStorage.setItem('currentPage', 'Statistics');
       const headerTitle = document.querySelector('.header-current') as HTMLElement;
       headerTitle.innerHTML = 'Statistics';
@@ -84,7 +84,7 @@ renderHTMLStructure().then(async () => {
   .then(async () => {
     const developersHtml = document.querySelector('.nav-developers') as HTMLButtonElement;
     developersHtml.addEventListener('click', () => {
-      //console.log(' вызываю About App page();');
+      // console.log(' вызываю About App page();');
       localStorage.setItem('currentPage', 'About App');
       const headerTitle = document.querySelector('.header-current') as HTMLElement;
       headerTitle.innerHTML = 'About App';
@@ -95,7 +95,7 @@ renderHTMLStructure().then(async () => {
   .then(async () => {
     const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
     loginHtml.addEventListener('click', () => {
-      //console.log(' Хочу залогинится;');
+      // console.log(' Хочу залогинится;');
       // localStorage.setItem('currentPage', 'About App');
       renderLoginWindow();
     });

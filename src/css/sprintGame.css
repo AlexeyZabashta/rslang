@@ -2,7 +2,7 @@ body.active {
   overflow-y: hidden;
 }
 
-.wrapper_minigame {  
+.sprint_minigame {  
   display:flex;
   justify-content: center;
   align-items: center; 
@@ -11,7 +11,7 @@ body.active {
   transition: .5s;
 }
 
-.wrapper_minigame.block {
+.sprint_minigame.block {
   opacity: 0; 
   transition: .5s;
 }
@@ -195,7 +195,8 @@ body.active {
   z-index: 200;
 }
 
-.wrapper_end_game {  
+.wrapper_end_game {
+  display: none;  
   position: absolute;  
   top: 120%;
   left: 0;
@@ -205,6 +206,7 @@ body.active {
 }
 
 .wrapper_end_game.active {
+  display: block; 
   top: 0;
   left: 0;
   transition: .5s;

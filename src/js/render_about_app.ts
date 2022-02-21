@@ -1,5 +1,5 @@
 export const aboutAppPage = (async () => {
-  //console.log('Отрисовываю страницу Разработчики');
+  // console.log('Отрисовываю страницу Разработчики');
   const mainHtml = document.querySelector('.main') as HTMLElement;
   mainHtml.innerHTML = '';
   mainHtml.innerHTML = `<section class="developers">
