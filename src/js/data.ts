@@ -1,4 +1,6 @@
-export const baseUrl = 'http://localhost:2020';
+export const bodyHtml = document.querySelector('.body') as HTMLElement;
+export const baseUrl = 'http://alexrslangproject.herokuapp.com';
+
 
 export interface Iword {
   audio: string
@@ -54,8 +56,8 @@ export interface IUserWordOptions {
   optional: {
     group: string,
     groupPage: string,
-    trueAnsw: number,
-    falseAnsw: number,
+    trueAnsw?: number,
+    falseAnsw?: number,
     answSeries?: number,
     learnDate?: string,
     learnGame?: string

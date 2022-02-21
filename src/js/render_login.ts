@@ -12,7 +12,8 @@ export const renderLoginWindow = async () => {
         <div class="login-exit">
             <button class="login-exit_btn"></button>
         </div>
-        <h4 class="login-head"> Sign up </h4> 
+        <h4 class="login-head"> Please login or register </h4>
+        <h4 class="logout-head"> You are logged in </h4>  
         <form class="login-form">
           <input class="login-input _name" 
             type="text"
@@ -59,10 +60,10 @@ export const renderLoginWindow = async () => {
         </form>  
         <div class="login-btn_wrapper">
             <button class="login-btn sign-in">
-                 Sign in 
+                 Log in 
             </button>
             <button class="login-btn log-out">
-                 Logout 
+                 Log out 
             </button>      
             <p class="notReg">Are not yet registered?</p>        
             <button class="login-btn registration">
@@ -81,7 +82,8 @@ export const renderLoginWindow = async () => {
     loginWindow.style.opacity = '0';
     loginWindow.style.visibility = 'hidden';
   });
-
+  const loginHead = document.querySelector('.login-head') as HTMLElement;
+  const logoutHead = document.querySelector('.logout-head') as HTMLElement;
   const loginInputData = document.querySelector('._name') as HTMLInputElement;
   const emailInputData = document.querySelector('._email') as HTMLInputElement;
   const passInputData = document.querySelector('._password') as HTMLInputElement;
@@ -184,11 +186,15 @@ export const renderLoginWindow = async () => {
       logoutBtn.classList.add('_logged');
       registrationBtn.classList.add('_logged');
       notRegMessage.classList.add('_logged');
+      loginHead.classList.add('_logged');
+      logoutHead.classList.add('_logged');
     } else {
       signInBtn.classList.remove('_logged');
       logoutBtn.classList.remove('_logged');
       registrationBtn.classList.remove('_logged');
       notRegMessage.classList.remove('_logged');
+      loginHead.classList.remove('_logged');
+      logoutHead.classList.remove('_logged');
     }
   };
 
@@ -227,11 +233,15 @@ export const renderLoginWindow = async () => {
     logoutBtn.classList.add('_logged');
     registrationBtn.classList.add('_logged');
     notRegMessage.classList.add('_logged');
+    loginHead.classList.add('_logged');
+    logoutHead.classList.add('_logged');
   } else {
     signInBtn.classList.remove('_logged');
     logoutBtn.classList.remove('_logged');
     registrationBtn.classList.remove('_logged');
     notRegMessage.classList.remove('_logged');
+    loginHead.classList.remove('_logged');
+    logoutHead.classList.remove('_logged');
   }
 
   logoutBtn.addEventListener('click', async () => {
@@ -241,11 +251,15 @@ export const renderLoginWindow = async () => {
       logoutBtn.classList.add('_logged');
       registrationBtn.classList.add('_logged');
       notRegMessage.classList.add('_logged');
+      loginHead.classList.add('_logged');
+      logoutHead.classList.add('_logged');
     } else {
       signInBtn.classList.remove('_logged');
       logoutBtn.classList.remove('_logged');
       registrationBtn.classList.remove('_logged');
       notRegMessage.classList.remove('_logged');
+      loginHead.classList.remove('_logged');
+      logoutHead.classList.remove('_logged');
     }
   });
 };

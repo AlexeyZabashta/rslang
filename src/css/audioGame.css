@@ -9,7 +9,7 @@
 
 button {
   cursor: pointer;
-  appearance: none; 
+  /*appearance: none; */
 }
 
 button:disabled {

@@ -18,6 +18,7 @@
   ],
   "rules": {
     "no-plusplus": "off",
+    "no-underscore-dangle": "off",
     "no-console": "warn",
     "max-len": ["warn", { "code": 120 }],
     "indent": ["warn", 2, {

@@ -1,12 +1,16 @@
 import { aboutAppPage } from './render_about_app';
 import { renderTextbookPage } from './render_textbook';
 import { renderStatisticsPage } from './render_statistics';
+import { renderLoginWindow } from './render_login';
 
 export const homePage = async () => {
   // console.log('Отрисовываю стартовую страницу');
   const mainHtml = document.querySelector('.main') as HTMLElement;
   mainHtml.innerHTML = '';
   mainHtml.innerHTML = `<section class="home">
+  <button class="header-login_btn"></button>
+    <div class="header-login_block"></div>
+  <div class="home-wrapper">
     <div class="home-intro home-article">
       <h2 class="home-intro_title">RS Lang</h2>
       <div class="home-intro_subtitle">
@@ -52,6 +56,8 @@ export const homePage = async () => {
         Meet the app development team
       </div>
     </div>
+  </div>
+  
   </section>
   `;
 
@@ -59,6 +65,8 @@ export const homePage = async () => {
   textbookHtml.addEventListener('click', () => {
     // console.log(' вызываю textbookPage');
     localStorage.setItem('currentPage', 'Textbook');
+    const headerTitle = document.querySelector('.header-current') as HTMLElement;
+    headerTitle.innerHTML = 'TextBook';
     renderTextbookPage();
   });
 
@@ -66,6 +74,8 @@ export const homePage = async () => {
   gamesHtml.addEventListener('click', () => {
     // console.log(' вызываю Games page();');
     localStorage.setItem('currentPage', 'Games');
+    const headerTitle = document.querySelector('.header-current') as HTMLElement;
+    headerTitle.innerHTML = 'Games';
     // renderStatisticsPage();
   });
 
@@ -73,6 +83,8 @@ export const homePage = async () => {
   statisticsHtml.addEventListener('click', () => {
     // console.log(' вызываю Statistics page();');
     localStorage.setItem('currentPage', 'Statistics');
+    const headerTitle = document.querySelector('.header-current') as HTMLElement;
+    headerTitle.innerHTML = 'Statistics';
     renderStatisticsPage();
   });
 
@@ -80,6 +92,19 @@ export const homePage = async () => {
   developersHtml.addEventListener('click', () => {
     // console.log(' вызываю About App page();');
     localStorage.setItem('currentPage', 'About App');
+    const headerTitle = document.querySelector('.header-current') as HTMLElement;
+    headerTitle.innerHTML = 'About App';
     aboutAppPage();
   });
+
+  const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
+  loginHtml.addEventListener('click', () => {
+    // console.log(' Хочу залогинится;');
+    // localStorage.setItem('currentPage', 'About App');
+    renderLoginWindow();
+  });
+
+  if (localStorage.getItem('userData')) {
+    loginHtml.classList.add('_logged');
+  } else loginHtml.classList.remove('_logged');
 };

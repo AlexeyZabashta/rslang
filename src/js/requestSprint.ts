@@ -78,8 +78,8 @@ export const updateWordUserSprint = async (group:number, page:number, idWord:str
     optional: {
       group: `${group}`,
       groupPage: `${page}`,
-      trueAnsw: val ? oldUserWord.optional.trueAnsw + 1 : oldUserWord.optional.trueAnsw,
-      falseAnsw: !val ? oldUserWord.optional.falseAnsw + 1 : oldUserWord.optional.falseAnsw,
+      trueAnsw: val ? (oldUserWord.optional.trueAnsw as number) + 1 : oldUserWord.optional.trueAnsw,
+      falseAnsw: !val ? (oldUserWord.optional.falseAnsw as number) + 1 : oldUserWord.optional.falseAnsw,
       answSeries: newDiff.ser,
       learnDate: checkLearnDate(newDiff, oldUserWord),
       learnGame: checkLearnGame(newDiff, oldUserWord),
@@ -164,18 +164,3 @@ export async function getAggrWordsTest(group:number, page:number) {
   console.log('response Aggr Words', resp);
   return resp;
 }
-
-export const getWordUserSprintTest = async () => {
-  console.log('getWordUserSprintTest');
-  const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response | void = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${data.token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(async (response) => {
-    console.log(await response.json());
-  });
-};
