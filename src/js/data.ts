@@ -55,8 +55,11 @@ export interface IUserWordOptions {
   optional: {
     group: string,
     groupPage: string,
-    trueAnsw: number,
-    falseAnsw: number
+    trueAnsw?: number,
+    falseAnsw?: number,
+    answSeries?: number,
+    learnDate?: string,
+    learnGame?: string
   }
 }
 
