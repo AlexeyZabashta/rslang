@@ -1,6 +1,5 @@
 export const bodyHtml = document.querySelector('.body') as HTMLElement;
-export const baseUrl = 'http://alexrslangproject.herokuapp.com';
-
+export const baseUrl = 'https://alexrslangproject.herokuapp.com';
 
 export interface Iword {
   audio: string

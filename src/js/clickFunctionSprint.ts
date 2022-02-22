@@ -189,12 +189,12 @@ async function checkIndexTextbook() {
 
 function allBtnsBlock() {
   const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.answ_btn');
-  btns.forEach((item) => item.disabled = true);
+  btns.forEach((item) => { item.disabled = true; });
 }
 
 function allBtnsUnlock() {
   const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.answ_btn');
-  btns.forEach((item) => item.disabled = false);
+  btns.forEach((item) => { item.disabled = false; });
 }
 
 export async function checkAuthSprint(flag: boolean, answ: boolean) {

@@ -684,6 +684,9 @@ button {
   cursor: pointer;
   transition: all 0.7s;
 }
+#textbook-select._learned-page{
+  background-color: var(--gold);
+}
 #textbook-select::-webkit-scrollbar {
   display: none;
 }

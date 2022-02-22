@@ -27,7 +27,6 @@ const getAllHardUserWords = async () => {
     const { userId } = getauthentData;
     const userToken: string = getauthentData.token;
 
-
     const request = await fetch(`${baseUrl}/users/${userId}/aggregatedWords?filter={"userWord.difficulty":"hard"}&wordsPerPage=3600`, {
       method: 'GET',
       headers: {
@@ -48,7 +47,6 @@ getAllHardUserWords().catch(async (error) => {
   if (error.status === 402) {
     alert('You need to log in again!!!\n\n Go to the Home page and login');
     // renderLoginWindow();
-
 
   // error.message; // 'An error has occurred: 404'
   }
@@ -195,6 +193,9 @@ export const renderTextbookPage = async () => {
     <audio class="textbook-player"></audio>
   </section>
   `;
+
+  const audioGame = document.querySelector('.textbook-audio_btn') as HTMLButtonElement;
+  const sprintGame = document.querySelector('.textbook-sprint_btn') as HTMLButtonElement;
 
   const prevBtn = document.querySelector('.textbook-prev_btn') as HTMLButtonElement;
   const nextBtn = document.querySelector('.textbook-nex_tbtn') as HTMLButtonElement;
@@ -600,13 +601,25 @@ export const renderTextbookPage = async () => {
       if ((countLearnedsWords + countDifficultWords) === 20 && localStorage.getItem('group') !== '6') {
         // console.log('Страница изучена');
         bodyHtml.classList.add('_learned-page');
-      } else bodyHtml.classList.remove('_learned-page');
+        selectedPage.classList.add('_learned-page');
+        audioGame.disabled = true;
+        audioGame.style.opacity = '0.5';
+        sprintGame.disabled = true;
+        sprintGame.style.opacity = '0.5';
+      } else {
+        bodyHtml.classList.remove('_learned-page');
+        selectedPage.classList.remove('_learned-page');
+        audioGame.disabled = false;
+        audioGame.style.opacity = '1';
+        sprintGame.disabled = false;
+        sprintGame.style.opacity = '1';
+      }
     };
     sumUserWords();
 
     learnBtns.forEach(async (learnButton) => {
       learnButton.addEventListener('click', async () => {
-        // console.log('Нажал Learned');
+        console.log('Нажал Learned');
         const currLearnedId = String((learnButton as HTMLButtonElement).dataset.learned);
         const curdiffButton = document.querySelector(`.difficult-word[data-difficult='${currLearnedId}']`) as HTMLButtonElement;
         const textBookItem = document.querySelector(`.textbook-item[data-item='${currLearnedId}']`) as HTMLElement;
@@ -629,14 +642,14 @@ export const renderTextbookPage = async () => {
           groupPage,
           nowDate,
         ).catch((error) => {
-        // error.message; // 'An error has occurred: 404'
+          // error.message; // 'An error has occurred: 404'
         });
       });
     });
 
     difficultBtns.forEach(async (diffButton, i: number) => {
       diffButton.addEventListener('click', async () => {
-        // console.log('Нажал Dificult');
+        console.log('Нажал Dificult');
         const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
         const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
         const textBookItem = document.querySelector(`.textbook-item[data-item='${currDifficultId}']`) as HTMLElement;
@@ -661,7 +674,7 @@ export const renderTextbookPage = async () => {
             groupPage,
             nowDate,
           ).catch((error) => {
-          // error.message; // 'An error has occurred: 404'
+            // error.message; // 'An error has occurred: 404'
           });
         }
 
@@ -672,8 +685,6 @@ export const renderTextbookPage = async () => {
       });
     });
 
-    const audioGame = document.querySelector('.textbook-audio_btn') as HTMLButtonElement;
-    const sprintGame = document.querySelector('.textbook-sprint_btn') as HTMLButtonElement;
     sprintGame.addEventListener('click', async () => {
       const groupSpr = Number(localStorage.getItem('group'));
       const pageSpr = Number(localStorage.getItem('groupPage'));
