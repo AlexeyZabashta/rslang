@@ -142,7 +142,7 @@ export const getWordUserSprint = async (idWord:string) => {
   });
   const resp = await (await request as Response).json();
   return resp;
-  /*.then(async (response) => {
+  /* .then(async (response) => {
     console.log(response);
     if (response.status === 200) {
       console.log('Сработал updateUserWord');
@@ -154,14 +154,13 @@ export const getWordUserSprint = async (idWord:string) => {
       createWordUserSprint(group, page, idWord, val);
       return 'sucsess';
     }
-  });*/
+  }); */
 };
-
 
 export async function checkGetWordStatus(group:number, page:number, idWord:string, val: boolean) {
   getWordUserSprint(idWord)
-    .then((response) => {      
-      console.log('Сработал updateUserWord');    
+    .then((response) => {
+      console.log('Сработал updateUserWord');
       updateWordUserSprint(group, page, idWord, val, response);
     })
     .catch((error) => {
@@ -177,21 +176,22 @@ type UserStat = {
   optional: UserOptional
 };
 
-type UserOptional = {  
+type UserOptional = {
   sprint?: UserOptionalGame,
   audio?: UserOptionalGame
 };
 
-/*type UserOptionalGen = {
+/* type UserOptionalGen = {
   new: number,
   weak: number,
   percent: string
-};*/
+}; */
 
-type UserOptionalGame = {  
+type UserOptionalGame = {
   percent: string,
   bestSer: number
 };
+
 
 export async function getUserStat() {
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
@@ -210,13 +210,13 @@ export async function getUserStat() {
 export async function getAggrWordsUserGeneral(val:number) {
   const today = new Date().toLocaleDateString();
   const optionsVar:string[] = [
-    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}`, //всего новых слов
-    `{"userWord.difficulty":"weak"}, {"userWord.optional.learnDate":"${today}"}`, //выучено за день
-    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}, {"userWord.optional.learnGame":"Sprint"}`, //новых слов в спринте
-    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}, {"userWord.optional.learnGame":"Audio"}`, //новых слов в аудио
-  ]; 
+    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}`, // всего новых слов
+    `{"userWord.difficulty":"weak"}, {"userWord.optional.learnDate":"${today}"}`, // выучено за день
+    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}, {"userWord.optional.learnGame":"Sprint"}`, // новых слов в спринте
+    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}, {"userWord.optional.learnGame":"Audio"}`, // новых слов в аудио
+  ];
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-      
+
   const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[${optionsVar[val]}]}`, {
     method: 'GET',
     headers: {
@@ -230,14 +230,17 @@ export async function getAggrWordsUserGeneral(val:number) {
   return resp.length;
 }
 
+
 function middlePercSprint(newPer:string, oldPerc:UserStat) {
   if (oldPerc.optional.sprint) {
     const perc1 = parseInt(newPer);
     const perc2 = parseInt(oldPerc.optional.sprint.percent);
+
     return `${(perc1 + perc2) / 2}%`;
   }
   return newPer;
 }
+
 
 function middlePercAudio(newPer:string, oldPerc:UserStat) {
   if (oldPerc.optional.audio) {
@@ -249,6 +252,7 @@ function middlePercAudio(newPer:string, oldPerc:UserStat) {
 }
 
 async function requestUpdateUserSprint(newOptions:UserStat) {
+
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
   const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
     method: 'PUT',
@@ -260,6 +264,7 @@ async function requestUpdateUserSprint(newOptions:UserStat) {
     body: JSON.stringify(newOptions),
   });
 }
+
 
 export async function updateUserStatSprint(perc:string, ser:number, oldInfo:UserStat) {
   if (oldInfo.optional.audio) {
@@ -292,6 +297,7 @@ export async function updateUserStatSprint(perc:string, ser:number, oldInfo:User
 }
 
 export async function requestUpdateUserAudio(newOptions:UserStat) {
+
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
   const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
     method: 'PUT',
@@ -303,7 +309,6 @@ export async function requestUpdateUserAudio(newOptions:UserStat) {
     body: JSON.stringify(newOptions),
   });    
 }
-
 
 export async function updateUserStatAudio(perc:string, ser:number, oldInfo:UserStat) {
   if (oldInfo.optional.sprint) {
@@ -333,34 +338,36 @@ export async function updateUserStatAudio(perc:string, ser:number, oldInfo:UserS
     };
     requestUpdateUserAudio(newOptions);
   }  
+
 }
 
 function createOptionSprint(perc:string, ser:number, val:boolean) {
   if (val) {
     return {
       learnedWords: 0,
-      optional: {      
-        sprint: {        
+      optional: {
+        sprint: {
           percent: perc,
           bestSer: ser,
-        },      
+        },
       },
     };
-  } else {
-    return {
-      learnedWords: 0,
-      optional: {      
-        audio: {        
-          percent: perc,
-          bestSer: ser,
-        },      
+  }
+  return {
+    learnedWords: 0,
+    optional: {
+      audio: {
+        percent: perc,
+        bestSer: ser,
       },
-    };
-  }  
+    },
+  };
 }
+
 
 export async function createUserStat(perc:string, ser:number, val: boolean) { 
   const newOptions:UserStat = createOptionSprint(perc, ser, val);  
+
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
   const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
     method: 'PUT',
@@ -370,9 +377,30 @@ export async function createUserStat(perc:string, ser:number, val: boolean) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newOptions),
-  });   
+  });
 }
 
+export async function checkGetUserStatus(percent:string, bestSer:number) {
+  getUserStat()
+    .then((response) => {
+      console.log('Сработал updateUserWord');
+      if (gameFlag[0]) {
+        updateUserStatSprint(percent, bestSer, response);
+      } else {
+        updateUserStatAudio(percent, bestSer, response);
+      }
+    })
+    .catch((error) => {
+      console.clear();
+      const e = new Error('error 404');
+      console.log('Сработал createUserWord', e);
+      if (gameFlag[0]) {
+        createUserStat(percent, bestSer, true);
+      } else {
+        createUserStat(percent, bestSer, false);
+      }
+    });
+}
 
 export async function checkGetUserStatus(percent:string, bestSer:number) {
   getUserStat()
@@ -404,6 +432,7 @@ export async function checkGetUserOptions(): Promise<boolean | UserStat>{
     .then((response) => {        
       out = response;
       return out;
+
     })
     .catch((error) => {
       console.clear();

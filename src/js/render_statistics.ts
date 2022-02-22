@@ -32,7 +32,7 @@ export const renderStatisticsPage = async () => {
   <button id="putStat">putStat</button>
   <button id="testStat">testStat</button>
   const getStat = document.querySelector('#getStat') as HTMLElement;
-  getStat.addEventListener('click', getUserStat); 
+  getStat.addEventListener('click', getUserStat);
   const testStat = document.querySelector('#testStat') as HTMLElement;
   testStat.addEventListener('click', () => getAggrWordsUserGeneral(1));*/
 };
