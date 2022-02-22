@@ -402,30 +402,6 @@ export async function checkGetUserStatus(percent:string, bestSer:number) {
     });
 }
 
-export async function checkGetUserStatus(percent:string, bestSer:number) {
-  getUserStat()
-    .then((response) => {          
-      if (gameFlag[0]) {
-        console.log('Сработал checkGetUserStatus для Sprint');
-        updateUserStatSprint(percent, bestSer, response);
-      } else {
-        console.log('Сработал checkGetUserStatus для Audio');
-        updateUserStatAudio(percent, bestSer, response);
-      }
-    })
-    .catch((error) => {
-      console.clear();
-      const e = new Error('error 404');      
-      if (gameFlag[0]) {
-        createUserStat(percent, bestSer, true);
-        console.log('Сработал createUserWord для Sprint');
-      } else {
-        console.log('Сработал createUserWord для Audio');
-        createUserStat(percent, bestSer, false);
-      }
-    });
-}
-
 export async function checkGetUserOptions(): Promise<boolean | UserStat>{
   let out:boolean | UserStat;
   return getUserStat()

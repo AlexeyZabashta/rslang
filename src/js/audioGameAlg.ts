@@ -130,7 +130,7 @@ async function endAudioGame() {
         }, 1000);
       }
     }
-
+  });
   total.innerHTML = `Total words: ${answersAudio.length}`;
   series.innerHTML = `Best answer series: ${bestSeriesAudio}`;
   const perc = rightAnswAudio / indexAnsw;
@@ -145,6 +145,7 @@ async function endAudioGame() {
   btnTextbook.addEventListener('click', renderTextbookPage);
   btnMain.addEventListener('click', homePage);
 }
+
 
 async function checkUserWordAudio(val:boolean) {
   if (localStorage.getItem('userData')) {
