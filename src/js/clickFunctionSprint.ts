@@ -140,16 +140,16 @@ export async function createSprintResult() {
   wrapperEndgame.classList.add('active');
   endScore.innerHTML = `Score: ${massPoint[0]}`;
   endTotal.innerHTML = `Total number of words: ${allAnswers}`;
-  endSer.innerHTML = `Best right-series:  ${bestSeries}`;
+  endSer.innerHTML = `Best right-series:  ${bestSeriesOld}`;
   const perc = rightAnswers / allAnswers;
   const percStr = (perc * 100).toFixed(1);
   if (allAnswers > 0) {
     endPer.innerHTML = `Answered correctly:  ${percStr}%`;
   } else {
     endPer.innerHTML = 'Answered correctly:  0';
-  }
-  // console.log('stop game');
-  await checkGetUserStatus(percStr, bestSeries);
+  }  
+  console.log('stop game' );
+  await checkGetUserStatus(percStr, bestSeriesOld);
 }
 
 export async function gameTimer() {

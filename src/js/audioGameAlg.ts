@@ -130,8 +130,8 @@ async function endAudioGame() {
         }, 1000);
       }
     }
-  });
-  total.innerHTML = `Total words: ${indexAnsw}`;
+
+  total.innerHTML = `Total words: ${answersAudio.length}`;
   series.innerHTML = `Best answer series: ${bestSeriesAudio}`;
   const perc = rightAnswAudio / indexAnsw;
   const percStr = (perc * 100).toFixed(1);
