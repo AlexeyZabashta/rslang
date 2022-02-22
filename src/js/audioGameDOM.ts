@@ -1,20 +1,21 @@
 import { Word } from './typeSprint';
 import { randomDiap } from './clickFunctionSprint';
-import { updateAudioGameDom, addListnersAudioGame } from './audioGameAlg';
+import { updateAudioGameDom, addListnersAudioGame, indexVariant } from './audioGameAlg';
 
 export const rightAnswNum: number[] = [];
 
 export const audioDOM = async (val:Word) => {
   const mainSection = document.querySelector('.main') as HTMLElement;
   const ind = randomDiap(0, 4); // индекс кнопки с верным ответом
-  console.log('верная кнопка: ', ind + 1);
+  //console.log('верная кнопка: ', ind + 1);
   rightAnswNum.push(ind);
   mainSection.innerHTML = `
   <section class="wrapper_audioGame">
+    <div class="audioGame_content">
     <div class="word_block">
-      <audio id="audioGame_audio" src="http://localhost:2020/${val.audio}"></audio>
+      <audio id="audioGame_audio" src="http://alexrslangproject.herokuapp.com/${val.audio}"></audio>
       <div class="hide_info">
-        <div class="audio_img" style="background-image: url('http://localhost:2020/${val.image}');"></div>    
+        <div class="audio_img" style="background-image: url('http://alexrslangproject.herokuapp.com/${val.image}');"></div>    
         <div class="audio_answer">${val.word} (${val.wordTranslate})</div>
       </div>
       <button id="play_word">
@@ -61,6 +62,8 @@ export const audioDOM = async (val:Word) => {
     The completed pages in the textbook are over!<br>
     Back to Menu or Text Book for play again    
     </div>
+    </div>
   </section>`;
   addListnersAudioGame(ind);
+  indexVariant.length = 0;
 };
