@@ -2,7 +2,9 @@ import { Word, GrPg } from './typeSprint';
 import { checkBonus, massPoint } from './bonusAlgSprint';
 import { IaggregatedWord } from './data';
 import { startFlag, groupPage, gameFlag } from '../indexGame';
-import { getWordUserSprint, getWordsMiniGame, buildMassSprint, checkGetWordStatus, checkGetUserStatus } from './requestSprint';
+import {
+  getWordUserSprint, getWordsMiniGame, buildMassSprint, checkGetWordStatus, checkGetUserStatus,
+} from './requestSprint';
 
 export const answers:Word[] = [];
 export const answersTextBook:IaggregatedWord[] = [];
@@ -112,11 +114,11 @@ async function checkPageTextBook(group:number, page:number):Promise<number | boo
     if (newAnswMass.length === 0) {
       await checkPageTextBook(group, newPage);
     }
-    //console.log('newPage ', newPage);
+    // console.log('newPage ', newPage);
     return newPage;
   }
   const newPage = false;
-  //console.log('newPage ', newPage);
+  // console.log('newPage ', newPage);
   return newPage;
 }
 
@@ -135,7 +137,7 @@ export async function createSprintResult() {
   const endSer = document.querySelector('.end_game_series') as HTMLDivElement;
   const endPer = document.querySelector('.end_game_percent') as HTMLDivElement;
   wrapperMinigame.classList.add('block');
-  wrapperEndgame.classList.add('active');  
+  wrapperEndgame.classList.add('active');
   endScore.innerHTML = `Score: ${massPoint[0]}`;
   endTotal.innerHTML = `Total number of words: ${allAnswers}`;
   endSer.innerHTML = `Best right-series:  ${bestSeries}`;
@@ -145,15 +147,15 @@ export async function createSprintResult() {
     endPer.innerHTML = `Answered correctly:  ${percStr}%`;
   } else {
     endPer.innerHTML = 'Answered correctly:  0';
-  }  
-  //console.log('stop game');
+  }
+  // console.log('stop game');
   await checkGetUserStatus(percStr, bestSeries);
 }
 
 export async function gameTimer() {
   const timerValue = document.querySelector('.timer_value') as HTMLElement;
   timer = document.querySelector('#game_timer') as HTMLAudioElement;
-  //console.log(timer);
+  // console.log(timer);
   timer.play();
   timerId = setTimeout(function tick() {
     if (timer.currentTime < timer.duration) {
@@ -179,7 +181,7 @@ async function checkIndexTextbook() {
     const newPage:number | boolean = await checkPageTextBook(group, page);
     if (typeof newPage === 'number') {
       await checkNewPageTextbookSprint(group, newPage);
-      //console.log('answers ', answers);
+      // console.log('answers ', answers);
       await newWordDOM();
     } else {
       createSprintResult();
@@ -201,19 +203,19 @@ function allBtnsUnlock() {
 
 export async function checkAuthSprint(flag: boolean, answ: boolean) {
   if (localStorage.getItem('userData')) {
-    if (flag === answ) {      
+    if (flag === answ) {
       checkGetWordStatus(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, true).catch(async (error) => {
-        //console.log('abc');
-        if (error.status === 404) {          
-          //console.log(error.status);
-        }         
+        // console.log('abc');
+        if (error.status === 404) {
+          // console.log(error.status);
+        }
       });
     } else {
       checkGetWordStatus(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, false).catch(async (error) => {
-        //console.log('abc');
-        if (error.status === 404) {          
-          //console.log(error.status);
-        }        
+        // console.log('abc');
+        if (error.status === 404) {
+          // console.log(error.status);
+        }
       });
     }
   }
@@ -238,7 +240,7 @@ export async function checkAnsw(val:boolean) {
     await checkIndex();
     newWordDOM();
   } else {
-    //console.log('textBook');
+    // console.log('textBook');
     checkAuthSprint(answerFlag, val);
     allBtnsBlock();
     await checkIndexTextbook().then(() => {

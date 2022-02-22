@@ -29,7 +29,7 @@ export const renderStatisticsPage = async () => {
 </section> 
     `;
   const getStat = document.querySelector('#getStat') as HTMLElement;
-  getStat.addEventListener('click', getUserStat); 
+  getStat.addEventListener('click', getUserStat);
   const testStat = document.querySelector('#testStat') as HTMLElement;
   testStat.addEventListener('click', () => getAggrWordsUserGeneral(1));
 };

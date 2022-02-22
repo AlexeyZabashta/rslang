@@ -43,13 +43,9 @@ const getAllHardUserWords = async () => {
   } return false;
 };
 getAllHardUserWords().catch(async (error) => {
-  // console.log('catch(error');
-  if (error.status === 402) {
-    alert('You need to log in again!!!\n\n Go to the Home page and login');
-    // renderLoginWindow();
-
-  // error.message; // 'An error has occurred: 404'
-  }
+  alert('You need to log in again!!!\n\n Go to the Home page and login, or continue as an Anonymous user');
+  localStorage.removeItem('userData');
+  window.location.reload();
 });
 
 const getCurrPageUserWords = async () => {
@@ -313,9 +309,9 @@ export const renderTextbookPage = async () => {
         <button class="word-btn difficult-word ${wordDifficultyFlag}" data-difficult='${id}'>Difficult</button>      
       </div>
       <div class="textbook-answ_wrapper">
-        <span class="answ-true">${wordTrueAnsw}</span>
-        <span class="answ-separator">/</span>
-        <span class="answ-false">${wordFalseAnsw}</span>
+        <span class="answ-true">true  :${wordTrueAnsw}</span>
+        <span class="answ-separator"></span>
+        <span class="answ-false">false:${wordFalseAnsw}</span>
       </div>
       </div>
       <div class="textbook-word_blur"></div>
@@ -366,9 +362,9 @@ export const renderTextbookPage = async () => {
         <button class="word-btn difficult-word _delete-word" data-difficult='${elem._id}'>Remove</button>      
       </div>
       <div class="textbook-answ_wrapper">
-        <span class="answ-true">0</span>
-        <span class="answ-separator">/</span>
-        <span class="answ-false">0</span>
+        <span class="answ-true">true  :${elem.userWord?.optional.trueAnsw}</span>
+        <span class="answ-separator"></span>
+        <span class="answ-false">false:${elem.userWord?.optional.falseAnsw}</span>
       </div>
       </div>
       <div class="textbook-word_blur"></div>
@@ -494,9 +490,9 @@ export const renderTextbookPage = async () => {
           // console.log(content);
         })
         .catch(async (error) => {
-          alert('Вам необходимо пройти авторизацию');
-
-        // error.message; // 'An error has occurred: 404'
+          alert('You need to log in again!!!\n\n Go to the Home page and login, or continue as an Anonymous user');
+          localStorage.removeItem('userData');
+          window.location.reload();
         });
     };
 
@@ -509,11 +505,21 @@ export const renderTextbookPage = async () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(word),
-      });
-      const updataContent: IUserWord = await rawResponse.json();
-      // console.log('updataContent = ', updataContent);
+      })
+        .then(async (response) => {
+          const updataContent: IUserWord = await response.json();
+          console.log(updataContent);
+        })
+        .catch(async (error) => {
+          alert('You need to log in again!!!\n\n Go to the Home page and login,\n               or \ncontinue as an Anonymous user');
+          localStorage.removeItem('userData');
+          window.location.reload();
+
+        // error.message; // 'An error has occurred: 404'
+        });
     };
 
+    /* ---------------Заменяем на updateUserWord
     const deleteUserWord = async (wordId: string) => {
       const rdeleteResponse = await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
         method: 'DELETE',
@@ -531,6 +537,7 @@ export const renderTextbookPage = async () => {
           // error.message; // 'An error has occurred: 404'
         });
     };
+    */
 
     const getUserWord = async (wordId: string, token: string, wordDifficulty: string,
       wordGroup: number, wordGroupPage: number, nowDate:string) => {
@@ -556,8 +563,8 @@ export const renderTextbookPage = async () => {
               {
                 difficulty: wordDifficulty,
                 optional: {
-                  group: String(wordGroup),
-                  groupPage: String(wordGroupPage),
+                  group: userWord.optional.group,
+                  groupPage: userWord.optional.groupPage,
                   trueAnsw: userWord.optional.trueAnsw,
                   falseAnsw: userWord.optional.falseAnsw,
                   answSeries: 0,
@@ -603,9 +610,9 @@ export const renderTextbookPage = async () => {
         bodyHtml.classList.add('_learned-page');
         selectedPage.classList.add('_learned-page');
         audioGame.disabled = true;
-        audioGame.style.opacity = '0.5';
+        audioGame.style.opacity = '0.2';
         sprintGame.disabled = true;
-        sprintGame.style.opacity = '0.5';
+        sprintGame.style.opacity = '0.2';
       } else {
         bodyHtml.classList.remove('_learned-page');
         selectedPage.classList.remove('_learned-page');
@@ -680,7 +687,21 @@ export const renderTextbookPage = async () => {
 
         if (Number(localStorage.getItem('group')) === 6) {
           textBookItem.classList.add('_removed-item');
-          deleteUserWord(currDifficultId);
+          // deleteUserWord(currDifficultId);
+          const diffBtnStatus = 'new';
+
+          // ------Запускаем проверку на наличие такого слова в userWords
+
+          const isUserWord = await getUserWord(
+            currDifficultId,
+            userToken,
+            diffBtnStatus,
+            group,
+            groupPage,
+            nowDate,
+          ).catch((error) => {
+            // error.message; // 'An error has occurred: 404'
+          });
         }
       });
     });

@@ -3,7 +3,6 @@ import { addDOMVariables } from './bonusAlgSprint';
 import { homePage } from './render_home_page';
 import { renderTextbookPage } from './render_textbook';
 
-
 export const sprintDOM = async (word:string) => {
   const mainSection = document.querySelector('.main') as HTMLElement;
   mainSection.innerHTML = `
