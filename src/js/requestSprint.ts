@@ -2,7 +2,7 @@ import { Word, AuthUser } from './typeSprint';
 import { IUserWordOptions } from './data';
 
 export const getWordsMiniGame = async (group:number, page:number) => {
-  const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/words?page=${page}&group=${group}`, {
+  const request:Response = await fetch(`https://alexrslangproject.herokuapp.com/words?page=${page}&group=${group}`, {
     method: 'GET',
   });
   const resp:Word[] = await request.json();
@@ -12,7 +12,7 @@ export const getWordsMiniGame = async (group:number, page:number) => {
 
 export async function getAggrWordsMiniGame(group:number, page:number) {
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}},{"userWord.difficulty":"weak"}]}&wordsPerPage=20`, {
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}},{"userWord.difficulty":"weak"}]}&wordsPerPage=20`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -83,7 +83,7 @@ export const updateWordUserSprint = async (group:number, page:number, idWord:str
     },
   };
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
+  const request:Response = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -113,7 +113,7 @@ export const createWordUserSprint = async (group:number, page:number, idWord:str
     },
   };
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
+  const request:Response = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -124,32 +124,58 @@ export const createWordUserSprint = async (group:number, page:number, idWord:str
   });
 };
 
-export const getWordUserSprint = async (group:number, page:number, idWord:string, val: boolean) => {
+export const getWordUserSprint = async (idWord:string) => {
   // console.log(idWord);
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response | void = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
+  const request:Promise<void | Response> = fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${data.token}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  }).then(async (response) => {
+  }).catch((error) => {
+    const e = new Error('error 404 userword');
+    console.log('ошибка в запросе', e);
+  });
+  const resp = await (await request as Response).json();
+  return resp;
+  /*.then(async (response) => {
+    console.log(response);
     if (response.status === 200) {
       console.log('Сработал updateUserWord');
       const resp: IUserWordOptions = await (response as Response).json();
       updateWordUserSprint(group, page, idWord, val, resp);
-      console.log();
+      return 'sucsess';
     } else {
       console.log('Сработал createUserWord');
       createWordUserSprint(group, page, idWord, val);
+      return 'sucsess';
     }
-  });
+  });*/
 };
+
+
+export async function checkGetWordStatus(group:number, page:number, idWord:string, val: boolean) {
+  getWordUserSprint(idWord)
+    .then((response) => {      
+      console.log('Сработал updateUserWord');    
+      updateWordUserSprint(group, page, idWord, val, response);
+    })
+    .catch((error) => {
+      console.clear();
+      const e = new Error('error 404');
+      console.log('Сработал createUserWord', e);
+      createWordUserSprint(group, page, idWord, val);
+    });
+}
+
+
+
 
 export async function getAggrWordsTest(group:number, page:number) {
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}}]}&wordsPerPage=20`, {
+  const request:Response | void = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}}]}&wordsPerPage=20`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -157,7 +183,7 @@ export async function getAggrWordsTest(group:number, page:number) {
       'Content-Type': 'application/json',
     },
   });
-  const resp:Word[] = (await request.json())[0].paginatedResults;
+  const resp:Word[] = (await (request as Response).json())[0].paginatedResults;
   console.log('response Aggr Words', resp);
   return resp;
 }

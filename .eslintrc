@@ -13,7 +13,7 @@
     "project": "./tsconfig.json"
   },
   "plugins": [
-
+    "import",
     "@typescript-eslint"
   ],
   "rules": {

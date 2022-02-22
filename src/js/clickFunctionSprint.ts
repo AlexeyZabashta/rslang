@@ -2,7 +2,7 @@ import { Word, GrPg } from './typeSprint';
 import { checkBonus, massPoint } from './bonusAlgSprint';
 import { IaggregatedWord } from './data';
 import { startFlag, groupPage } from '../indexGame';
-import { getWordUserSprint, getWordsMiniGame, buildMassSprint } from './requestSprint';
+import { getWordUserSprint, getWordsMiniGame, buildMassSprint, checkGetWordStatus } from './requestSprint';
 
 export const answers:Word[] = [];
 export const answersTextBook:IaggregatedWord[] = [];
@@ -18,7 +18,7 @@ let rightAnswers = 0;
 let timerId:NodeJS.Timeout;
 let timer:HTMLAudioElement;
 
-function sprintDefaultIndex() {
+export function sprintDefaultIndex() {
   answersIndex = 0;
   bestSeries = 0;
   allAnswers = 0;
@@ -143,8 +143,7 @@ export function createSprintResult() {
     endPer.innerHTML = `Answered correctly:  ${(perc * 100).toFixed(1)}%`;
   } else {
     endPer.innerHTML = 'Answered correctly:  0';
-  }
-  sprintDefaultIndex();
+  }  
   console.log('stop game');
 }
 
@@ -199,10 +198,20 @@ function allBtnsUnlock() {
 
 export async function checkAuthSprint(flag: boolean, answ: boolean) {
   if (localStorage.getItem('userData')) {
-    if (flag === answ) {
-      await getWordUserSprint(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, true);
+    if (flag === answ) {      
+      checkGetWordStatus(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, true).catch(async (error) => {
+        console.log('abc');
+        if (error.status === 404) {          
+          console.log(error.status);
+        }         
+      });
     } else {
-      await getWordUserSprint(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, false);
+      checkGetWordStatus(groupPage[0].group, groupPage[0].page, answers[answersIndex].id, false).catch(async (error) => {
+        console.log('abc');
+        if (error.status === 404) {          
+          console.log(error.status);
+        }        
+      });
     }
   }
 }
