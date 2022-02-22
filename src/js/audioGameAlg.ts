@@ -2,7 +2,8 @@ import { Word } from './typeSprint';
 import { rightAnswNum, audioDOM } from './audioGameDOM';
 import { randomDiap } from './clickFunctionSprint';
 import { getWordsMiniGame, buildMassSprint, checkGetWordStatus } from './requestSprint';
-import { startFlag, groupPage, startMiniGame } from '../indexGame';
+import { startFlag, groupPage, startMiniGame, gameFlag } from '../indexGame';
+import { getUserStat, checkGetUserStatus } from './requestSprint';
 
 import { renderTextbookPage } from './render_textbook';
 import { homePage } from './render_home_page';
@@ -28,7 +29,7 @@ export async function createMassFalseAudio(group:number, page:number) {
 }
 
 export function clickAudioGame(ind:number, val:boolean) {
-  console.log('сработала функция клика', ind + 1, val);
+  //console.log('сработала функция клика', ind + 1, val);
   const answView = document.querySelector(`#audio_answer_variant${ind}`) as HTMLSpanElement;
   if (val) {
     answView.classList.add('right');
@@ -87,7 +88,9 @@ async function checkPageAudioMain() { // проверка для игры из �
   return newPage;
 }
 
-async function clearIndexAudio() {
+export async function clearIndexAudio() {  
+  startFlag.length = 0;
+  gameFlag.length = 0;
   falseAnswersAudio.length = 0;
   answersAudio.length = 0;
   indexAnsw = 0;
@@ -128,11 +131,13 @@ async function endAudioGame() {
   total.innerHTML = `Total words: ${indexAnsw}`;
   series.innerHTML = `Best answer series: ${bestSeriesAudio}`;
   const perc = rightAnswAudio / indexAnsw;
+  const percStr = (perc * 100).toFixed(1); 
   if (indexAnsw > 0) {
-    percent.innerHTML = `Answered correctly:  ${(perc * 100).toFixed(1)}%`;
+    percent.innerHTML = `Answered correctly:  ${percStr}%`;
   } else {
     percent.innerHTML = 'Answered correctly:  0';
   }
+  await checkGetUserStatus(percStr, bestSeriesAudio);
   clearIndexAudio();
   btnTextbook.addEventListener('click', renderTextbookPage);
   btnMain.addEventListener('click', homePage);
@@ -198,17 +203,17 @@ function randomNum() {
   const newInd = randomDiap(0, 19);
   const val = indexVariant.indexOf(newInd);
   if (val >= 0) {
-    console.log('recursion', indexVariant, val, newInd);
+    //console.log('recursion', indexVariant, val, newInd);
     randomNum();
   }  
   indexVariant.push(newInd);
-  console.log('no recursion', indexVariant, val);
+  //console.log('no recursion', indexVariant, val);
   return newInd;
 }
 
 export async function updateAudioGameDom(btnIndex:number, rightIndex:number, word:string): Promise<string> {  
   if (btnIndex === rightIndex) {
-    console.log('верный ответ на кнопке', btnIndex + 1);
+    //console.log('верный ответ на кнопке', btnIndex + 1);
     return word;
   }  
   const falseInd:number = randomNum();

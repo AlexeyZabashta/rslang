@@ -1,6 +1,7 @@
 import { aboutAppPage } from './render_about_app';
 import { renderTextbookPage } from './render_textbook';
 import { renderStatisticsPage } from './render_statistics';
+import { renderGamesPage } from './render_games_page';
 import { renderLoginWindow } from './render_login';
 
 export const homePage = async () => {
@@ -76,7 +77,7 @@ export const homePage = async () => {
     localStorage.setItem('currentPage', 'Games');
     const headerTitle = document.querySelector('.header-current') as HTMLElement;
     headerTitle.innerHTML = 'Games';
-    // renderStatisticsPage();
+    renderGamesPage();
   });
 
   const statisticsHtml = document.querySelector('.home-statistics') as HTMLElement;
