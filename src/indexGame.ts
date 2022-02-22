@@ -1,11 +1,11 @@
 import './style.css';
 import { Word, GrPg } from './js/typeSprint';
-import { answers, createMassFalse, gameTimer } from './js/clickFunctionSprint';
+import {
+  answers, createMassFalse, gameTimer, sprintDefaultIndex,
+} from './js/clickFunctionSprint';
 import { sprintDOM } from './js/sprintDOM';
 import { getWordsMiniGame, buildMassSprint } from './js/requestSprint';
-import { answersAudio, createMassFalseAudio } from './js/audioGameAlg';
-import { clearIndexAudio } from './js/audioGameAlg';
-import { sprintDefaultIndex } from './js/clickFunctionSprint';
+import { answersAudio, createMassFalseAudio, clearIndexAudio } from './js/audioGameAlg';
 
 import { audioDOM } from './js/audioGameDOM';
 

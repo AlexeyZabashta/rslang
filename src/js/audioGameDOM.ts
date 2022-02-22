@@ -7,7 +7,7 @@ export const rightAnswNum: number[] = [];
 export const audioDOM = async (val:Word) => {
   const mainSection = document.querySelector('.main') as HTMLElement;
   const ind = randomDiap(0, 4); // индекс кнопки с верным ответом
-  //console.log('верная кнопка: ', ind + 1);
+  // console.log('верная кнопка: ', ind + 1);
   rightAnswNum.push(ind);
   mainSection.innerHTML = `
   <section class="wrapper_audioGame">
