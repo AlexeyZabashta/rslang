@@ -1,8 +1,9 @@
 import { Word, AuthUser } from './typeSprint';
 import { IUserWordOptions } from './data';
+import { gameFlag } from '../indexGame';
 
 export const getWordsMiniGame = async (group:number, page:number) => {
-  const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/words?page=${page}&group=${group}`, {
+  const request:Response = await fetch(`https://alexrslangproject.herokuapp.com/words?page=${page}&group=${group}`, {
     method: 'GET',
   });
   const resp:Word[] = await request.json();
@@ -12,7 +13,7 @@ export const getWordsMiniGame = async (group:number, page:number) => {
 
 export async function getAggrWordsMiniGame(group:number, page:number) {
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}},{"userWord.difficulty":"weak"}]}&wordsPerPage=20`, {
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}},{"userWord.difficulty":"weak"}]}&wordsPerPage=20`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -62,10 +63,11 @@ function checkLearnDate(newDiff:DiffType, oldUserWord:IUserWordOptions) {
 }
 
 function checkLearnGame(newDiff:DiffType, oldUserWord:IUserWordOptions) {
-  if (newDiff.diff !== 'weak') {
-    return (oldUserWord.optional.learnGame as string);
+  if (newDiff.diff !== oldUserWord.difficulty) {
+    const game = gameFlag[0] ? 'Sprint' : 'Audio';
+    return game;
   }
-  return newDiff.diff;
+  return oldUserWord.optional.learnGame;
 }
 
 export const updateWordUserSprint = async (group:number, page:number, idWord:string, val: boolean, oldUserWord:IUserWordOptions) => {
@@ -83,7 +85,7 @@ export const updateWordUserSprint = async (group:number, page:number, idWord:str
     },
   };
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
+  const request:Response = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -109,11 +111,11 @@ export const createWordUserSprint = async (group:number, page:number, idWord:str
       falseAnsw: !val ? 1 : 0,
       answSeries: val ? 1 : 0,
       learnDate: new Date().toLocaleDateString(),
-      learnGame: ' ',
+      learnGame: gameFlag[0] ? 'Sprint' : 'Audio',
     },
   };
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
+  const request:Response = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -124,32 +126,98 @@ export const createWordUserSprint = async (group:number, page:number, idWord:str
   });
 };
 
-export const getWordUserSprint = async (group:number, page:number, idWord:string, val: boolean) => {
+export const getWordUserSprint = async (idWord:string) => {
   // console.log(idWord);
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request:Response | void = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
+  const request:Promise<void | Response> = fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/words/${idWord}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${data.token}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  }).then(async (response) => {
+  }).catch((error) => {
+    const e = new Error('error 404 userword');
+    console.log('ошибка в запросе', e);
+  });
+  const resp = await (await request as Response).json();
+  return resp;
+  /* .then(async (response) => {
+    console.log(response);
     if (response.status === 200) {
       console.log('Сработал updateUserWord');
       const resp: IUserWordOptions = await (response as Response).json();
       updateWordUserSprint(group, page, idWord, val, resp);
-      console.log();
+      return 'sucsess';
     } else {
       console.log('Сработал createUserWord');
       createWordUserSprint(group, page, idWord, val);
+      return 'sucsess';
     }
-  });
+  }); */
 };
 
-export async function getAggrWordsTest(group:number, page:number) {
+export async function checkGetWordStatus(group:number, page:number, idWord:string, val: boolean) {
+  getWordUserSprint(idWord)
+    .then((response) => {
+      console.log('Сработал updateUserWord');
+      updateWordUserSprint(group, page, idWord, val, response);
+    })
+    .catch((error) => {
+      console.clear();
+      const e = new Error('error 404');
+      console.log('Сработал createUserWord', e);
+      createWordUserSprint(group, page, idWord, val);
+    });
+}
+
+type UserStat = {
+  learnedWords: number,
+  optional: UserOptional
+};
+
+type UserOptional = {
+  sprint?: UserOptionalGame,
+  audio?: UserOptionalGame
+};
+
+/* type UserOptionalGen = {
+  new: number,
+  weak: number,
+  percent: string
+}; */
+
+type UserOptionalGame = {
+  percent: string,
+  bestSer: number
+};
+
+
+export async function getUserStat() {
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
-  const request = await fetch(`http://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[{"group": ${group}},{"page": ${page}}]}&wordsPerPage=20`, {
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  const resp:UserStat = await request.json();
+  return resp;
+}
+
+export async function getAggrWordsUserGeneral(val:number) {
+  const today = new Date().toLocaleDateString();
+  const optionsVar:string[] = [
+    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}`, // всего новых слов
+    `{"userWord.difficulty":"weak"}, {"userWord.optional.learnDate":"${today}"}`, // выучено за день
+    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}, {"userWord.optional.learnGame":"Sprint"}`, // новых слов в спринте
+    `{"userWord.difficulty":"new"}, {"userWord.optional.learnDate":"${today}"}, {"userWord.optional.learnGame":"Audio"}`, // новых слов в аудио
+  ];
+  const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
+
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/aggregatedWords?&filter={"$and":[${optionsVar[val]}]}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -158,6 +226,247 @@ export async function getAggrWordsTest(group:number, page:number) {
     },
   });
   const resp:Word[] = (await request.json())[0].paginatedResults;
-  console.log('response Aggr Words', resp);
-  return resp;
+  console.log('response getAggrWordsUserGeneral', resp.length, resp);
+  return resp.length;
+}
+
+
+function middlePercSprint(newPer:string, oldPerc:UserStat) {
+  if (oldPerc.optional.sprint) {
+    const perc1 = parseInt(newPer);
+    const perc2 = parseInt(oldPerc.optional.sprint.percent);
+
+    return `${(perc1 + perc2) / 2}%`;
+  }
+  return newPer;
+}
+
+
+function middlePercAudio(newPer:string, oldPerc:UserStat) {
+  if (oldPerc.optional.audio) {
+    const perc1 = parseInt(newPer);
+    const perc2 = parseInt(oldPerc.optional.audio.percent);
+    return `${(perc1 + perc2) / 2}%`;
+  }
+  return newPer;
+}
+
+async function requestUpdateUserSprint(newOptions:UserStat) {
+
+  const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newOptions),
+  });
+}
+
+
+export async function updateUserStatSprint(perc:string, ser:number, oldInfo:UserStat) {
+  if (oldInfo.optional.audio) {
+    const newOptions:UserStat = {
+      learnedWords: 0,
+      optional: {      
+        sprint: {        
+          percent: middlePercSprint(perc, oldInfo),
+          bestSer: ser > (oldInfo.optional.sprint as UserOptionalGame).bestSer ? ser : (oldInfo.optional.sprint as UserOptionalGame).bestSer,
+        },
+        audio: {
+          percent: oldInfo.optional.audio.percent,
+          bestSer: oldInfo.optional.audio.bestSer,
+        },      
+      },
+    };
+    requestUpdateUserSprint(newOptions);
+  } else {
+    const newOptions:UserStat = {
+      learnedWords: 0,
+      optional: {      
+        sprint: {        
+          percent: middlePercSprint(perc, oldInfo),
+          bestSer: ser,
+        },      
+      },
+    };
+    requestUpdateUserSprint(newOptions);
+  }    
+}
+
+export async function requestUpdateUserAudio(newOptions:UserStat) {
+
+  const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newOptions),
+  });    
+}
+
+export async function updateUserStatAudio(perc:string, ser:number, oldInfo:UserStat) {
+  if (oldInfo.optional.sprint) {
+    const newOptions:UserStat = {
+      learnedWords: 0,
+      optional: {      
+        audio: {        
+          percent: middlePercAudio(perc, oldInfo),
+          bestSer: ser > (oldInfo.optional.audio as UserOptionalGame).bestSer ? ser : (oldInfo.optional.audio as UserOptionalGame).bestSer,
+        },
+        sprint: {
+          percent: oldInfo.optional.sprint.percent,
+          bestSer: oldInfo.optional.sprint.bestSer,
+        },      
+      },
+    };
+    requestUpdateUserAudio(newOptions);
+  } else {
+    const newOptions:UserStat = {
+      learnedWords: 0,
+      optional: {      
+        audio: {        
+          percent: middlePercAudio(perc, oldInfo),
+          bestSer: ser,
+        },      
+      },
+    };
+    requestUpdateUserAudio(newOptions);
+  }  
+
+}
+
+function createOptionSprint(perc:string, ser:number, val:boolean) {
+  if (val) {
+    return {
+      learnedWords: 0,
+      optional: {
+        sprint: {
+          percent: perc,
+          bestSer: ser,
+        },
+      },
+    };
+  }
+  return {
+    learnedWords: 0,
+    optional: {
+      audio: {
+        percent: perc,
+        bestSer: ser,
+      },
+    },
+  };
+}
+
+
+export async function createUserStat(perc:string, ser:number, val: boolean) { 
+  const newOptions:UserStat = createOptionSprint(perc, ser, val);  
+
+  const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newOptions),
+  });
+}
+
+export async function checkGetUserStatus(percent:string, bestSer:number) {
+  getUserStat()
+    .then((response) => {
+      console.log('Сработал updateUserWord');
+      if (gameFlag[0]) {
+        updateUserStatSprint(percent, bestSer, response);
+      } else {
+        updateUserStatAudio(percent, bestSer, response);
+      }
+    })
+    .catch((error) => {
+      console.clear();
+      const e = new Error('error 404');
+      console.log('Сработал createUserWord', e);
+      if (gameFlag[0]) {
+        createUserStat(percent, bestSer, true);
+      } else {
+        createUserStat(percent, bestSer, false);
+      }
+    });
+}
+
+export async function checkGetUserOptions(): Promise<boolean | UserStat>{
+  let out:boolean | UserStat;
+  return getUserStat()
+    .then((response) => {        
+      out = response;
+      return out;
+
+    })
+    .catch((error) => {
+      console.clear();
+      const e = new Error('error 404');
+      console.log('Сработал createUserWord', e);
+      out = false;
+      return out;
+    });  
+}
+
+
+export async function createStatField(val:number) {
+  const massId:string[] = ['perc_date', 'perc_date_sprint', 'best_series_sprint',
+    'perc_date_audio', 'best_series_audio'];
+  const info = await checkGetUserOptions();
+  if (info) {
+    if (val === 0) {
+      if ((info as UserStat).optional.audio && (info as UserStat).optional.sprint) {
+        const percAud = (info as UserStat).optional.audio?.percent;
+        const percSpr = (info as UserStat).optional.audio?.percent;
+        const middlePer = (parseInt(percAud as string) + parseInt(percSpr as string)) / 2;
+        return `${middlePer}%`;      
+      }   
+      if ((info as UserStat).optional.audio) {
+        return (info as UserStat).optional.audio?.percent;
+      } 
+      if ((info as UserStat).optional.sprint) {
+        return (info as UserStat).optional.sprint?.percent;
+      }  
+    }
+    if (val === 1) {
+      if ((info as UserStat).optional.sprint?.percent) {
+        return (info as UserStat).optional.sprint?.percent;
+      } else {
+        return 0;
+      }
+    }
+    if (val === 2) {
+      if ((info as UserStat).optional.sprint?.bestSer) {
+        return (info as UserStat).optional.sprint?.bestSer;
+      } else {
+        return 0;
+      }
+    }
+    if (val === 3) {
+      if ((info as UserStat).optional.audio?.percent) {
+        return (info as UserStat).optional.audio?.percent;
+      } else {
+        return 0;
+      }
+    }
+    if (val === 4) {
+      if ((info as UserStat).optional.audio?.bestSer) {
+        return (info as UserStat).optional.audio?.bestSer;
+      } else {
+        return 0;
+      }
+    }
+  }
+  return 0;
 }

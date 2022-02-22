@@ -1,10 +1,11 @@
+import { bodyHtml } from './data';
 import { homePage } from './render_home_page';
 import { aboutAppPage } from './render_about_app';
 import { renderTextbookPage } from './render_textbook';
+import { renderGamesPage } from './render_games_page';
 import { renderStatisticsPage } from './render_statistics';
 
 export const renderHTMLStructure = async () => {
-  const bodyHtml = document.querySelector('.body') as HTMLElement;
   bodyHtml.innerHTML = '';
   const header = document.createElement('header');
   header.classList.add('header');
@@ -27,7 +28,8 @@ renderHTMLStructure().then(async () => {
       <button class="nav-btn nav-textbook">TextBook</button>
       <button class="nav-btn nav-games">Games</button>
       <button class="nav-btn nav-statistics">Statistics</button>
-      <button class="nav-btn nav-developers">About App</button>   
+      <button class="nav-btn nav-developers">About App</button>
+      <button class="nav-mode"></button>    
     </nav>     
   `;
 })
@@ -68,6 +70,21 @@ renderHTMLStructure().then(async () => {
   })
 
   .then(async () => {
+    const gamesHtml = document.querySelector('.nav-games') as HTMLButtonElement;
+    gamesHtml.addEventListener('click', () => {
+      // console.log(' вызываю textbookPage');
+      const mainHtml = document.querySelector('.main') as HTMLElement;
+      mainHtml.innerHTML = `
+    `;
+      localStorage.setItem('currentPage', 'Games');
+      const headerTitle = document.querySelector('.header-current') as HTMLElement;
+      headerTitle.innerHTML = 'Games';
+      // renderGroupBtns();
+      renderGamesPage();
+    });
+  })
+
+  .then(async () => {
     const statisticsHtml = document.querySelector('.nav-statistics') as HTMLButtonElement;
     statisticsHtml.addEventListener('click', () => {
       // console.log(' вызываю Statistics page();');
@@ -88,17 +105,21 @@ renderHTMLStructure().then(async () => {
       aboutAppPage();
     });
   })
-  /*
 
   .then(async () => {
-    const loginHtml = document.querySelector('.header-login_btn') as HTMLButtonElement;
-    loginHtml.addEventListener('click', () => {
-      // console.log(' Хочу залогинится;');
-      // localStorage.setItem('currentPage', 'About App');
-      renderLoginWindow();
+    const nightMode = document.querySelector('.nav-mode') as HTMLButtonElement;
+    nightMode.addEventListener('click', () => {
+      if (localStorage.getItem('nightMode') === null) {
+        localStorage.setItem('nightMode', 'nightMode');
+        nightMode.classList.add('_night-mode');
+        bodyHtml.classList.add('_night-mode');
+      } else {
+        localStorage.removeItem('nightMode');
+        nightMode.classList.remove('_night-mode');
+        bodyHtml.classList.remove('_night-mode');
+      }
     });
   })
-  */
 
   .then(async () => {
     const footerHtml = document.querySelector('.footer') as HTMLElement;
@@ -129,9 +150,16 @@ window.addEventListener('load', async () => {
     if (localStorage.getItem('currentPage') === 'Textbook') {
       renderTextbookPage();
     }
+    if (localStorage.getItem('currentPage') === 'Games') renderGamesPage();
+    if (localStorage.getItem('currentPage') === 'About App') aboutAppPage();
     if (localStorage.getItem('currentPage') === 'Statistics') renderStatisticsPage();
     if (localStorage.getItem('currentPage') === 'About App') aboutAppPage();
-    // if (localStorage.getItem('currentPage') === "Home") homePage();
+
+    if (localStorage.getItem('nightMode') === 'nightMode') {
+      const nightMode = document.querySelector('.nav-mode') as HTMLButtonElement;
+      nightMode.classList.add('_night-mode');
+      bodyHtml.classList.add('_night-mode');
+    }
   }
 
   const headerTitle = document.querySelector('.header-current') as HTMLElement;
@@ -142,6 +170,9 @@ window.addEventListener('load', async () => {
     }
     if (localStorage.getItem('currentPage') === 'Textbook') {
       headerTitle.innerHTML = 'Textbook';
+    }
+    if (localStorage.getItem('currentPage') === 'Games') {
+      headerTitle.innerHTML = 'Games';
     }
     if (localStorage.getItem('currentPage') === 'Statistics') {
       headerTitle.innerHTML = 'Statistics';

@@ -47,8 +47,18 @@ button {
   background-attachment: fixed; 
   /*backdrop-filter: blur(0.3rem); */  
 }
+.body._night-mode {
+  background-color: var(--black);
+  background-image: none;
+  filter: grayscale(67%);
+}
+
 .body._learned-page {
   background-image: url('../assets/img/flag_GB.jpg');
+}
+
+.body._night-mode._learned-page {
+  background-image: url('../assets/img/flag_GB_night.jpg');
 }
 
 /*-----------------HEADER----------------------*/
@@ -56,14 +66,8 @@ button {
 .header {  
   width: 100%;  
   height: 7vh;
-  background-color: var(--bg-dark-transp);
+  background-color: var(--bg-dark-transp); 
   
-
-  /*position: fixed;
-  left: 0;
-  top: 0;*/
-
-  z-index: 5;
 }
 
 .header-current {
@@ -126,14 +130,14 @@ button {
   opacity: 1;   
 }
 .nav-btn {
-  flex: 0 1 5.5rem;
-  height: 1.5rem;
+  flex: 0 1 5.9rem;
+  height: 1.7rem;
   background-color: var(--grey);  
   background-image: url('../assets/img/flag_GB_light.png');
   background-repeat: no-repeat;
   background-size: 5rem;
   background-position: center ;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
   font-weight: 800;
   cursor: pointer;
   transition: all 1s ease-in-out;  
@@ -142,12 +146,34 @@ button {
   background-image: url('../assets/img/flag_GB.png');
   transition: all 1s ease-in-out;  
 }
+
+.nav-mode {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--bg-transp);  
+  background-image: url('../assets/img/day_sun.png');
+  background-repeat: no-repeat;
+  background-size: 2rem;
+  background-position: center ;  
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 1s ease-in-out; 
+  margin-right: 4rem ;  
+}
+.nav-mode._night-mode {
+  background-image: url('../assets/img/night_moon.png');
+}
+.nav-mode:hover {
+  background-color: var(--white); 
+}
+
 .nav-btn:first-child{
   margin-left: 1rem;
 }
 .nav-btn:last-child{
   flex: 0 1 5.8rem;
-  margin-right: 3.5rem;
+  
 }
 .header-login_btn {
   position: fixed;
@@ -247,11 +273,12 @@ button {
 }
 
 .logout-head._logged,
+.login-username._logged,
 .login-head {
   visibility: visible;
   width: 100%;
   height: 1rem;
-	font-size: var(--font2);
+	font-size: var(--font3);
   font-weight: 700;
   color: var(--border);
 	margin-bottom: 1.5rem;
@@ -263,6 +290,9 @@ button {
   transition: all 0.7s;
   
 }
+.login-username._logged {
+  color: var(--red);
+}
 .login-head._logged {
   visibility: hidden;
   opacity: 0;
@@ -271,7 +301,8 @@ button {
   transform: scale(0);
   transition: all 0.7s;
 }
-.logout-head {
+.logout-head,
+.login-username {
   visibility: hidden;
   opacity: 0;
   width: 0;
@@ -632,7 +663,7 @@ button {
 .textbook-headbtns_wrapper {
   position: fixed;
   top: 7vh;
-  left: 0;
+  left: 1vw;
   display: flex; 
   flex-direction: column; 
   justify-content: space-around;
@@ -657,12 +688,11 @@ button {
 .textbook-group {
   display: flex;
   flex-direction: column;   
-  height: calc(100vh - 6rem);
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  height: 86vh;
+  
   justify-content: space-evenly;
   position: fixed;
-  top: 0;
+  top: 7vh;
   right: 2%;  
 }
 
@@ -671,6 +701,7 @@ button {
   height: 3.5rem;
   text-align: center;
   border-radius: 50%;
+  color: var(--border);
   background-color: var(--bg-transp);  
   border: 0.4rem solid var(--border-transp);
   background-size: 3rem;
@@ -680,6 +711,7 @@ button {
   font-weight: 900;
   color: var(--border);
   appearance: none;
+  opacity: 1;
   /*box-shadow: inset 0.2rem 0.2rem 1rem 0.1rem var(--red-transp); */
   cursor: pointer;
   transition: all 0.7s;
@@ -905,7 +937,7 @@ button {
   justify-content: center;
   align-items: center;  
   overflow: hidden;  
-  background-color: rgba(168, 190, 228, 0.8);  
+  background-color: rgba(241, 233, 231, 0.77);  
   padding: 0 0.7rem 0 16.5rem;
   border-radius: 2rem 2rem 0 2rem;
   background-repeat: no-repeat;
@@ -980,7 +1012,7 @@ button {
   height: 100%;
   left: 12rem;
   top: 0;
-  background: linear-gradient(to right, var(--bg-transp), rgba(168, 190, 228, 0.8));
+  background: linear-gradient(to right, var(--bg-transp), rgba(241, 233, 231, 0.678));
   transition: all 0.5s;
 }
 
@@ -1082,7 +1114,7 @@ button {
 .answ-true,
 .answ-false,
 .answ-separator {
-  font-size: var(--font3);
+  font-size: var(--font4);
 }
 .answ-true {
   color: var(--gren);
@@ -1169,16 +1201,12 @@ button {
 .footer {
   display: flex;    
   width: 100%;
-  height: 7vh;
-
-  /*position: fixed;
-  bottom: 0;
-  left: 0;*/
+  height: 7vh;  
 
   justify-content: space-around;
   align-items: center;
   background-color: var(--bg-dark-transp); 
-  z-index: 5;  
+   
 }
 .footer-copyright,
 .footer-rsschool,
@@ -1245,7 +1273,7 @@ button {
   .textbook-word,
   .textbook-word_transcription,
   .textbook-word_translate {  
-    margin-right: 1rem;
+    margin-right: 0rem;
     font-weight: 900;
     font-size: var(--font3);
   }
@@ -1261,12 +1289,7 @@ button {
   .header {
     width: 100%;
     height: 7vh;
-
-    /*position: fixed;    
-    left: 0;
-    top: 0;
-    */
-    z-index: 5;
+    
   }
   
   .header-nav {
@@ -1292,16 +1315,20 @@ button {
   .nav-btn,
   .nav-btn.nav-home,
   .nav-btn.nav-developers {
-    width: 5rem;    
+    flex: 0 0 3rem;
+    width: 5rem;      
+
     padding: 0;
     margin: 0;
   }
   .nav-btn.nav-home{
-    margin-top: 3.2rem;
+    margin-top: 0rem;
   }
 
-  .nav-btn.nav-developers {
-    margin-bottom: 3.5rem;
+  
+
+  .nav-mode {
+    margin: 0 auto;
   }
 
   .home-article,
@@ -1379,12 +1406,9 @@ button {
     min-height: 60vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-     
-    overflow: hidden;  
-    background-color: rgba(168, 190, 228, 0.8);  
-    padding: 0 0.7rem 0 0.7rem;
-      
+    justify-content: center;     
+    overflow: hidden;       
+    padding: 0 0.7rem 0 0.7rem;      
     transition: all 0.5s;
   }
 
@@ -1448,7 +1472,7 @@ button {
   .textbook-word,
   .textbook-word_transcription,
   .textbook-word_translate {  
-    margin-right: 1rem;
+    margin-right: 0;
     font-weight: 700;
     font-size: var(--font3);
   }

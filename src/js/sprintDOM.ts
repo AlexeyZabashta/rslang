@@ -1,4 +1,4 @@
-import { checkAnsw, answerVariant } from './clickFunctionSprint';
+import { checkAnsw, answerVariant, sprintDefaultIndex } from './clickFunctionSprint';
 import { addDOMVariables } from './bonusAlgSprint';
 import { homePage } from './render_home_page';
 import { renderTextbookPage } from './render_textbook';
@@ -60,9 +60,11 @@ export const sprintDOM = async (word:string) => {
   const backMain = document.querySelector('#end_game_mainmenu') as HTMLElement;
   backMain.addEventListener('click', () => {
     homePage();
+    sprintDefaultIndex();
   });
   const backText = document.querySelector('#end_game_textbook') as HTMLElement;
   backText.addEventListener('click', () => {
     renderTextbookPage();
+    sprintDefaultIndex();
   });
 };

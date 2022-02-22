@@ -1,0 +1,27 @@
+.statistics_page {
+  padding: 5rem 5rem 5rem 5rem; 
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.statistics_page h2 {
+  background-color: rgb(240, 248, 255);
+  font-size: 1.2rem; 
+}
+
+.stat_section {
+  width: 30%;
+  height: 30%;
+  margin: 0 auto;
+  background-color: rgba(196, 196, 196, 0.7);
+}
+
+.span_stat {
+  display: block;
+  margin-top: 2rem;
+  font-size: 1.2rem;  
+  text-align: center;
+  background-color: rgb(240, 248, 255);
+}

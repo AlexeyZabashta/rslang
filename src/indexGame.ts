@@ -1,13 +1,16 @@
 import './style.css';
 import { Word, GrPg } from './js/typeSprint';
-import { answers, createMassFalse, gameTimer } from './js/clickFunctionSprint';
+import {
+  answers, createMassFalse, gameTimer, sprintDefaultIndex,
+} from './js/clickFunctionSprint';
 import { sprintDOM } from './js/sprintDOM';
 import { getWordsMiniGame, buildMassSprint } from './js/requestSprint';
-import { answersAudio, createMassFalseAudio } from './js/audioGameAlg';
+import { answersAudio, createMassFalseAudio, clearIndexAudio } from './js/audioGameAlg';
 
 import { audioDOM } from './js/audioGameDOM';
 
 export const startFlag:boolean[] = [];
+export const gameFlag:boolean[] = [];
 export const groupPage:GrPg[] = [];
 
 async function createDataSprint(flagStart:boolean, group:number, page:number) {
@@ -36,14 +39,17 @@ async function createDataAudio(flagStart:boolean, group:number, page:number) {
   }
 }
 
-export async function startMiniGame(gameFlag:boolean, flagStart:boolean, group:number, page:number):Promise<void> {
+export async function startMiniGame(flagGame:boolean, flagStart:boolean, group:number, page:number):Promise<void> {
   // gameFlag = true старт Спринт, false - старт аудио-игры
   // flagStart = true запуск из меню, false - запуск из учебника
+  await clearIndexAudio();
+  sprintDefaultIndex();
   console.log(flagStart, group, page);
   startFlag.push(flagStart);
+  gameFlag.push(flagGame);
   const obj:GrPg = { group, page };
   groupPage.push(obj);
-  if (gameFlag) {
+  if (gameFlag[0]) {
     createDataSprint(flagStart, group, page);
   } else {
     createDataAudio(flagStart, group, page);
