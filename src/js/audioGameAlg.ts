@@ -7,7 +7,7 @@ import { startFlag, groupPage, startMiniGame } from '../indexGame';
 import { renderTextbookPage } from './render_textbook';
 import { homePage } from './render_home_page';
 
-export let falseAnswersAudio: Word[];
+export const falseAnswersAudio: Word[] = [];
 export const answersAudio:Word[] = [];
 
 let indexAnsw = 0;
@@ -17,9 +17,9 @@ let rightAnswAudio = 0;
 
 export async function createMassFalseAudio(group:number, page:number) {
   if (group < 5) {
-    falseAnswersAudio = await getWordsMiniGame(group + 1, page);
+    falseAnswersAudio.concat(await getWordsMiniGame(group + 1, page));
   } else {
-    falseAnswersAudio = await getWordsMiniGame(group - 1, page);
+    falseAnswersAudio.concat(await getWordsMiniGame(group - 1, page));
   }
   // console.log(answersFalse);
 }

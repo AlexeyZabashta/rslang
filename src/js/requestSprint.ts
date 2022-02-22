@@ -1,9 +1,6 @@
 import { Word, AuthUser } from './typeSprint';
 import { IUserWordOptions } from './data';
 
-
-
-
 export const getWordsMiniGame = async (group:number, page:number) => {
   const request:Response = await fetch(`http://alexrslangproject.herokuapp.com/words?page=${page}&group=${group}`, {
     method: 'GET',
@@ -137,7 +134,7 @@ export const getWordUserSprint = async (group:number, page:number, idWord:string
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  }).then(async (response) => {    
+  }).then(async (response) => {
     if (response.status === 200) {
       console.log('Сработал updateUserWord');
       const resp: IUserWordOptions = await (response as Response).json();
