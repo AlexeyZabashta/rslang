@@ -68,10 +68,11 @@
 }
 .game_page_sprint:hover::after{
   content: 'Start Sprint Game';
-  position: absolute;
+  position: absolute;  
+  text-align: center;
   top: 10vh;
-  left: 30%;
-  color: white;
+  left: calc(50% - 7.7rem);
+  color: black;
   transition: all 0.7s;
   font-size: 2rem; 
   transition: all 1s; 
@@ -84,8 +85,8 @@
   content: 'Start AudioCall Game';
   position: absolute;
   top: 10vh;
-  left: 25%;
-  color: white;
+  left: calc(50% - 7.7rem);
+  color: rgb(207, 18, 18);
   transition: all 0.7s;
   font-size: 2rem;  
 }

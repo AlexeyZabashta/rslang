@@ -83,10 +83,16 @@ export const homePage = async () => {
   const statisticsHtml = document.querySelector('.home-statistics') as HTMLElement;
   statisticsHtml.addEventListener('click', () => {
     // console.log(' вызываю Statistics page();');
-    localStorage.setItem('currentPage', 'Statistics');
-    const headerTitle = document.querySelector('.header-current') as HTMLElement;
-    headerTitle.innerHTML = 'Statistics';
-    renderStatisticsPage();
+
+    if (localStorage.getItem('userData') !== null) {
+      statisticsHtml.style.opacity = '1';
+      localStorage.setItem('currentPage', 'Statistics');
+      const headerTitle = document.querySelector('.header-current') as HTMLElement;
+      headerTitle.innerHTML = 'Statistics';
+      renderStatisticsPage();
+    } else {
+      statisticsHtml.style.opacity = '0.8';
+    }
   });
 
   const developersHtml = document.querySelector('.home-developers') as HTMLElement;

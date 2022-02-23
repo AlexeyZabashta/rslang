@@ -1353,7 +1353,7 @@ button {
 .footer-rsschool_svg {
   width: 7rem;
   height: 2.3rem;
-  background-image: url(assets/66e800aacc5aaf68c358.svg);
+  background-image: url(assets/2418248d4ccd4e7738a4.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1373,7 +1373,7 @@ button {
   width: 2.2rem;
   height: 2.2rem;
   margin: 0 .5rem 0 1rem;
-  background-image: url(assets/bea7512054f79a0e0e00.svg);
+  background-image: url(assets/cadab172d77dc4de24c0.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1648,6 +1648,18 @@ button {
 }
 
 
+.wrapper_minigame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%; 
+  height: 86vh; 
+  background-color: rgba(51, 50, 50, 0.61);  
+}
+
+/*
 .sprint_minigame {  
   display:flex;
   justify-content: center;
@@ -1656,6 +1668,7 @@ button {
   padding-top: 5rem;
   transition: .5s;
 }
+*/
 
 .sprint_minigame.block {
   opacity: 0; 
@@ -1670,17 +1683,18 @@ button {
 
 .game_content_wrapper {
   position: relative;
-  width:45%;
+  width: 50vw;
+  
   padding: 3% 3% 3% 3%;
   border: grey solid 1px;
-  border-radius: 1rem;
+  border-radius: 2rem 2rem 0 2rem;
   background-color: rgba(255, 255, 255, .5);
 }
 
 .total_score,
 .game_content,
 .bonus_carousel_wrapper {
-  margin: 2rem auto;
+  margin: 0.5rem auto;
   text-align: center;
 }
 
@@ -1691,6 +1705,7 @@ button {
 .total_score {
   width: 100%;
   text-align: center;
+  color: rgba(0, 0, 255, 0.9);
   font-size: 2.5rem;
 }
 
@@ -1722,7 +1737,7 @@ button {
 }
 
 .bonus_circle.active {
-  background-image: url(assets/be7c5034058e2dc3ad88.svg);
+  background-image: url(assets/a7e9a3da31c72c38b31d.svg);
   opacity: 1;
   transition: .5s;
 }
@@ -1788,13 +1803,13 @@ button {
   width: 4rem;
   height: 4rem;  
   opacity: 0; 
-  transition: .2s; 
+  transition: .5s; 
 }
 
 .answ_result_right.click, 
 .answ_result_false.click {
   opacity: 1;
-  transition: .2s;  
+  transition: .5s;  
 }
 
 .big,
@@ -1829,37 +1844,19 @@ button {
 /*========================================================*/
 
 .wrapper_end_game {
-  /*display: none;  
-  position: absolute;  
-  top: 120%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: .5s;*/
-
-
   position: absolute;
-  display: none;
-  
+  display: none;  
   width: 0%; 
   height: 0vh; 
   background-color: rgba(51, 50, 50, 0.61); 
   transition: all 1.5s;
 }
 
-.wrapper_end_game.active {
-  /*display: block; 
-  top: 0;
-  left: 0;
-  */
-  
+.wrapper_end_game.active {  
   position: absolute;
-  left: 0;
-  top: 7vh;
+  left: 0;  
   width: 100%; 
-  height: 86vh; 
-
-
+  height: 100%; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2099,13 +2096,13 @@ button:disabled {
 }
 
 .audio_answer_variant.right {
-  background-image: url(assets/be7c5034058e2dc3ad88.svg);
+  background-image: url(assets/a7e9a3da31c72c38b31d.svg);
   opacity: 1;
   transition: .7s;
 }
 
 .audio_answer_variant.false {
-  background-image: url(assets/38e56ba2673b244da7a0.svg);
+  background-image: url(assets/f013d031f2cc78bdaf6e.svg);
   opacity: 1;
   transition: .7s;
 }
@@ -2321,10 +2318,11 @@ button:disabled {
 }
 .game_page_sprint:hover::after{
   content: 'Start Sprint Game';
-  position: absolute;
+  position: absolute;  
+  text-align: center;
   top: 10vh;
-  left: 30%;
-  color: white;
+  left: calc(50% - 7.7rem);
+  color: black;
   transition: all 0.7s;
   font-size: 2rem; 
   transition: all 1s; 
@@ -2337,8 +2335,8 @@ button:disabled {
   content: 'Start AudioCall Game';
   position: absolute;
   top: 10vh;
-  left: 25%;
-  color: white;
+  left: calc(50% - 7.7rem);
+  color: rgb(207, 18, 18);
   transition: all 0.7s;
   font-size: 2rem;  
 }

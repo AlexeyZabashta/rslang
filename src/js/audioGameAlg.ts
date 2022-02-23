@@ -146,7 +146,6 @@ async function endAudioGame() {
   btnMain.addEventListener('click', homePage);
 }
 
-
 async function checkUserWordAudio(val:boolean) {
   if (localStorage.getItem('userData')) {
     checkGetWordStatus(groupPage[0].group, groupPage[0].page, answersAudio[indexAnsw].id, val);

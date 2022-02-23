@@ -56,7 +56,7 @@ async function newWordDOM() {
 }
 
 export async function falseAnsw() {
-  //console.log('блок неверного ответа и картинка false', 'ответ номер', allAnswers);
+  // console.log('блок неверного ответа и картинка false', 'ответ номер', allAnswers);
   const answerFalse = document.querySelector('.answ_result_false') as HTMLElement;
   answerFalse.classList.add('click');
   answerFalse.ontransitionend = function () {
@@ -65,7 +65,7 @@ export async function falseAnsw() {
 }
 
 export async function trueAnsw() {
-  //console.log('блок верного ответа и картинка true', 'ответ номер', allAnswers);
+  // console.log('блок верного ответа и картинка true', 'ответ номер', allAnswers);
   const answer = document.querySelector('.answ_result_right') as HTMLElement;
   answer.classList.add('click');
   answer.ontransitionend = function () {
@@ -146,7 +146,7 @@ export async function createSprintResult() {
     endScore.innerHTML = `Score: ${massPoint[0]}`;
   } else {
     endScore.innerHTML = 'Score: 0}';
-  }  
+  }
   endTotal.innerHTML = `Total number of words: ${allAnswers}`;
   endSer.innerHTML = `Best right-series:  ${bestSeriesOld}`;
   const perc = rightAnswers / allAnswers;
@@ -155,10 +155,10 @@ export async function createSprintResult() {
     endPer.innerHTML = `Answered correctly:  ${percStr}%`;
   } else {
     endPer.innerHTML = 'Answered correctly:  0';
-  }  
+  }
   massPoint[0] = 0;
-  //console.log('stop game' );
-  document.removeEventListener('keydown', keySprint);  
+  // console.log('stop game' );
+  document.removeEventListener('keydown', keySprint);
   await checkGetUserStatus(percStr, bestSeriesOld);
 }
 
@@ -236,25 +236,25 @@ export async function checkAnsw(val:boolean) {
   // console.log('if result: ', val === answerFlag);
   console.clear();
   if (answerFlag === val) {
-    //console.log('верно');
+    // console.log('верно');
     trueAnsw();
     checkBonus(true);
     rightAnswers += 1;
     bestSeries += 1;
   } else {
-    //console.log('неверно');
+    // console.log('неверно');
     bestSeriesOld = bestSeriesOld < bestSeries ? bestSeries : bestSeriesOld;
     bestSeries = 0;
     checkBonus(false);
     falseAnsw();
   }
   allAnswers += 1;
-  //console.log('startflag', startFlag[0]);
+  // console.log('startflag', startFlag[0]);
   if (startFlag[0]) {
     await checkIndex();
     newWordDOM();
   } else {
-    //console.log('textBook');
+    // console.log('textBook');
     checkAuthSprint(answerFlag, val);
     allBtnsBlock();
     await checkIndexTextbook().then(() => {

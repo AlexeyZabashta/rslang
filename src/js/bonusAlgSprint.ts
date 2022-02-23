@@ -2,7 +2,7 @@ let bonusIndex = 0;
 let circleMass:NodeListOf<HTMLElement>;
 let totalPointsDOM:HTMLElement;
 let bonusSize:number;
-//let totalPoints = 0;
+// let totalPoints = 0;
 export const massPoint:number[] = [0];
 let bonusPoint:HTMLElement;
 let flagDOM = false;
@@ -121,5 +121,5 @@ export function checkBonus(val:boolean):void {
   }
   playSoundAnswer(val);
   bonusPoint.innerHTML = `+${bonusSize} очков за слово`;
-  totalPointsDOM.innerHTML = `${massPoint[0]}`;  
+  totalPointsDOM.innerHTML = `${massPoint[0]}`;
 }
