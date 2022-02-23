@@ -3,8 +3,9 @@ import { checkBonus, massPoint } from './bonusAlgSprint';
 import { IaggregatedWord } from './data';
 import { startFlag, groupPage, gameFlag } from '../indexGame';
 import {
-  getWordUserSprint, getWordsMiniGame, buildMassSprint, checkGetWordStatus, checkGetUserStatus,
+  getWordsMiniGame, buildMassSprint, checkGetWordStatus, checkGetUserStatus,
 } from './requestSprint';
+import { keySprint } from './sprintDOM';
 
 export const answers:Word[] = [];
 export const answersTextBook:IaggregatedWord[] = [];
@@ -149,6 +150,7 @@ export async function createSprintResult() {
     endPer.innerHTML = 'Answered correctly:  0';
   }  
   console.log('stop game' );
+  document.removeEventListener('keydown', keySprint);  
   await checkGetUserStatus(percStr, bestSeriesOld);
 }
 

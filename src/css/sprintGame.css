@@ -97,7 +97,7 @@
 }
 
 #answ_false {
-  background-color: brown;
+  background-color: rgb(165, 42, 42);
 }
 
 #answ_true {
@@ -207,6 +207,18 @@
   top: 0;
   left: 0;
   transition: .5s;
+}
+
+.sprint_key_icon {
+  position: relative;
+  top: 7rem; 
+  text-align: center;  
+}
+
+.sprint_key_icon img{
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
 }
 
 
