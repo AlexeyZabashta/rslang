@@ -142,7 +142,7 @@ const playWord = async (wordId: string) => {
         clearInterval(audioPlay);
         playWordsBtns.forEach(async (button, i: number) => {
           button.disabled = false;
-          button.style.opacity = '0.1';
+          button.style.opacity = '1';
         });
       }
     }, 200);
@@ -454,6 +454,7 @@ export const renderTextbookPage = async () => {
     button.addEventListener('click', () => {
       const currWordId = String((button as HTMLButtonElement).dataset.audioplay);
       // console.log(currWordId);
+      button.style.opacity = '0.1';
       playWord(currWordId);
     });
   });
@@ -705,16 +706,22 @@ export const renderTextbookPage = async () => {
         }
       });
     });
-
-    sprintGame.addEventListener('click', async () => {
-      const groupSpr = Number(localStorage.getItem('group'));
-      const pageSpr = Number(localStorage.getItem('groupPage'));
-      await startMiniGame(true, false, groupSpr, pageSpr);
-    });
-    audioGame.addEventListener('click', async () => {
-      const groupSpr = Number(localStorage.getItem('group'));
-      const pageSpr = Number(localStorage.getItem('groupPage'));
-      await startMiniGame(false, false, groupSpr, pageSpr);
-    });
   }
+
+  sprintGame.addEventListener('click', async () => {
+    localStorage.setItem('currentPage', 'Games');
+    const headerTitle = document.querySelector('.header-current') as HTMLElement;
+    headerTitle.innerHTML = 'Games';
+    const groupSpr = Number(localStorage.getItem('group'));
+    const pageSpr = Number(localStorage.getItem('groupPage'));
+    await startMiniGame(true, false, groupSpr, pageSpr);
+  });
+  audioGame.addEventListener('click', async () => {
+    localStorage.setItem('currentPage', 'Games');
+    const headerTitle = document.querySelector('.header-current') as HTMLElement;
+    headerTitle.innerHTML = 'Games';
+    const groupSpr = Number(localStorage.getItem('group'));
+    const pageSpr = Number(localStorage.getItem('groupPage'));
+    await startMiniGame(false, false, groupSpr, pageSpr);
+  });
 };

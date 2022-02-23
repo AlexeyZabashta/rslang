@@ -116,7 +116,7 @@ async function endAudioGame() {
   wrapper.classList.add('active');
   btnNextPage.classList.add('active');
   btnNextPage.addEventListener('click', async () => {
-    if (startFlag[0]) {
+    if (!localStorage.getItem('userData')) {
       const newPage = await checkPageAudioMain();
       startMiniGame(false, true, groupPage[0].group, newPage);
     } else {

@@ -15,7 +15,7 @@ export const groupPage:GrPg[] = [];
 
 async function createDataSprint(flagStart:boolean, group:number, page:number) {
   await createMassFalse(group, page);
-  if (flagStart) {
+  if (!localStorage.getItem('userData')) {
     const respMass:Word[] = await getWordsMiniGame(group, page);
     respMass.map((item) => answers.push(item));
     await sprintDOM(respMass[0].word).then(() => gameTimer());
@@ -28,7 +28,7 @@ async function createDataSprint(flagStart:boolean, group:number, page:number) {
 
 async function createDataAudio(flagStart:boolean, group:number, page:number) {
   await createMassFalseAudio(group, page);
-  if (flagStart) {
+  if (!localStorage.getItem('userData')) {
     const respMass:Word[] = await getWordsMiniGame(group, page);
     respMass.map((item) => answersAudio.push(item));
     audioDOM(respMass[0]);
@@ -44,7 +44,7 @@ export async function startMiniGame(flagGame:boolean, flagStart:boolean, group:n
   // flagStart = true запуск из меню, false - запуск из учебника
   await clearIndexAudio();
   sprintDefaultIndex();
-  console.log(flagStart, group, page);
+  // console.log(flagStart, group, page);
   startFlag.push(flagStart);
   gameFlag.push(flagGame);
   const obj:GrPg = { group, page };

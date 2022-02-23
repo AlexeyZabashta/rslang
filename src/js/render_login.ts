@@ -196,6 +196,7 @@ export const renderLoginWindow = async () => {
       notRegMessage.classList.add('_logged');
       loginHead.classList.add('_logged');
       logoutHead.classList.add('_logged');
+      loginUsername.innerHTML = `${authentData.name} !`;
       loginUsername.classList.add('_logged');
     } else {
       signInBtn.classList.remove('_logged');
