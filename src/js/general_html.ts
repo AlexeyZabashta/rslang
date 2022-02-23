@@ -127,6 +127,17 @@ renderHTMLStructure().then(async () => {
   })
 
   .then(async () => {
+    const navBtns = document.querySelectorAll('.nav-btn') as NodeListOf<HTMLButtonElement>;
+    navBtns.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (localStorage.getItem('currentPage') !== 'Textbook') {
+          bodyHtml.classList.remove('_learned-page');
+        }
+      });
+    });
+  })
+
+  .then(async () => {
     const footerHtml = document.querySelector('.footer') as HTMLElement;
     footerHtml.innerHTML = '';
     footerHtml.innerHTML = `<div class="footer-rsschool">

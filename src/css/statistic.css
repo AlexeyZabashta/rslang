@@ -28,7 +28,7 @@
 
 .stat_title {
   background-color: rgb(240, 248, 255);
-  font-size: 2rem; 
+  font-size: 1.5rem; 
   color: rgb(173, 15, 15);
   text-align: center;
 }
@@ -44,7 +44,7 @@ align-self: flex-start;
 .span_stat {
   display: block;
   margin-top: 3vh;
-  font-size: 1.5rem;  
+  font-size: 1.3rem;  
   text-align: center;
   background-color: rgb(240, 248, 255);
   box-shadow: 0rem 0rem 7rem 5rem rgba(0, 0, 255, 0.473);
