@@ -121,6 +121,7 @@
   border-radius: 1rem 1rem 0rem 1rem;
   background-color: transparent;
   transition: All .5s;
+
 }
 
 .choose_group_content {    
@@ -166,6 +167,7 @@
   background-image: url('../assets/img/flag_GB_light.png');
   background-position: center;
   background-size: 0;
+  cursor: pointer;
   transition: all 0.5s;  
 }
 .choose_group_num:active {

@@ -1167,7 +1167,7 @@ button {
 }
 .developer-aboutapp {
   padding: 1rem;
-  color: var(--black);
+  color: var(--border);
   font-size: var(--font3);
   text-align: justify;
 

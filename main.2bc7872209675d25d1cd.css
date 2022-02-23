@@ -1296,7 +1296,7 @@ button {
 }
 .developer-aboutapp {
   padding: 1rem;
-  color: var(--black);
+  color: var(--border);
   font-size: var(--font3);
   text-align: justify;
 
@@ -2444,6 +2444,7 @@ button:disabled {
   border-radius: 1rem 1rem 0rem 1rem;
   background-color: transparent;
   transition: All .5s;
+
 }
 
 .choose_group_content {    
@@ -2489,6 +2490,7 @@ button:disabled {
   background-image: url(assets/bbc83a590b934a28474d.png);
   background-position: center;
   background-size: 0;
+  cursor: pointer;
   transition: all 0.5s;  
 }
 .choose_group_num:active {

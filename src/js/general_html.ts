@@ -44,6 +44,20 @@ renderHTMLStructure().then(async () => {
   })
 
   .then(async () => {
+    const menuSettings = document.querySelector('.header-nav') as HTMLElement;
+    const statisticsHtml = document.querySelector('.nav-statistics') as HTMLButtonElement;
+
+    menuSettings.addEventListener('click', () => {
+      if (localStorage.getItem('userData') !== null) {
+        statisticsHtml.disabled = false;
+        statisticsHtml.style.opacity = '1';
+        const headerTitle = document.querySelector('.header-current') as HTMLElement;
+        headerTitle.innerHTML = 'Statistics';
+      }
+    });
+  })
+
+  .then(async () => {
     const homeHtml = document.querySelector('.nav-home') as HTMLButtonElement;
     homeHtml.addEventListener('click', () => {
       // console.log(' вызываю homePage();');
@@ -179,10 +193,10 @@ window.addEventListener('load', async () => {
   }
 
   const headerTitle = document.querySelector('.header-current') as HTMLElement;
-  headerTitle.innerHTML = 'Statistics';
+  headerTitle.innerHTML = '';
   if (!localStorage.getItem('currentPage')) { headerTitle.innerHTML = ''; } else {
     if (localStorage.getItem('currentPage') === 'Home') {
-      headerTitle.innerHTML = '';
+      headerTitle.innerHTML = 'Home';
     }
     if (localStorage.getItem('currentPage') === 'Textbook') {
       headerTitle.innerHTML = 'Textbook';
