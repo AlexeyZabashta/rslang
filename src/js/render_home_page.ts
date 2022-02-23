@@ -54,7 +54,7 @@ export const homePage = async () => {
     <div class="home-developers home-article">
       <h2 class="home-developers_title">About App</h2>
       <div class="home-developers_subtitle">
-        Meet the app development team
+        Meet the app developer team, which will introduce you to the app...
       </div>
     </div>
   </div>
