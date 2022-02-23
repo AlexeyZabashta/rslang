@@ -239,9 +239,12 @@ export async function getAggrWordsUserGeneral(val:number) {
       'Content-Type': 'application/json',
     },
   });
-  const resp:UserResponse = (await request.json());
-  //console.log('response getAggrWordsUserGeneral', resp[0].totalCount[0].count);
-  return resp[0].totalCount[0].count;
+  const resp:UserResponse = (await request.json());  
+  if (resp[0].totalCount.length) {    
+    return resp[0].totalCount[0].count;
+  } else {
+    return 0;
+  } 
 }
 
 
@@ -490,12 +493,12 @@ export async function putUserStat() {
     learnedWords: 0,
     optional: {
       audio: {
-        percent: 70,
-        bestSer: 5,
+        percent: 0,
+        bestSer: 0,
       }, 
       sprint: {
-        percent: 70,
-        bestSer: 5,
+        percent: 0,
+        bestSer: 0,
       },
     },
   };
