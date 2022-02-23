@@ -250,7 +250,7 @@ export async function checkAnsw(val:boolean) {
   }
   allAnswers += 1;
   // console.log('startflag', startFlag[0]);
-  if (startFlag[0]) {
+  if (!localStorage.getItem('userData')) {
     await checkIndex();
     newWordDOM();
   } else {

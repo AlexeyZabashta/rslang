@@ -54,7 +54,7 @@ export const audioDOM = async (val:Word) => {
         <div class="end_game_percent"></div>
         <button id="end_game_textbook">Back to TextBook</button>
         <button id="end_game_mainmenu">Back to Home page</button>
-        <button id="end_game_nextPage">To the next page</button>
+        <button id="end_game_nextPage">Start next train</button>
     </div>
     <div class="end_audio_info">
     The completed pages in the textbook are over!<br>

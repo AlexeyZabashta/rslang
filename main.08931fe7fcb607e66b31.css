@@ -1353,7 +1353,7 @@ button {
 .footer-rsschool_svg {
   width: 7rem;
   height: 2.3rem;
-  background-image: url(assets/66e800aacc5aaf68c358.svg);
+  background-image: url(assets/2418248d4ccd4e7738a4.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1373,7 +1373,7 @@ button {
   width: 2.2rem;
   height: 2.2rem;
   margin: 0 .5rem 0 1rem;
-  background-image: url(assets/bea7512054f79a0e0e00.svg);
+  background-image: url(assets/cadab172d77dc4de24c0.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1737,7 +1737,7 @@ button {
 }
 
 .bonus_circle.active {
-  background-image: url(assets/be7c5034058e2dc3ad88.svg);
+  background-image: url(assets/a7e9a3da31c72c38b31d.svg);
   opacity: 1;
   transition: .5s;
 }
@@ -2096,13 +2096,13 @@ button:disabled {
 }
 
 .audio_answer_variant.right {
-  background-image: url(assets/be7c5034058e2dc3ad88.svg);
+  background-image: url(assets/a7e9a3da31c72c38b31d.svg);
   opacity: 1;
   transition: .7s;
 }
 
 .audio_answer_variant.false {
-  background-image: url(assets/38e56ba2673b244da7a0.svg);
+  background-image: url(assets/f013d031f2cc78bdaf6e.svg);
   opacity: 1;
   transition: .7s;
 }
@@ -2513,31 +2513,57 @@ button:disabled {
 
 }
 .statistics_page {
-  padding: 5rem 5rem 5rem 5rem; 
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
-
-.statistics_page h2 {
-  background-color: rgb(240, 248, 255);
-  font-size: 1.2rem; 
+  width: 100%;
+  height: 86vh;  
+  
+  display: flex; 
+  flex-wrap: wrap;
+  justify-content: space-evenly;   
+  align-items: center;
+  background-color: rgba(51, 50, 50, 0.61);
+  background-image: url(assets/e3db910a5ca78abc4710.png);
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(0.5rem);
 }
 
 .stat_section {
-  width: 30%;
-  height: 30%;
-  margin: 0 auto;
+  flex: 0 1 60vw;  
   background-color: rgba(196, 196, 196, 0.7);
+  border-radius: 0rem 2rem 0rem 2rem;  
+}
+.stat_section_wrapper {
+  border-radius: 0rem 2rem 0rem 2rem;
+  overflow: hidden;
+  box-shadow: 0rem 0rem 7rem 5rem rgba(0, 0, 255, 0.473); 
+  
 }
 
+.stat_title {
+  background-color: rgb(240, 248, 255);
+  font-size: 2rem; 
+  color: rgb(173, 15, 15);
+  text-align: center;
+}
+/*.stat_words {
+align-self: flex-start;
+}
+.stat_sprint {
+  align-self: center;
+}
+.stat_audio {
+  align-self: flex-end;
+}*/
 .span_stat {
   display: block;
-  margin-top: 2rem;
-  font-size: 1.2rem;  
+  margin-top: 3vh;
+  font-size: 1.5rem;  
   text-align: center;
   background-color: rgb(240, 248, 255);
+  box-shadow: 0rem 0rem 7rem 5rem rgba(0, 0, 255, 0.473);
+
+  
 }
 
  
