@@ -1,4 +1,6 @@
-import { getUserStat, getAggrWordsUserGeneral, createStatField, putUserStat } from './requestSprint';
+import {
+  getUserStat, getAggrWordsUserGeneral, createStatField, putUserStat,
+} from './requestSprint';
 
 export const renderStatisticsPage = async () => {
   // console.log('Отрисовываю страницу Statistics');
@@ -24,9 +26,5 @@ export const renderStatisticsPage = async () => {
     <span id="best_series_audio" class="span_stat">Best series: ${await createStatField(4)}</span>    
   </section>      
 </section> 
-    `; 
-  const getStat = document.querySelector('#getStat') as HTMLElement;
-  getStat.addEventListener('click', getUserStat);
-  const putStat = document.querySelector('#putStat') as HTMLElement;
-  putStat.addEventListener('click', putUserStat);  
+    `;
 };

@@ -3,7 +3,6 @@ import { addDOMVariables } from './bonusAlgSprint';
 import { homePage } from './render_home_page';
 import { renderTextbookPage } from './render_textbook';
 
-
 export function keySprint(event:KeyboardEvent) {
   if (event.key === 'ArrowLeft') {
     event.preventDefault();
@@ -12,18 +11,18 @@ export function keySprint(event:KeyboardEvent) {
   if (event.key === 'ArrowRight') {
     event.preventDefault();
     checkAnsw(true);
-  } 
+  }
   const headerNav = document.querySelector('.header-nav') as HTMLElement;
   headerNav.addEventListener('click', (e) => {
     if ((e.target as HTMLButtonElement).classList.contains('nav-btn')) {
-      //console.log('обработчик убран');
+      // console.log('обработчик убран');
       document.removeEventListener('keydown', keySprint);
     }
-  });   
+  });
 }
 
 function keydownEventListner() {
-  document.addEventListener('keyup', (event) => keySprint(event));  
+  document.addEventListener('keyup', (event) => keySprint(event));
 }
 
 export const sprintDOM = async (word:string) => {
@@ -96,6 +95,3 @@ export const sprintDOM = async (word:string) => {
     sprintDefaultIndex();
   });
 };
-
-
-

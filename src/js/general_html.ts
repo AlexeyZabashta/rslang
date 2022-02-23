@@ -88,10 +88,15 @@ renderHTMLStructure().then(async () => {
     const statisticsHtml = document.querySelector('.nav-statistics') as HTMLButtonElement;
     statisticsHtml.addEventListener('click', () => {
       // console.log(' вызываю Statistics page();');
-      localStorage.setItem('currentPage', 'Statistics');
-      const headerTitle = document.querySelector('.header-current') as HTMLElement;
-      headerTitle.innerHTML = 'Statistics';
-      renderStatisticsPage();
+      if (localStorage.getItem('userData') !== null) {
+        statisticsHtml.disabled = false;
+        statisticsHtml.style.opacity = '1';
+        localStorage.setItem('currentPage', 'Statistics');
+        const headerTitle = document.querySelector('.header-current') as HTMLElement;
+        headerTitle.innerHTML = 'Statistics';
+        renderStatisticsPage();
+      } else statisticsHtml.disabled = true;
+      statisticsHtml.style.opacity = '0.7';
     });
   })
 

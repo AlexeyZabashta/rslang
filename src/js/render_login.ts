@@ -1,7 +1,7 @@
 import { baseUrl, Iuser, IauthorisedUser } from './data';
 
 export const renderLoginWindow = async () => {
-  //console.log('Отрисовываю окно LogIn');
+  // console.log('Отрисовываю окно LogIn');
   // const nameRegExp = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
   // const emailRegExp = /^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$/;
   // const nameRegExp = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -11,7 +11,7 @@ export const renderLoginWindow = async () => {
     const getauthentData: IauthorisedUser = JSON.parse(getUserFromLS);
     userName = getauthentData.name;
   }
-  //console.log('userName', userName);
+  // console.log('userName', userName);
   const loginWindow = document.querySelector('.header-login_block') as HTMLElement;
   // loginWindow.innerHTML = '';
   loginWindow.innerHTML = `<div class="login-window">

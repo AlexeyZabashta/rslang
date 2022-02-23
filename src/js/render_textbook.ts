@@ -508,7 +508,7 @@ export const renderTextbookPage = async () => {
       })
         .then(async (response) => {
           const updataContent: IUserWord = await response.json();
-          //console.log(updataContent);
+          // console.log(updataContent);
         })
         .catch(async (error) => {
           alert('You need to log in again!!!\n\n Go to the Home page and login,\n               or \ncontinue as an Anonymous user');
@@ -590,7 +590,7 @@ export const renderTextbookPage = async () => {
               });
           }
         }).catch(async (error) => {
-          //console.log('Such a word was not found');
+          // console.log('Such a word was not found');
           // error.message; // 'An error has occurred: 404'
         });
     };
@@ -626,7 +626,7 @@ export const renderTextbookPage = async () => {
 
     learnBtns.forEach(async (learnButton) => {
       learnButton.addEventListener('click', async () => {
-        //console.log('Нажал Learned');
+        // console.log('Нажал Learned');
         const currLearnedId = String((learnButton as HTMLButtonElement).dataset.learned);
         const curdiffButton = document.querySelector(`.difficult-word[data-difficult='${currLearnedId}']`) as HTMLButtonElement;
         const textBookItem = document.querySelector(`.textbook-item[data-item='${currLearnedId}']`) as HTMLElement;
@@ -656,7 +656,7 @@ export const renderTextbookPage = async () => {
 
     difficultBtns.forEach(async (diffButton, i: number) => {
       diffButton.addEventListener('click', async () => {
-        //console.log('Нажал Dificult');
+        // console.log('Нажал Dificult');
         const currDifficultId = String((diffButton as HTMLButtonElement).dataset.difficult);
         const currLearnedBtn = document.querySelector(`.learned-word[data-learned='${currDifficultId}']`) as HTMLButtonElement;
         const textBookItem = document.querySelector(`.textbook-item[data-item='${currDifficultId}']`) as HTMLElement;
