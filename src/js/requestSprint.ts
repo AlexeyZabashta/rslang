@@ -1,5 +1,5 @@
 import { Word, AuthUser } from './typeSprint';
-import { IUserWordOptions } from './data';
+import { IUserWordOptions, IaggregatedWord } from './data';
 import { gameFlag } from '../indexGame';
 
 export const getWordsMiniGame = async (group:number, page:number) => {
@@ -31,13 +31,13 @@ export async function buildMassSprint(group:number, page:number): Promise<Word[]
   const respAggrMass:Word[] = await getAggrWordsMiniGame(group, page);
 
   const buildArr:Word[] = respMass.filter((item) => {
-    console.log(respAggrMass);
+    //console.log(respAggrMass);
     if (respAggrMass.some((val) => val.word === item.word) === false) {
       return item;
     }
     return null;
   });
-  console.log('buildArr: ', buildArr);
+  //console.log('buildArr: ', buildArr);
   return buildArr;
 }
 
@@ -138,7 +138,7 @@ export const getWordUserSprint = async (idWord:string) => {
     },
   }).catch((error) => {
     const e = new Error('error 404 userword');
-    console.log('ошибка в запросе', e);
+    //console.log('ошибка в запросе', e);
   });
   const resp = await (await request as Response).json();
   return resp;
@@ -160,13 +160,13 @@ export const getWordUserSprint = async (idWord:string) => {
 export async function checkGetWordStatus(group:number, page:number, idWord:string, val: boolean) {
   getWordUserSprint(idWord)
     .then((response) => {
-      console.log('Сработал updateUserWord');
+      //console.log('Сработал updateUserWord');
       updateWordUserSprint(group, page, idWord, val, response);
     })
     .catch((error) => {
       console.clear();
       const e = new Error('error 404');
-      console.log('Сработал createUserWord', e);
+      //console.log('Сработал createUserWord', e);
       createWordUserSprint(group, page, idWord, val);
     });
 }
@@ -188,7 +188,7 @@ type UserOptional = {
 }; */
 
 type UserOptionalGame = {
-  percent: string,
+  percent: number,
   bestSer: number
 };
 
@@ -206,6 +206,20 @@ export async function getUserStat() {
   const resp:UserStat = await request.json();
   return resp;
 }
+
+
+type UserResponse = {
+  [index: number] : UserCount  
+};
+
+type UserCount = {
+  paginatedResults: IaggregatedWord[],
+  totalCount: TotalCount[]
+};
+
+type TotalCount = {
+  count : number
+};
 
 export async function getAggrWordsUserGeneral(val:number) {
   const today = new Date().toLocaleDateString();
@@ -225,30 +239,30 @@ export async function getAggrWordsUserGeneral(val:number) {
       'Content-Type': 'application/json',
     },
   });
-  const resp:Word[] = (await request.json())[0].paginatedResults;
-  console.log('response getAggrWordsUserGeneral', resp.length, resp);
-  return resp.length;
+  const resp:UserResponse = (await request.json());
+  //console.log('response getAggrWordsUserGeneral', resp[0].totalCount[0].count);
+  return resp[0].totalCount[0].count;
 }
 
 
-function middlePercSprint(newPer:string, oldPerc:UserStat) {
+function middlePercSprint(newPer:number, oldPerc:UserStat) {
   if (oldPerc.optional.sprint) {
-    const perc1 = parseInt(newPer);
-    const perc2 = parseInt(oldPerc.optional.sprint.percent);
+    const perc1 = newPer;
+    const perc2 = oldPerc.optional.sprint.percent;
 
-    return `${(perc1 + perc2) / 2}%`;
+    return (perc1 + perc2) / 2;
   }
   return newPer;
 }
 
 
-function middlePercAudio(newPer:string, oldPerc:UserStat) {
+function middlePercAudio(newPer:number, oldPerc:UserStat) {
   if (oldPerc.optional.audio) {
-    const perc1 = parseInt(newPer);
-    const perc2 = parseInt(oldPerc.optional.audio.percent);
-    return `${(perc1 + perc2) / 2}%`;
+    const perc1 = newPer;
+    const perc2 = oldPerc.optional.audio.percent;
+    return Math.round((perc1 + perc2) / 2);
   }
-  return newPer;
+  return Math.round(newPer);
 }
 
 async function requestUpdateUserSprint(newOptions:UserStat) {
@@ -266,7 +280,7 @@ async function requestUpdateUserSprint(newOptions:UserStat) {
 }
 
 
-export async function updateUserStatSprint(perc:string, ser:number, oldInfo:UserStat) {
+export async function updateUserStatSprint(perc:number, ser:number, oldInfo:UserStat) {
   if (oldInfo.optional.audio) {
     const newOptions:UserStat = {
       learnedWords: 0,
@@ -310,7 +324,7 @@ export async function requestUpdateUserAudio(newOptions:UserStat) {
   });    
 }
 
-export async function updateUserStatAudio(perc:string, ser:number, oldInfo:UserStat) {
+export async function updateUserStatAudio(perc:number, ser:number, oldInfo:UserStat) {
   if (oldInfo.optional.sprint) {
     const newOptions:UserStat = {
       learnedWords: 0,
@@ -341,7 +355,7 @@ export async function updateUserStatAudio(perc:string, ser:number, oldInfo:UserS
 
 }
 
-function createOptionSprint(perc:string, ser:number, val:boolean) {
+function createOptionSprint(perc:number, ser:number, val:boolean) {
   if (val) {
     return {
       learnedWords: 0,
@@ -365,7 +379,7 @@ function createOptionSprint(perc:string, ser:number, val:boolean) {
 }
 
 
-export async function createUserStat(perc:string, ser:number, val: boolean) { 
+export async function createUserStat(perc:number, ser:number, val: boolean) { 
   const newOptions:UserStat = createOptionSprint(perc, ser, val);  
 
   const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
@@ -380,10 +394,10 @@ export async function createUserStat(perc:string, ser:number, val: boolean) {
   });
 }
 
-export async function checkGetUserStatus(percent:string, bestSer:number) {
+export async function checkGetUserStatus(percent:number, bestSer:number) {
   getUserStat()
     .then((response) => {
-      console.log('Сработал updateUserWord');
+      //console.log('Сработал updateUserWord');
       if (gameFlag[0]) {
         updateUserStatSprint(percent, bestSer, response);
       } else {
@@ -393,7 +407,7 @@ export async function checkGetUserStatus(percent:string, bestSer:number) {
     .catch((error) => {
       console.clear();
       const e = new Error('error 404');
-      console.log('Сработал createUserWord', e);
+      //console.log('Сработал createUserWord', e);
       if (gameFlag[0]) {
         createUserStat(percent, bestSer, true);
       } else {
@@ -413,7 +427,7 @@ export async function checkGetUserOptions(): Promise<boolean | UserStat>{
     .catch((error) => {
       console.clear();
       const e = new Error('error 404');
-      console.log('Сработал createUserWord', e);
+      //console.log('Сработал createUserWord', e);
       out = false;
       return out;
     });  
@@ -428,20 +442,20 @@ export async function createStatField(val:number) {
     if (val === 0) {
       if ((info as UserStat).optional.audio && (info as UserStat).optional.sprint) {
         const percAud = (info as UserStat).optional.audio?.percent;
-        const percSpr = (info as UserStat).optional.audio?.percent;
-        const middlePer = (parseInt(percAud as string) + parseInt(percSpr as string)) / 2;
-        return `${middlePer}%`;      
+        const percSpr = (info as UserStat).optional.sprint?.percent;
+        const middlePer = Math.round(((percAud as number) + (percSpr as number)) / 2);
+        return `${middlePer}`;      
       }   
       if ((info as UserStat).optional.audio) {
-        return (info as UserStat).optional.audio?.percent;
+        return (info as UserStat).optional.audio?.percent.toFixed(0);
       } 
       if ((info as UserStat).optional.sprint) {
-        return (info as UserStat).optional.sprint?.percent;
+        return (info as UserStat).optional.sprint?.percent.toFixed(0);
       }  
     }
     if (val === 1) {
       if ((info as UserStat).optional.sprint?.percent) {
-        return (info as UserStat).optional.sprint?.percent;
+        return (info as UserStat).optional.sprint?.percent.toFixed(0);
       } else {
         return 0;
       }
@@ -455,7 +469,7 @@ export async function createStatField(val:number) {
     }
     if (val === 3) {
       if ((info as UserStat).optional.audio?.percent) {
-        return (info as UserStat).optional.audio?.percent;
+        return (info as UserStat).optional.audio?.percent.toFixed(0);
       } else {
         return 0;
       }
@@ -469,4 +483,30 @@ export async function createStatField(val:number) {
     }
   }
   return 0;
+}
+
+export async function putUserStat() {
+  const newOptions:UserStat = {
+    learnedWords: 0,
+    optional: {
+      audio: {
+        percent: 70,
+        bestSer: 5,
+      }, 
+      sprint: {
+        percent: 70,
+        bestSer: 5,
+      },
+    },
+  };
+  const data:AuthUser = JSON.parse(String(localStorage.getItem('userData')));
+  const request = await fetch(`https://alexrslangproject.herokuapp.com/users/${data.userId}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newOptions),
+  });
 }

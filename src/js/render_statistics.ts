@@ -1,4 +1,4 @@
-import { getUserStat, getAggrWordsUserGeneral, createStatField } from './requestSprint';
+import { getUserStat, getAggrWordsUserGeneral, createStatField, putUserStat } from './requestSprint';
 
 export const renderStatisticsPage = async () => {
   // console.log('Отрисовываю страницу Statistics');
@@ -9,7 +9,7 @@ export const renderStatisticsPage = async () => {
     <h2>Words Statistic</h2>
     <span id="new_words_all" class="span_stat">New words: ${await getAggrWordsUserGeneral(0)}</span>
     <span id="weak_words" class="span_stat">Learned words: ${await getAggrWordsUserGeneral(1)}</span>
-    <span id="perc_date" class="span_stat">Answered correctly: ${await createStatField(0)}%</span>    
+    <span id="perc_date" class="span_stat">Answered correctly: ${await createStatField(0)}%</span>     
   </section>
   <section class="stat_sprint stat_section">
     <h2>Sprint Statistic</h2>
@@ -24,15 +24,9 @@ export const renderStatisticsPage = async () => {
     <span id="best_series_audio" class="span_stat">Best series: ${await createStatField(4)}</span>    
   </section>      
 </section> 
-    `;
-
-
-  /*
-  <button id="getStat">getStat</button>
-  <button id="putStat">putStat</button>
-  <button id="testStat">testStat</button>
+    `; 
   const getStat = document.querySelector('#getStat') as HTMLElement;
   getStat.addEventListener('click', getUserStat);
-  const testStat = document.querySelector('#testStat') as HTMLElement;
-  testStat.addEventListener('click', () => getAggrWordsUserGeneral(1));*/
+  const putStat = document.querySelector('#putStat') as HTMLElement;
+  putStat.addEventListener('click', putUserStat);  
 };

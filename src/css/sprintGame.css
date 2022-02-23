@@ -138,13 +138,13 @@
   width: 4rem;
   height: 4rem;  
   opacity: 0; 
-  transition: .5s; 
+  transition: .2s; 
 }
 
 .answ_result_right.click, 
 .answ_result_false.click {
   opacity: 1;
-  transition: .5s;  
+  transition: .2s;  
 }
 
 .big,

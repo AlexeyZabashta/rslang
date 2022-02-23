@@ -16,14 +16,14 @@ export function keySprint(event:KeyboardEvent) {
   const headerNav = document.querySelector('.header-nav') as HTMLElement;
   headerNav.addEventListener('click', (e) => {
     if ((e.target as HTMLButtonElement).classList.contains('nav-btn')) {
-      console.log('обработчик убран');
+      //console.log('обработчик убран');
       document.removeEventListener('keydown', keySprint);
     }
   });   
 }
 
 function keydownEventListner() {
-  document.addEventListener('keydown', (event) => keySprint(event));  
+  document.addEventListener('keyup', (event) => keySprint(event));  
 }
 
 export const sprintDOM = async (word:string) => {
