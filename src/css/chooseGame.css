@@ -1,100 +1,263 @@
+:root { 
+  --group1: rgba(243, 123, 102, 0.7);
+  --group2: rgba(223, 173, 66, 0.7);
+  --group3: rgba(222, 248, 77, 0.7);
+  --group4: rgba(95, 206, 31, 0.7);
+  --group5: rgba(49, 198, 243, 0.6);
+  --group6: rgba(31, 57, 206, 0.7);
+  --group7: rgba(177, 31, 206, 0.6);
+  
+}
+
 .game_page_wrapper {
-  width: 100%; 
-  padding-top: 18vh; 
+  width: 100%;
+  height: 86vh;  
   position: relative;
+  background-color: rgba(51, 50, 50, 0.61);
+  backdrop-filter: blur(0.3rem);
 }
 
 .choose_game {
-  position: absolute;
-  top: calc(50% - 10vh);
-  left: 20%;  
   display: flex;
-  justify-content: center;
-  width: 60%;
-  height: 20vh;
-  padding: 3% 3% 3% 3%;
-  border: grey solid 1px;
-  border-radius: 1rem;
-  background-color: rgba(196, 196, 196, 0.7);
-  transition: .5s;
+  width: 100%;
+  height: 86vh;
+
+  position: absolute;
+  top: 0vh;
+   
+  
+  justify-content: space-evenly;
+  align-items: center;  
+  
+  /*border: grey solid 1px;*/
+  border-radius: 2rem;
+  background-color: transparent;
+  visibility: visible;
+  opacity: 1;
+  transition: All 0.5s;
+  z-index: 10;
 }
 
-.choose_game.block {  
+.choose_game.block { 
+  scale: 0;
+  visibility: hidden;
   opacity: 0;
   top: -100%;
-  transition: .5s;
+
+  transition:All 0.5s;
 }
 
 .game_page_sprint,
-.game_page_audio {
+.game_page_audio {  
   cursor: pointer;
-  width: 8rem;
-  height: 6rem;
-  border-radius: 1rem;
-  background-color:rgba(245, 245, 220, .5);
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background-color:transparent;
+  background-position: center;
+  background-size: 15rem; 
+  background-repeat: no-repeat;
   text-align: center;
   vertical-align: middle;
   font-size: 1.5rem;
-  transition: .5s;  
+  transition: all 0.5s;  
+}
+
+.game_page_sprint{
+  background-image: url('../assets/img/sprint.png');
+}
+.game_page_sprint:hover::after{
+  content: 'Start Sprint Game';
+  position: absolute;
+  top: 10vh;
+  left: 30%;
+  color: white;
+  transition: all 0.7s;
+  font-size: 2rem; 
+  transition: all 1s; 
+}
+
+.game_page_audio {
+  background-image: url('../assets/img/audio_call.png');
+}
+.game_page_audio:hover::after{
+  content: 'Start AudioCall Game';
+  position: absolute;
+  top: 10vh;
+  left: 25%;
+  color: white;
+  transition: all 0.7s;
+  font-size: 2rem;  
 }
 
 
 .game_page_audio:hover,
 .game_page_sprint:hover,
 .choose_group_num:hover {
-  background-color: aliceblue;
-  transition: .5s;
+  background-color: rgba(0, 0, 255, 0.349);
+  box-shadow: 0rem 0rem 10rem 5rem rgba(0, 0, 255, 0.473);
+  transition:All 0.5s;
 }
 
-
 .game_page_sprint {  
-  margin-left: 6rem;  
+  margin-left: 0rem;  
 }
 
 .choose_group {
-  position: relative;
-  top:40vh;
-  margin: 0 auto;
+  position: absolute;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  
   opacity: 0;  
-  width: 60%;
+  width: 90vw;
   height: 20vh;
-  padding: 3% 3% 3% 3%;
-  border: grey solid 1px;
-  border-radius: 1rem;
-  background-color: rgba(196, 196, 196, 0.7);
-  transition: .5s;
+  margin-left: 5vw;
+  border: transparent;
+  border-radius: 1rem 1rem 0rem 1rem;
+  background-color: transparent;
+  transition: All .5s;
 }
 
 .choose_group_content {    
   display: flex;
+  width: 80%;
   justify-content: space-between; 
   margin-top: 2rem; 
 }
 
 .choose_group_h2 {
   text-align: center;
-  background-color: rgb(240, 248, 255);
-  width: 20rem;
-  height: 2rem;
-  border-radius: .5rem;
+  
+  color: white;
+  font-size: 3rem;
+  font-weight: 700;
+
+  width: 20rem;  
+
+  height: 3rem;
+  border-radius: 0rem 1rem 0rem 1rem;
   font-size: 1.5rem;
-  margin-left: calc(50% - 10rem);
+  
 }
 
 .choose_group.active {
   opacity: 1;
   transition: .5s;
-  top: 18vh;
+  top: 30vh;
 }
 
-.choose_group_num {
-  cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1.5rem;
-  background-color: rgba(240, 248, 255, .5);
-  margin-left: 1rem;
-  padding-top: 1rem;
-  font-size: 1.5rem;  
-  text-align: center;
+.choose_group_num  {  
+  display: flex;  
+  width: 4rem;
+  height: 4rem;
+  justify-content: center;
+  align-items: center;  
+  font-size: 2rem;
+  font-weight: 900;
+  color:  rgba(48, 48, 158, 0.986);
+  border-width: 0.5rem;
+  border-radius: 50%;
+  background-color: transparent;
+  background-image: url('../assets/img/flag_GB_light.png');
+  background-position: center;
+  background-size: 0;
+  transition: all 0.5s;  
+}
+.choose_group_num:active {
+  transform: translateY(0.2rem);
+}
+.choose_group_num:nth-child(1) {
+  border-color: var(--group1);
+  box-shadow: 0rem 0rem 1rem 1rem var(--group1); 
+}
+.choose_group_num:nth-child(1):hover {
+  background-color: var(--group1);  
+}
+.choose_group_num:nth-child(2) {
+  border-color: var(--group2);
+  box-shadow: 0rem 0rem 1rem 1rem var(--group2); 
+}
+.choose_group_num:nth-child(2):hover {
+  background-color: var(--group2);  
+}
+.choose_group_num:nth-child(3) {
+  border-color: var(--group3);
+  box-shadow: 0rem 0rem 1rem 1rem var(--group3); 
+}
+.choose_group_num:nth-child(3):hover {
+  background-color: var(--group3);  
+}
+.choose_group_num:nth-child(4) {
+  border-color: var(--group4);
+  box-shadow: 0rem 0rem 1rem 1rem var(--group4); 
+}
+.choose_group_num:nth-child(4):hover {
+  background-color: var(--group4);  
+}
+.choose_group_num:nth-child(5) {
+  border-color: var(--group5);
+  box-shadow: 0rem 0rem 1rem 1rem var(--group5); 
+}
+.choose_group_num:nth-child(5):hover {
+  background-color: var(--group5);  
+}
+.choose_group_num:nth-child(6) {
+  border-color: var(--group6);
+  box-shadow: 0rem 0rem 1rem 1rem var(--group6); 
+}
+.choose_group_num:nth-child(6):hover {
+  background-color: var(--group6);  
+}
+
+
+@media all and (max-width: 35rem) {
+
+  .choose_group {    
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 80vh;
+    
+  }
+
+  .choose_group_content {    
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center; 
+    align-items: center;
+    
+  }
+
+  .choose_group.active {
+    opacity: 1;
+    transition: .5s;
+    top: 0vh;
+  }
+
+}
+
+@media all and (max-height: 40rem) {
+  .choose_group_num  {  
+    display: flex;  
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .choose_group_content {    
+    display: flex;
+    width: 80%;
+    height: 60vh;
+    justify-content: space-between; 
+    margin-top: 0rem; 
+  }
+
+
 }
