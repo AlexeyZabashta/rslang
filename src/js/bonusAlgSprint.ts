@@ -17,16 +17,16 @@ let answerSound:HTMLAudioElement;
 let answerBonus:HTMLAudioElement;
 
 async function playBonusSound() {
-  answerBonus.src = '../src/assets/audio/bonus.mp3';
+  answerBonus.src = '../rslang/src/assets/audio/bonus.mp3';
   answerBonus.play();
 }
 
 async function playSoundAnswer(val:boolean) {
   if (val) {
-    answerSound.src = '../src/assets/audio/right2.mp3';
+    answerSound.src = '../rslang/src/assets/audio/right2.mp3';
     answerSound.play();
   } else {
-    answerSound.src = '../src/assets/audio/wrong2.mp3';
+    answerSound.src = '../rslang/src/assets/audio/wrong2.mp3';
     answerSound.play();
   }
 }

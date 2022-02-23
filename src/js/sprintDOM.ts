@@ -30,7 +30,7 @@ export const sprintDOM = async (word:string) => {
   mainSection.innerHTML = `
   <section class="wrapper_minigame">
     <div class="sprint_minigame">
-      <audio id="game_timer" src="../src/assets/audio/timer.mp3"></audio>
+      <audio id="game_timer" src="../rslang/src/assets/audio/timer.mp3"></audio>
       <audio id="answer_sound"></audio>
       <audio id="answer_bonus"></audio>
       <h2 class="total_score">0</h2>
@@ -45,10 +45,10 @@ export const sprintDOM = async (word:string) => {
       </div>
       <div class="game_content">
         <div class="bonus_icon_wrapper">
-          <img src="../src/assets/red.png" class="bonus_icon" id="red">
-          <img src="../src/assets/big.png" class="bonus_icon big" id="big">
-          <img src="../src/assets/boom.png" class="bonus_icon boom" id="boom">
-          <img src="../src/assets/flash.png" class="bonus_icon flash" id="flash">
+          <img src="../rslang/src/assets/red.png" class="bonus_icon" id="red">
+          <img src="../rslang/src/assets/big.png" class="bonus_icon big" id="big">
+          <img src="../rslang/src/assets/boom.png" class="bonus_icon boom" id="boom">
+          <img src="../rslang/src/assets/flash.png" class="bonus_icon flash" id="flash">
         </div>
         <div class="engl_word">${word}</div>
         <div class="translate_engl_word">${await answerVariant()}</div>
@@ -58,11 +58,11 @@ export const sprintDOM = async (word:string) => {
         <button class="answ_btn" id="answ_true">Верно</button>
       </div>
       <div class="sprint_key_icon">
-        <img src="../src/assets/arr_left.svg">
-        <img src="../src/assets/arr_right.svg">
+        <img src="../rslang/src/assets/arr_left.svg">
+        <img src="../rslang/src/assets/arr_right.svg">
       </div>
-      <img class="answ_result_right" src="../src/assets/true2.svg">
-      <img class="answ_result_false" src="../src/assets/false2.svg">
+      <img class="answ_result_right" src="../rslang/src/assets/true2.svg">
+      <img class="answ_result_false" src="../rslang/src/assets/false2.svg">
     </div>  
     <div class="timer_value">60</div>
   </div>

@@ -145,7 +145,7 @@ export async function createSprintResult() {
   if (massPoint[0]) {
     endScore.innerHTML = `Score: ${massPoint[0]}`;
   } else {
-    endScore.innerHTML = 'Score: 0}';
+    endScore.innerHTML = 'Score: 0';
   }
   endTotal.innerHTML = `Total number of words: ${allAnswers}`;
   endSer.innerHTML = `Best right-series:  ${bestSeriesOld}`;
