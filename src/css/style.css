@@ -1127,7 +1127,7 @@ button {
 
 /*---------------------STATISTICS-------------------*/
 
-.statistics{
+/*.statistics{
   width: 100%;
   height: 86vh;  
   background-color: var(--border-transp); 
@@ -1135,49 +1135,77 @@ button {
   padding-top: 40vh;
   color: var(--white);
   font-size: var(--font1);
-}
+}*/
 
 
 /*---------------------ABOUT APP--------------------*/
 
 .developers {
-  display: block;  
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
+  height: 86vh;  
+  background-color: var(--bg-transp); 
+  text-align: center;   
+  font-size: var(--font1);
+  box-shadow: inset 0rem 0rem 3rem 1rem var(--black); 
+  backdrop-filter: blur(0.1rem); 
+}
+.developers-wrapper {
+  width: 100%;
+  height: 86vh;  
+  overflow: scroll;  
+  /*box-shadow: 1.75rem 2rem 3rem 0rem var(--black);  */
+}
+.developers-wrapper::-webkit-scrollbar {
+  display: none;
 }
 .developers-title {
   width: 100%;
   text-align: center;
   font-size: var(--font1);
-  color: var(--border);
-  margin-bottom: 2rem;
+  color: var(--red);
+  margin: 2rem auto;
 }
-.developers-wrapper {
-  width: 100%;
+.developer-aboutapp {
+  padding: 1rem;
+  color: var(--black);
+  font-size: var(--font3);
+  text-align: justify;
+
+}
+.developer-aboutapp_subtitle span {
+  color: var(--bg-dark);
+  font-size: var(--font2);
+}
+.developer-wrapper {
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 .developer {
-  width: 100%;
-  height: 30vh;
+  width: 90%;
+  margin:  0 auto;
+  margin-bottom: 2rem;
+  min-height: 30vh;
   font-size: var(--font3);
-  background-color: rgba(106, 156, 202, 0.5);
+  background-color: rgba(204, 217, 233, 0.7);
   background-repeat: no-repeat;
   background-size: contain;   
-  margin-bottom: 3rem; 
-  color: var(--border); 
+  color: var(--border);
+  box-shadow:  0rem 0rem 3rem 1rem rgba(24, 54, 185, 0.877);  
 }
 .developer:first-child {
   background-image: url('https://avatars.githubusercontent.com/u/91083180?v=4');
   background-position: 0 0;
-  border-radius: 2rem 0rem 0rem 2rem;
+  border-radius: 2rem 2rem 0rem 2rem;
   padding-left: 17rem;
   padding-right: 1rem;
 }
 .developer:last-child {
   background-image: url('https://cdn.rs.school/arturzabashta.png?size=192');
   background-position: 100% 0;
-  border-radius: 0rem 2rem 2rem 0rem;
+  border-radius: 0rem 2rem 2rem 2rem;
   padding-left: 1rem;
   padding-right: 17rem;
 }
@@ -1190,7 +1218,7 @@ button {
 }
 .developer-role,
 .developer-work {
-  margin-top: 1.5rem;  
+  margin-top: 1.5rem auto;  
 }
 .developer-role {
   color: var(--gold);
@@ -1281,6 +1309,8 @@ button {
     display: flex;
     flex-direction: column;
   }
+
+  
 
 }
 
@@ -1450,6 +1480,33 @@ button {
     font-size: var(--font4);
   }
 
+  /*============================*/
+
+  .developer-wrapper {
+    width: 67vw; 
+    min-height: 70vw;      
+  }
+  .developer {
+    position: relative;     
+    background-size: contain;    
+
+  }
+  
+  .developer:first-child {   
+    background-position: 0 0;
+    border-radius: 2rem 2rem 0rem 2rem;
+
+    padding: 0 2vh 2vh 2vh;   
+    padding-top: 67vw;
+  }
+  .developer:last-child {    
+    background-position: 100% 0;
+    border-radius: 0rem 2rem 2rem 2rem;
+
+    padding: 0 2vh 2vh 2vh;   
+    padding-top: 67vw;
+  }
+  
 }
 
 @media all and (min-width: 80rem) {
@@ -1514,6 +1571,22 @@ button {
   .textbook-group_btn  {        
     width: 2.5rem;
     height: 2.5rem;     
+  }
+
+  .footer-copyright,
+  .footer-rsschool,
+  .footer-github {
+    
+    height: 2rem;
+    font-size: var(--font3);    
+  }
+
+  .footer-rsschool_svg {    
+    height: 2rem;    
+  }
+  
+  .footer-github {     
+    height: 2rem;     
   }
 
 }
