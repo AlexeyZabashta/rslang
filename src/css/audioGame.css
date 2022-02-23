@@ -1,16 +1,23 @@
 .wrapper_audioGame {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%; 
-  padding-top: 18vh; 
+  height: 86vh; 
+  background-color: rgba(51, 50, 50, 0.61);  
 }
 
-.audioGame_content {  
+.audioGame_content {   
+  display: flex; 
+  flex-direction: column;
   margin: 0 auto;
   width: 60%;
-  height: 40vh;
-  padding: 3% 3% 3% 3%;
+  height: 90%;  
   border: grey solid 1px;
-  border-radius: 1rem;
+  border-radius: 2rem 2rem 0 2rem;
   background-color: rgba(196, 196, 196, 0.7);
+  box-shadow: 0rem 0rem 7rem 5rem rgba(0, 0, 255, 0.473);
   transition: .5s;
 }
 
@@ -30,17 +37,22 @@ button:disabled {
 }
 
 .word_block {
+  position: relative;
+  width: 100%;
+  height: 40%;
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  vertical-align: middle;
+  align-items: center;
+  
 }
 
 .word_variants {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;  
-  margin: 5rem 0 5rem 0;  
+  flex-direction: column;
+  justify-content: space-evenly;  
+  align-items: center;
+  margin: 3rem 0 2rem 0;  
 }
 
 .next_word {
@@ -50,11 +62,12 @@ button:disabled {
 }
 
 .audio_answer {
-  width: 10rem;
+  width: 100%;
   height: 1.5rem;
-  background-color: rgba(255, 255, 255, .5);
-  font-size: 1.2rem;
+  color: rgba(31, 31, 148, 0.836);
+  font-size: 1.5rem;
   text-align: center;
+  
   border-radius: .5rem;
 }
 
@@ -65,119 +78,206 @@ button:disabled {
 
 
 .word_variant {
-  margin-top: .5rem;
-  margin-left: .5rem;
-}
-.btn_word_variant {    
-  width: 9rem;
-  font-size: 1rem;
-  border-radius: .5rem;  
+  flex: 1 1 2rem;
+  min-width: 15rem;
+  display: flex;
+  margin-bottom: 0.7rem;
+  
 }
 
 .audio_answer_variant {
   width: 1.5rem;
   height: 1.5rem;
+  margin-right: 1rem ;
   background-color: gray;
   border-radius: .75rem;
-  opacity: .5;
-  transition: .5s;
+  opacity: 0;
+  transition: all 0.7s;
 }
 
-.next_word_btn:disabled {
+#next_word_btn:disabled {  
+  opacity: 0;
+  visibility: hidden;
+  transition: all .5s;
+}
+
+#next_word_btn {
   background-color: gray;
-  opacity: .5;
-  transition: .5s;
+  width: 11rem;
+  font-size: 1rem;
+  border-radius: 0.7rem 0.7rem 0 0.7rem; 
+  box-shadow: 0rem 0rem 1rem 0.3rem rgba(0, 0, 0, 0.623);
+  transition: all  0.7s;
 }
 
-.next_word_btn {
-  background-color: transparent;
-  transition: .5s;
+.btn_word_variant,
+#end_game_nextPage,
+#end_game_mainmenu,
+#end_game_textbook {
+  width: 11rem;
+  font-size: 1rem;
+  border-radius: 0.7rem 0.7rem 0 0.7rem;
+  opacity: 0.8;
+  box-shadow: 0rem 0rem 1rem 0.3rem rgba(0, 0, 0, 0.623);
+  transition: all 0.7s;
 }
-
-.btn_word_variant {
+.btn_word_variant:hover,
+#idk:hover,
+#next_word_btn:hover,
+#end_game_nextPage:hover,
+#end_game_mainmenu:hover,
+#end_game_textbook:hover {
+  color: rgba(0, 0, 255, 0.9);
   opacity: 1;
+  box-shadow: 0rem 0rem 1rem 0.7rem rgba(0, 0, 255, 0.473);
+  transition: all 0.7s;
+}
+#idk:hover {
+  color: green;
 }
 
-.btn_word_variant.block,
-#idk:disabled {
+.btn_word_variant.block {
   background-color: gray;
-  opacity: .5;
-  transition: .5s;
+  transition: all 0.7s;
+}
+
+#idk {
+  width: 11rem;
+  font-size: 1rem;
+  border-radius: 0.7rem 0.7rem 0 0.7rem; 
+  box-shadow: 0rem 0rem 1rem 0.3rem rgba(0, 0, 0, 0.623);
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.7s;
+
+}
+
+#idk:disabled {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.7s;
 }
 
 .audio_answer_variant.right {
   background-image: url('../assets/true2.svg');
   opacity: 1;
-  transition: .5s;
+  transition: .7s;
 }
 
 .audio_answer_variant.false {
   background-image: url('../assets/false2.svg');
   opacity: 1;
-  transition: .5s;
+  transition: .7s;
 }
 
 
 .hide_info {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 5%;  
   opacity: 0;
-  transition: .5s;
+  transition: all .5s;
   text-align: center;
+  z-index: -1;
 }
 
 .hide_info.active {
   opacity: 1;
-  transition: .5s;
+  transition: all .5s;
+  z-index: 7;
 }
 
 .audio_img {
-  width: 8rem;
-  height: 8rem;
+  width: 100%;
+  height: 100%;
   border-radius: 4rem;  
-  transition: .5s;
+  transition: all 1s;
   display: inline-block;
   background-position: center;
-  background-size: contain;  
+  background-size: contain;
+  background-repeat: no-repeat;  
 }
 
 #play_word {
-  display: block;
-  margin-left: 2rem;
+  display: block;  
   width: 4rem;
   height: 4rem;
   border-radius: 2rem;
+  background-color: transparent;
+  background-image: url('../assets/img/audioplay_btn.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: all 1.4s;
+}
+#play_word:hover {
+  background-color: rgba(0, 0, 255, 0.349);
+  box-shadow: 0rem 0rem 10rem 5rem rgba(0, 0, 255, 0.473);
+  transition: all 1.4s;
 }
 
-.end_audio_train {
-  position: absolute; 
-  width:20rem;
-  height: 20rem;
-  top: calc(50% - 10rem);
-  left: calc(50% - 10rem);
-  transition: 1s;
-  font-size: 1.5rem;
-  text-align: center;
-  vertical-align: middle;
-  background-color: rgba(196, 196, 196, 0.7);;
-  border: grey solid 1px;
-  border-radius: 1rem;  
-  z-index: 200;
-}
+
+/*====================================================*/
+
 
 .end_audio_train_wrapper {
-  display: none;  
+  /*display: none;  
   position: absolute;  
   top: 120%;
   left: 0;
   width: 100%;
   height: 100%;
-  transition: .5s;
+  transition: .5s;*/
+
+
+  position: absolute;
+  display: none;
+  
+  width: 0%; 
+  height: 0vh; 
+  background-color: rgba(51, 50, 50, 0.61); 
+  transition: all 1.5s;
 }
 
 .end_audio_train_wrapper.active {
-  display: block; 
+  /*display: block; 
   top: 0;
   left: 0;
-  transition: .5s;
+  */
+  
+  position: absolute;
+  left: 0;
+  top: 7vh;
+  width: 100%; 
+  height: 86vh; 
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1.5s;
+}
+
+.end_audio_train {
+  position: absolute; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2vh;
+  width:20rem;
+  height: 20rem;  
+  transition: 1s;
+  font-size: 1.5rem;
+  text-align: center;
+  vertical-align: middle;
+  color: rgba(0, 0, 255, 0.9);
+  background-color: rgba(196, 196, 196, 0.7);
+  box-shadow: 0rem 0rem 10rem 5rem rgba(255, 238, 0, 0.603);
+  border: grey solid 1px;
+  border-radius: 2rem 2rem 0 2rem;  
+  z-index: 200;
 }
 
 #end_game_nextPage {

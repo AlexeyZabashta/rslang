@@ -36,11 +36,11 @@ export async function renderGamesPage() {
   mainHtml.innerHTML = `
   <section class="game_page_wrapper">
     <div class="choose_game">
-      <div class="game_page_audio">Start Audio Game</div>
-      <div class="game_page_sprint">Start Sprint Game</div>
+      <div class="game_page_audio"></div>
+      <div class="game_page_sprint"></div>
     </div>
     <div class="choose_group">
-      <h2 class="choose_group_h2">Choose group to Start</h2>
+      <p class="choose_group_h2">Choose group to Start</p>
       <div class="choose_group_content">
         <div class="choose_group_num group_num1">1</div>
         <div class="choose_group_num group_num2">2</div>
