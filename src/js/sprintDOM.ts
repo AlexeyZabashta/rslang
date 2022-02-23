@@ -3,6 +3,29 @@ import { addDOMVariables } from './bonusAlgSprint';
 import { homePage } from './render_home_page';
 import { renderTextbookPage } from './render_textbook';
 
+
+export function keySprint(event:KeyboardEvent) {
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    checkAnsw(false);
+  }
+  if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    checkAnsw(true);
+  } 
+  const headerNav = document.querySelector('.header-nav') as HTMLElement;
+  headerNav.addEventListener('click', (e) => {
+    if ((e.target as HTMLButtonElement).classList.contains('nav-btn')) {
+      //console.log('обработчик убран');
+      document.removeEventListener('keydown', keySprint);
+    }
+  });   
+}
+
+function keydownEventListner() {
+  document.addEventListener('keyup', (event) => keySprint(event));  
+}
+
 export const sprintDOM = async (word:string) => {
   const mainSection = document.querySelector('.main') as HTMLElement;
   mainSection.innerHTML = `
@@ -35,6 +58,10 @@ export const sprintDOM = async (word:string) => {
         <button class="answ_btn" id="answ_false">Неверно</button>
         <button class="answ_btn" id="answ_true">Верно</button>
       </div>
+      <div class="sprint_key_icon">
+        <img src="../src/assets/arr_left.svg">
+        <img src="../src/assets/arr_right.svg">
+      </div>
       <img class="answ_result_right" src="../src/assets/true2.svg">
       <img class="answ_result_false" src="../src/assets/false2.svg">
     </div>  
@@ -56,6 +83,7 @@ export const sprintDOM = async (word:string) => {
   btnFalse.addEventListener('click', () => checkAnsw(false));
   const btnTrue = document.querySelector('#answ_true') as HTMLElement;
   btnTrue.addEventListener('click', () => checkAnsw(true));
+  keydownEventListner();
   addDOMVariables();
   const backMain = document.querySelector('#end_game_mainmenu') as HTMLElement;
   backMain.addEventListener('click', () => {
@@ -68,3 +96,6 @@ export const sprintDOM = async (word:string) => {
     sprintDefaultIndex();
   });
 };
+
+
+

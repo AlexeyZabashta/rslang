@@ -3,8 +3,9 @@ import { checkBonus, massPoint } from './bonusAlgSprint';
 import { IaggregatedWord } from './data';
 import { startFlag, groupPage, gameFlag } from '../indexGame';
 import {
-  getWordUserSprint, getWordsMiniGame, buildMassSprint, checkGetWordStatus, checkGetUserStatus,
+  getWordsMiniGame, buildMassSprint, checkGetWordStatus, checkGetUserStatus,
 } from './requestSprint';
+import { keySprint } from './sprintDOM';
 
 export const answers:Word[] = [];
 export const answersTextBook:IaggregatedWord[] = [];
@@ -23,6 +24,7 @@ let timer:HTMLAudioElement;
 export function sprintDefaultIndex() {
   answersIndex = 0;
   bestSeries = 0;
+  bestSeriesOld = 0;
   allAnswers = 0;
   rightAnswers = 0;
   answersFalse.length = 0;
@@ -54,14 +56,16 @@ async function newWordDOM() {
 }
 
 export async function falseAnsw() {
-  const answer = document.querySelector('.answ_result_false') as HTMLElement;
-  answer.classList.add('click');
-  answer.ontransitionend = function () {
-    answer.classList.remove('click');
+  //console.log('блок неверного ответа и картинка false', 'ответ номер', allAnswers);
+  const answerFalse = document.querySelector('.answ_result_false') as HTMLElement;
+  answerFalse.classList.add('click');
+  answerFalse.ontransitionend = function () {
+    answerFalse.classList.remove('click');
   };
 }
 
 export async function trueAnsw() {
+  //console.log('блок верного ответа и картинка true', 'ответ номер', allAnswers);
   const answer = document.querySelector('.answ_result_right') as HTMLElement;
   answer.classList.add('click');
   answer.ontransitionend = function () {
@@ -138,17 +142,23 @@ export async function createSprintResult() {
   const endPer = document.querySelector('.end_game_percent') as HTMLDivElement;
   wrapperMinigame.classList.add('block');
   wrapperEndgame.classList.add('active');
-  endScore.innerHTML = `Score: ${massPoint[0]}`;
+  if (massPoint[0]) {
+    endScore.innerHTML = `Score: ${massPoint[0]}`;
+  } else {
+    endScore.innerHTML = 'Score: 0}';
+  }  
   endTotal.innerHTML = `Total number of words: ${allAnswers}`;
   endSer.innerHTML = `Best right-series:  ${bestSeriesOld}`;
   const perc = rightAnswers / allAnswers;
-  const percStr = (perc * 100).toFixed(1);
+  const percStr = Number((perc * 100).toFixed(1));
   if (allAnswers > 0) {
     endPer.innerHTML = `Answered correctly:  ${percStr}%`;
   } else {
     endPer.innerHTML = 'Answered correctly:  0';
   }  
-  console.log('stop game' );
+  massPoint[0] = 0;
+  //console.log('stop game' );
+  document.removeEventListener('keydown', keySprint);  
   await checkGetUserStatus(percStr, bestSeriesOld);
 }
 
@@ -224,23 +234,27 @@ export async function checkAuthSprint(flag: boolean, answ: boolean) {
 export async function checkAnsw(val:boolean) {
   // console.log('val: ', val, 'answerFlag: ', answerFlag);
   // console.log('if result: ', val === answerFlag);
+  console.clear();
   if (answerFlag === val) {
+    //console.log('верно');
     trueAnsw();
     checkBonus(true);
     rightAnswers += 1;
     bestSeries += 1;
   } else {
+    //console.log('неверно');
     bestSeriesOld = bestSeriesOld < bestSeries ? bestSeries : bestSeriesOld;
     bestSeries = 0;
     checkBonus(false);
     falseAnsw();
   }
   allAnswers += 1;
+  //console.log('startflag', startFlag[0]);
   if (startFlag[0]) {
     await checkIndex();
     newWordDOM();
   } else {
-    // console.log('textBook');
+    //console.log('textBook');
     checkAuthSprint(answerFlag, val);
     allBtnsBlock();
     await checkIndexTextbook().then(() => {

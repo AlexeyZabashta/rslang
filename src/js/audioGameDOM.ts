@@ -18,9 +18,7 @@ export const audioDOM = async (val:Word) => {
         <div class="audio_img" style="background-image: url('http://alexrslangproject.herokuapp.com/${val.image}');"></div>    
         <div class="audio_answer">${val.word} (${val.wordTranslate})</div>
       </div>
-      <button id="play_word">
-        <img src="../src/assets/volume.svg" id="play_word_audio">        
-      </button>      
+      <button id="play_word"></button>      
     </div>
     <div class="word_variants">
       <div class="word_variant">
@@ -45,8 +43,8 @@ export const audioDOM = async (val:Word) => {
       </div>
     </div>
     <div class="next_word">
-      <button id="idk">Не знаю</button>
-      <button id="next_word_btn" disabled>&#8594;</button>
+      <button id="idk">True answer</button>
+      <button id="next_word_btn" disabled>Next word</button>
     </div>    
   </section>
   <section class="end_audio_train_wrapper">
@@ -55,7 +53,7 @@ export const audioDOM = async (val:Word) => {
         <div class="end_game_series"></div>
         <div class="end_game_percent"></div>
         <button id="end_game_textbook">Back to TextBook</button>
-        <button id="end_game_mainmenu">Back to Menu</button>
+        <button id="end_game_mainmenu">Back to Home page</button>
         <button id="end_game_nextPage">To the next page</button>
     </div>
     <div class="end_audio_info">
