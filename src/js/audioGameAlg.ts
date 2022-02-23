@@ -1,5 +1,5 @@
 import { Word } from './typeSprint';
-import { rightAnswNum, audioDOM } from './audioGameDOM';
+import { audioDOM } from './audioGameDOM';
 import { randomDiap } from './clickFunctionSprint';
 import {
   getWordsMiniGame, buildMassSprint, checkGetWordStatus, getUserStat, checkGetUserStatus,
@@ -134,7 +134,7 @@ async function endAudioGame() {
   total.innerHTML = `Total words: ${answersAudio.length}`;
   series.innerHTML = `Best answer series: ${bestSeriesAudio}`;
   const perc = rightAnswAudio / indexAnsw;
-  const percStr = (perc * 100).toFixed(1);
+  const percStr = Number((perc * 100).toFixed(1));
   if (indexAnsw > 0) {
     percent.innerHTML = `Answered correctly:  ${percStr}%`;
   } else {
