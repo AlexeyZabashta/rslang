@@ -1381,7 +1381,7 @@ button {
 .footer-rsschool_svg {
   width: 7rem;
   height: 2.3rem;
-  background-image: url(assets/2418248d4ccd4e7738a4.svg);
+  background-image: url(assets/66e800aacc5aaf68c358.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1401,7 +1401,7 @@ button {
   width: 2.2rem;
   height: 2.2rem;
   margin: 0 .5rem 0 1rem;
-  background-image: url(assets/cadab172d77dc4de24c0.svg);
+  background-image: url(assets/bea7512054f79a0e0e00.svg);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1810,7 +1810,7 @@ button {
 }
 
 .bonus_circle.active {
-  background-image: url(assets/a7e9a3da31c72c38b31d.svg);
+  background-image: url(assets/be7c5034058e2dc3ad88.svg);
   opacity: 1;
   transition: .5s;
 }
@@ -2169,13 +2169,13 @@ button:disabled {
 }
 
 .audio_answer_variant.right {
-  background-image: url(assets/a7e9a3da31c72c38b31d.svg);
+  background-image: url(assets/be7c5034058e2dc3ad88.svg);
   opacity: 1;
   transition: .7s;
 }
 
 .audio_answer_variant.false {
-  background-image: url(assets/f013d031f2cc78bdaf6e.svg);
+  background-image: url(assets/38e56ba2673b244da7a0.svg);
   opacity: 1;
   transition: .7s;
 }

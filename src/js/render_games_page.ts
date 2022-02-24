@@ -24,7 +24,7 @@ async function addListnersGamePage() {
   groupWrapper.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).classList.contains('choose_group_num')) {
       const mainHtml = document.querySelector('.main') as HTMLElement;
-      gameGroupNum = Number((e.target as HTMLElement).classList[1].slice(9));
+      gameGroupNum = Number((e.target as HTMLElement).classList[1].slice(9)) - 1;
       mainHtml.innerHTML = '';
       startMiniGame(gamePageFlag, true, gameGroupNum, randomDiap(0, 29));
     }
