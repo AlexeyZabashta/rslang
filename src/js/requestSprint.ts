@@ -276,6 +276,21 @@ async function requestUpdateUserSprint(newOptions:UserStat) {
   });
 }
 
+
+function bestSerStatSprint(ser:number, oldInfo:UserStat) {
+  if ((oldInfo as UserStat).optional.sprint?.bestSer) {
+    return ser > (oldInfo.optional.sprint as UserOptionalGame).bestSer ? ser : (oldInfo.optional.sprint as UserOptionalGame).bestSer;
+  } 
+  return ser;
+}
+
+function bestSerStatAudio(ser:number, oldInfo:UserStat) {
+  if ((oldInfo as UserStat).optional.audio?.bestSer) {
+    return ser > (oldInfo.optional.audio as UserOptionalGame).bestSer ? ser : (oldInfo.optional.audio as UserOptionalGame).bestSer;
+  } 
+  return ser;
+}
+
 export async function updateUserStatSprint(perc:number, ser:number, oldInfo:UserStat) {
   if (oldInfo.optional.audio) {
     const newOptions:UserStat = {
@@ -283,7 +298,7 @@ export async function updateUserStatSprint(perc:number, ser:number, oldInfo:User
       optional: {
         sprint: {
           percent: middlePercSprint(perc, oldInfo),
-          bestSer: ser > (oldInfo.optional.sprint as UserOptionalGame).bestSer ? ser : (oldInfo.optional.sprint as UserOptionalGame).bestSer,
+          bestSer: bestSerStatSprint(ser, oldInfo),
         },
         audio: {
           percent: oldInfo.optional.audio.percent,
@@ -326,7 +341,7 @@ export async function updateUserStatAudio(perc:number, ser:number, oldInfo:UserS
       optional: {
         audio: {
           percent: middlePercAudio(perc, oldInfo),
-          bestSer: ser > (oldInfo.optional.audio as UserOptionalGame).bestSer ? ser : (oldInfo.optional.audio as UserOptionalGame).bestSer,
+          bestSer: bestSerStatAudio(ser, oldInfo),
         },
         sprint: {
           percent: oldInfo.optional.sprint.percent,
