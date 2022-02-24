@@ -438,15 +438,25 @@ export async function createStatField(val:number) {
         return `${middlePer}`;
       }
       if ((info as UserStat).optional.audio) {
-        return (info as UserStat).optional.audio?.percent.toFixed(0);
+        if ((info as UserStat).optional.audio?.percent !== 0) {
+          return (info as UserStat).optional.audio?.percent.toFixed(0);
+        } else {
+          return 0;
+        }        
       }
       if ((info as UserStat).optional.sprint) {
-        return (info as UserStat).optional.sprint?.percent.toFixed(0);
+        if ((info as UserStat).optional.sprint?.percent !== 0) {
+          return (info as UserStat).optional.sprint?.percent.toFixed(0);
+        } else {
+          return 0;
+        }
       }
     }
     if (val === 1) {
       if ((info as UserStat).optional.sprint?.percent) {
-        return (info as UserStat).optional.sprint?.percent.toFixed(0);
+        if ((info as UserStat).optional.sprint?.percent !== 0) {
+          return (info as UserStat).optional.sprint?.percent.toFixed(0);
+        }       
       }
       return 0;
     }
@@ -458,7 +468,9 @@ export async function createStatField(val:number) {
     }
     if (val === 3) {
       if ((info as UserStat).optional.audio?.percent) {
-        return (info as UserStat).optional.audio?.percent.toFixed(0);
+        if ((info as UserStat).optional.audio?.percent !== 0) {
+          return (info as UserStat).optional.audio?.percent.toFixed(0);
+        }        
       }
       return 0;
     }
